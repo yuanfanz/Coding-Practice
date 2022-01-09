@@ -1,6 +1,5 @@
 class Solution {
     public int minSubArrayLen(int target, int[] nums) {
-        
         int j = 0;
         int sum = 0;
         int min = nums.length;
@@ -13,12 +12,10 @@ class Solution {
                 sum += nums[j];
                 j++;
             }
-            System.out.println(sum);
             if (sum >= target) {
                 flag = true;
                 if (min > j - i) {
                     min = j - i;
-                    
                 }
             }
             sum -= nums[i];
