@@ -2,24 +2,18 @@ class Solution {
     public boolean checkValid(int[][] matrix) {
         int n = matrix.length;
         
-        boolean[] set = new boolean[n + 1];
+        int xor1 = 0;
+        int xor2 = 0;
         for (int i = 0; i < n; ++i) {
+            xor1 = 0;
+            xor2 = 0;
             for (int j = 0; j < n; ++j) {
-                if (set[matrix[i][j]]) {
-                    return false;
-                }
-                set[matrix[i][j]] = true;
+                xor1 = xor1 ^ (matrix[i][j] ^ (j + 1));
+                xor2 = xor2 ^ (matrix[j][i] ^ (j + 1));
             }
-            set = new boolean[n + 1];
-        }
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (set[matrix[j][i]]) {
-                    return false;
-                }
-                set[matrix[j][i]] = true;
+            if (xor1 != 0 || xor2 != 0) {
+                return false;
             }
-            set = new boolean[n + 1];
         }
         return true;
     }
