@@ -1,6 +1,5 @@
 
 public class Codec {
-
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         if (root == null) {
@@ -25,23 +24,23 @@ public class Codec {
         if (data.length() == 0) {
             return null;
         }
-        LinkedList<String> queue = new LinkedList<>(Arrays.asList(data.split(",")));
-        return dfs(queue, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        Deque<String> deque = new LinkedList<>(Arrays.asList(data.split(",")));
+        return dfs(deque, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
     
-    private TreeNode dfs(LinkedList<String> queue, int min, int max) {
-        if (queue.size() == 0) {
+    private TreeNode dfs(Deque<String> deque, int min, int max) {
+        if (deque.size() == 0) {
             return null;
         }
-        String cur = queue.peek();
+        String cur = deque.peekFirst();
         int val = Integer.valueOf(cur);
         if (val < min || val > max) {
             return null;
         }
-        queue.pollFirst();
+        deque.pollFirst();
         TreeNode root = new TreeNode(val);
-        root.left = dfs(queue, min, val);
-        root.right = dfs(queue, val, max);
+        root.left = dfs(deque, min, val);
+        root.right = dfs(deque, val, max);
         return root;
     }
 }
