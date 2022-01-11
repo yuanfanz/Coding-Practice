@@ -8,6 +8,7 @@ class BSTIterator {
     public int next() {
         TreeNode cur = stack.pop();
         int val = cur.val;
+        // go to right sub tree
         addAll(cur.right);
         return val;
     }
