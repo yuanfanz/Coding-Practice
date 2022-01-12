@@ -1,24 +1,23 @@
-
 public class Codec {
-
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         if (root == null) {
             return "";
         }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
         StringBuilder sb = new StringBuilder();
-        dfs(root, sb);
-        return sb.toString();
-    }
-    
-    private void dfs(TreeNode root, StringBuilder sb) {
-        if (root == null) {
-            sb.append("#,");
-            return;
+        while (queue.size() != 0) {
+            TreeNode cur = queue.poll();
+            if (cur == null) {
+                sb.append("#,");
+            } else {
+                sb.append(cur.val + ",");
+                queue.offer(cur.left);
+                queue.offer(cur.right);
+            }
         }
-        sb.append(root.val + ",");
-        dfs(root.left, sb);
-        dfs(root.right, sb);
+        return sb.toString();
     }
 
     // Decodes your encoded data to tree.
@@ -26,19 +25,29 @@ public class Codec {
         if (data.length() == 0) {
             return null;
         }
-        Deque<String> deque = new LinkedList<>(Arrays.asList(data.split(",")));
-        return dfs(deque);
-    }
-    
-    private TreeNode dfs(Deque<String> deque) {
-        String cur = deque.pollFirst();
-        if (cur.equals("#")) {
-            return null;
+        String[] strs = data.split(",");
+        TreeNode root = new TreeNode(Integer.valueOf(strs[0]));
+        List<TreeNode> list = new ArrayList<>();
+        list.add(root);
+        int index = 0;
+        boolean isLeft = true;
+        for (int i = 1; i < strs.length; ++i) {
+            String cur = strs[i];
+            if (!cur.equals("#")) {
+                int val = Integer.valueOf(cur);
+                TreeNode node = new TreeNode(val);
+                if (isLeft) {
+                    list.get(index).left = node;
+                } else {
+                    list.get(index).right = node;
+                }
+                list.add(node);
+            }
+            if (!isLeft) {
+                index++;
+            }
+            isLeft = !isLeft;
         }
-        int val = Integer.valueOf(cur);
-        TreeNode root = new TreeNode(val);
-        root.left = dfs(deque);
-        root.right = dfs(deque);
         return root;
     }
 }
@@ -47,3 +56,13 @@ public class Codec {
 // Codec ser = new Codec();
 // Codec deser = new Codec();
 // TreeNode ans = deser.deserialize(ser.serialize(root));
+
+
+
+
+
+
+
+
+
+
