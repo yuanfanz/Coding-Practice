@@ -1,14 +1,14 @@
 class MinStack {
-    private Node head;
+    Node head;
     public MinStack() {
     }
     
     public void push(int val) {
-        if (head != null) {
+        if (head == null) {
+            head = new Node(val, val, null);
+        } else {
             Node newNode = new Node(val, Math.min(head.min, val), head);
             head = newNode;
-        } else {
-            head = new Node(val, val, null);
         }
     }
     
