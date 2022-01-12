@@ -2,7 +2,6 @@ class Solution {
     int max = 0;
     public int depthSumInverse(List<NestedInteger> nestedList) {
         dfs(nestedList, 1);
-        System.out.println(max);
         return getSum(nestedList, 1, max);
     }
     private int getSum(List<NestedInteger> nestedList, int level, int max) {
