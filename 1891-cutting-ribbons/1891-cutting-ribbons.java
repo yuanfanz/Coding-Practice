@@ -14,7 +14,6 @@ class Solution {
     }
     private boolean isValid(int[] ribbons, int length, int k) {
         int count = 0;
-        
         for (int i = 0; i < ribbons.length; ++i) {
             count += ribbons[i] / length;
         }
