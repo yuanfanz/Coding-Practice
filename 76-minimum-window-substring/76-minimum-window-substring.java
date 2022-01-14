@@ -1,35 +1,31 @@
 class Solution {
     public String minWindow(String s, String t) {
-        String result = "";
-        int[] hashS = new int[256];
-        int[] hashT = new int[256];
-        
+        int[] hash1 = new int[256];
+        int[] hash2 = new int[256];
         for (int i = 0; i < t.length(); ++i) {
-            hashT[t.charAt(i)]++;
+            hash2[t.charAt(i)]++;
         }
         int j = 0;
-        int min = Integer.MAX_VALUE;
+        String[] result = new String[1];
+        result[0] = "";
+        int min = s.length() + 1;
         for (int i = 0; i < s.length(); ++i) {
-            while (j < s.length()) {
-                if (isValid(hashS, hashT)) {
-                    break;
-                }
-                hashS[s.charAt(j)]++;
-                j++;
+            while (j < s.length() && !isValid(hash1, hash2)) {
+                hash1[s.charAt(j++)]++;
             }
-            if (isValid(hashS, hashT)) {
+            if (isValid(hash1, hash2)) {
                 if (min > j - i) {
                     min = j - i;
-                    result = s.substring(i, j);
+                    result[0] = s.substring(i, j);
                 }
             }
-            hashS[s.charAt(i)]--;
+            hash1[s.charAt(i)]--;
         }
-        return result;
+        return result[0];
     }
-    private boolean isValid(int[] hashS, int[] hashT) {
-        for (int i = 0; i < hashS.length; ++i) {
-            if (hashS[i] < hashT[i]) {
+    private boolean isValid(int[] hash1, int[] hash2) {
+        for (int i = 0; i < hash1.length; ++i) {
+            if (hash1[i] < hash2[i]) {
                 return false;
             }
         }
