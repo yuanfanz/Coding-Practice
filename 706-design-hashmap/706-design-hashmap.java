@@ -1,57 +1,69 @@
 class MyHashMap {
-    private Node[] array;
-    private int SIZE = 10001;
+    Node[] array;
+    int SIZE = 10001;
     public MyHashMap() {
         array = new Node[SIZE];
     }
     
     public void put(int key, int value) {
-        int index = getIndex(key);
-        Node head = array[index];
-        Node cur = head;
-        while (cur != null) {
-            if (cur.key == key) {
-                cur.value = value;
-                return;
+        int hash = getHash(key);
+        if (array[hash] != null) {
+            Node head = array[hash];
+            Node cur = head;
+            while (cur != null) {
+                if (cur.key == key) {
+                    cur.value = value;
+                    return;
+                }
+                cur = cur.next;
             }
-            cur = cur.next;
+            Node newNode = new Node(key, value, head);
+            array[hash] = newNode;
+            return;
         }
-        Node node = new Node(key, value, null);
-        node.next = head;
-        array[index] = node;
+        Node newNode = new Node(key, value, null);
+        array[hash] = newNode;
     }
     
     public int get(int key) {
-        int index = getIndex(key);
-        Node cur = array[index];
-        while (cur != null) {
-            if (cur.key == key) {
-                return cur.value;
+        int hash = getHash(key);
+        if (array[hash] != null) {
+            Node head = array[hash];
+            Node cur = head;
+            while (cur != null) {
+                if (key == cur.key) {
+                    return cur.value;
+                }
+                cur = cur.next;
             }
-            cur = cur.next;
         }
         return -1;
     }
     
     public void remove(int key) {
-        int index = getIndex(key);
-        Node cur = array[index];
-        Node prev = null;
-        while (cur != null) {
-            if (cur.key == key) {
-                if (prev == null) {
-                    array[index] = cur.next;
-                } else {
-                    prev.next = cur.next;
+        int hash = getHash(key);
+        if (array[hash] != null) {
+            Node head = array[hash];
+            Node cur = head;
+            Node prev = null;
+            
+            while (cur != null) {
+                if (cur.key == key) {
+                    if (prev != null) {
+                        prev.next = cur.next;
+                    } else {
+                        array[hash] = cur.next;
+                    }
+                    return;
                 }
+                prev = cur;
+                cur = cur.next;
             }
-            prev = cur;
-            cur = cur.next;
         }
     }
     
-    private int getIndex(int index) {
-        return Integer.hashCode(index) % SIZE;
+    private int getHash(int key) {
+        return Integer.hashCode(key) % SIZE;
     }
     
     class Node{
