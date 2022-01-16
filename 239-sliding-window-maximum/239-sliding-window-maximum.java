@@ -1,11 +1,10 @@
 class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        int n = nums.length;
+        Deque<Integer> deque = new LinkedList<>();
         
         int[] result = new int[nums.length - k + 1];
-        // save index in deque
-        Deque<Integer> deque = new LinkedList<>();
-        for (int i = 0; i < n; ++i) {
+        int index = 0;
+        for (int i = 0; i < nums.length; ++i) {
             while (deque.size() > 0 && deque.peekFirst() <= i - k) {
                 deque.pollFirst();
             }
