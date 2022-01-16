@@ -4,10 +4,10 @@ class Solution {
         
         int[] start = new int[n];
         int[] end = new int[n];
-        
-        for (int i = 0; i < n; ++i) {
-            start[i] = intervals[i][0];
-            end[i] = intervals[i][1];
+        int index = 0;
+        for (int[] cur : intervals) {
+            start[index] = cur[0];
+            end[index++] = cur[1];
         }
         Arrays.sort(start);
         Arrays.sort(end);
@@ -15,7 +15,6 @@ class Solution {
         int endPtr = 0;
         for (int i = 1; i < n; ++i) {
             if (start[i] < end[endPtr]) {
-                // a meeting starts, previous meeting did not end
                 rooms++;
             } else {
                 endPtr++;
