@@ -17,6 +17,6 @@ class Solution {
                 return true;
             }
         }
-        return count == n;
+        return false;
     }
 }
