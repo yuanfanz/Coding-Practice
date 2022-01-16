@@ -8,8 +8,8 @@ class Solution {
             row = 0;
             col = 0;
             for (int j = 0; j < n; ++j) {
-                row = row ^ (matrix[i][j] ^ (j + 1));
-                col = col ^ (matrix[j][i] ^ (j + 1));
+                row = row ^ matrix[i][j] ^ (j + 1);
+                col = col ^ matrix[j][i] ^ (j + 1);
             }
             if (row != 0 || col != 0) {
                 return false;
