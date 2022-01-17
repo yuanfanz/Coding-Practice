@@ -13,7 +13,7 @@ class Solution {
                     if (ch == '-') {
                         negFlag = true;
                     }
-                    if (ch == '-') continue;
+                    if (ch == '-' || ch == '+') continue;
                     num = num * 10 + ch - '0';
                 }
                 if (negFlag) {
