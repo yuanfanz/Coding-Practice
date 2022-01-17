@@ -2,12 +2,11 @@ class Solution {
     public void sortColors(int[] nums) {
         int zeroPtr = 0;
         int twoPtr = nums.length - 1;
-        
-        for (int i = 0; i <= twoPtr; ++i) {
+        for (int i = 0; i < nums.length; ++i) {
             while (i < twoPtr && nums[i] == 2) {
                 swap(nums, i, twoPtr--);
             }
-            while (zeroPtr < i && nums[i] == 0) {
+            while (i > zeroPtr && nums[i] == 0) {
                 swap(nums, i, zeroPtr++);
             }
         }
