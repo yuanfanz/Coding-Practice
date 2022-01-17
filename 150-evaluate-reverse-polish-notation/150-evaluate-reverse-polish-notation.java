@@ -13,13 +13,12 @@ class Solution {
                     if (ch == '-') {
                         negFlag = true;
                     }
-                    if (ch == '-' || ch == '+') continue;
+                    if (ch == '-') continue;
                     num = num * 10 + ch - '0';
                 }
                 if (negFlag) {
                     num = -num;
                 }
-                // System.out.println(num);
                 stack.push(num);
             } else {
                 if (ch == '+') {
