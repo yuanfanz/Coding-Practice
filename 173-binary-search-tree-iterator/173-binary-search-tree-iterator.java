@@ -1,5 +1,6 @@
+
 class BSTIterator {
-    Stack<TreeNode> stack;
+    private Stack<TreeNode> stack;
     public BSTIterator(TreeNode root) {
         stack = new Stack<>();
         addAll(root);
@@ -8,7 +9,6 @@ class BSTIterator {
     public int next() {
         TreeNode cur = stack.pop();
         int val = cur.val;
-        // go to right sub tree
         addAll(cur.right);
         return val;
     }
