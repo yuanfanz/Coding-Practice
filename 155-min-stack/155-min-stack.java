@@ -1,6 +1,7 @@
 class MinStack {
-    Node head;
+    private Node head;
     public MinStack() {
+        
     }
     
     public void push(int val) {
