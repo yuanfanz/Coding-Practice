@@ -1,46 +1,34 @@
 class Solution {
     public boolean validTree(int n, int[][] edges) {
-        UnionFind uf = new UnionFind(n);
-        
+        Map<Integer, List<Integer>> map = new HashMap<>();
         for (int[] cur : edges) {
             int first = cur[0];
             int second = cur[1];
-            if (uf.isConnected(first, second)) {
-                return false;
-            }
-            uf.union(first, second);
+            List<Integer> list1 = map.getOrDefault(first, new ArrayList<>());
+            List<Integer> list2 = map.getOrDefault(second, new ArrayList<>());
+            list1.add(second);
+            list2.add(first);
+            map.put(first, list1);
+            map.put(second, list2);
         }
-        return uf.count == 1;
+        
+        boolean[] visited = new boolean[n];
+        if (dfs(0, -1, visited, map)) return false;
+        for (boolean cur : visited) {
+            if (!cur) return false;
+        }
+        return true;
     }
-    
-    class UnionFind{
-        int[] parent;
-        int count;
-        public UnionFind(int n) {
-            parent = new int[n];
-            for (int i = 0; i < n; ++i) {
-                parent[i] = i;
+    private boolean dfs(int cur, int parent, boolean[] visited, Map<Integer, List<Integer>> map) {
+        visited[cur] = true;
+        if (map.containsKey(cur)) {
+            for (int next : map.get(cur)) {
+                if (next == parent) continue;
+                if (visited[next] || dfs(next, cur, visited, map)) {
+                    return true;
+                }
             }
-            count = n;
         }
-        public int find(int p) {
-            while (p != parent[p]) {
-                parent[p] = parent[parent[p]];
-                p = parent[p];
-            }
-            return p;
-        }
-        public boolean isConnected(int p, int q) {
-            int rootP = find(p);
-            int rootQ = find(q);
-            return rootP == rootQ;
-        }
-        public void union(int p, int q) {
-            int rootP = find(p);
-            int rootQ = find(q);
-            if (rootP == rootQ) return;
-            parent[rootP] = rootQ;
-            count--;
-        }
+        return false;
     }
 }
