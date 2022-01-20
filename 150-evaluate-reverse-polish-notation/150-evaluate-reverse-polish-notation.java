@@ -2,28 +2,30 @@ class Solution {
     public int evalRPN(String[] tokens) {
         Stack<Integer> stack = new Stack<>();
         
-        for (int i = 0; i < tokens.length; ++i) {
-            String cur = tokens[i];
-            char ch = cur.charAt(cur.length() - 1);
-            if (Character.isDigit(ch)) {
-                stack.push(Integer.valueOf(cur));
+        for (String s : tokens) {
+            if (Character.isDigit(s.charAt(s.length() - 1))) {
+                stack.push(Integer.valueOf(s));
             } else {
-                if (ch == '+') {
+                if (s.equals("+")) {
                     stack.push(stack.pop() + stack.pop());
                 }
-                if (ch == '-') {
+                if (s.equals("-")) {
                     stack.push(-stack.pop() + stack.pop());
                 }
-                if (ch == '*') {
+                if (s.equals("*")) {
                     stack.push(stack.pop() * stack.pop());
                 }
-                if (ch == '/') {
+                if (s.equals("/")) {
                     int first = stack.pop();
                     int second = stack.pop();
-                    stack.push(second/first);
+                    stack.push(second / first);
                 }
             }
         }
-        return stack.pop();
+        int res = 0;
+        while (!stack.isEmpty()) {
+            res += stack.pop();
+        }
+        return res;
     }
 }
