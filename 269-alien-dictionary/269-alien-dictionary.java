@@ -1,10 +1,13 @@
 class Solution {
     public String alienOrder(String[] words) {
         Map<Character, List<Character>> map = new HashMap<>();
-        Map<Character, Integer> degree = new HashMap<>();
+        
+        int[] visited = new int[26];
+        Arrays.fill(visited, -1);
+        
         for (String word : words) {
             for (char ch : word.toCharArray()) {
-                degree.put(ch, 0);
+                visited[ch - 'a'] = 0;
                 map.put(ch, new ArrayList<>());
             }
         }
@@ -21,33 +24,42 @@ class Solution {
                     List<Character> list = map.getOrDefault(ch1, new ArrayList<>());
                     list.add(ch2);
                     map.put(ch1, list);
-                    degree.put(ch2, degree.get(ch2) + 1);
                     break;
                 }
             }
         }
-        Queue<Character> queue = new LinkedList<>();
-        for (char key : degree.keySet()) {
-            if (degree.get(key) == 0) {
-                queue.offer(key);
+        
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < 26; ++i) {
+            if (visited[i] == 0) {
+                if (dfs(i, map, visited, stack)) return "";
             }
         }
+        
+        
+        // if (sb.length() < degree.size()) {
+        //     return "";
+        // }
         StringBuilder sb = new StringBuilder();
-        while (queue.size() != 0) {
-            char ch = queue.poll();
-            sb.append(ch);
-            for (char next : map.get(ch)) {
-                int val = degree.get(next) - 1;
-                degree.put(next, val);
-                if (val == 0) {
-                    queue.offer(next);
-                }
-            }
-        }
-        if (sb.length() < degree.size()) {
-            return "";
+        while (stack.size() != 0) {
+            sb.append(stack.pop());
         }
         return sb.toString();
+    }
+    
+    private boolean dfs(int i, Map<Character, List<Character>> map,
+                       int[] visited, Stack<Character> stack) {
+        char ch = (char) (i + 'a');
+        visited[i] = 1;
+        for (char next : map.get(ch)) {
+            if (visited[next - 'a'] == 1) return true;
+            if (visited[next - 'a'] == 0) {
+                if (dfs(next - 'a', map, visited, stack)) return true;
+            }
+        }
+        stack.push(ch);
+        visited[i] = 2;
+        return false;
     }
 }
 
