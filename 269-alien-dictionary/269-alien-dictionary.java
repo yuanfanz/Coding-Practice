@@ -28,25 +28,18 @@ class Solution {
                 }
             }
         }
-        
         Stack<Character> stack = new Stack<>();
         for (int i = 0; i < 26; ++i) {
             if (visited[i] == 0) {
                 if (dfs(i, map, visited, stack)) return "";
             }
         }
-        
-        
-        // if (sb.length() < degree.size()) {
-        //     return "";
-        // }
         StringBuilder sb = new StringBuilder();
         while (stack.size() != 0) {
             sb.append(stack.pop());
         }
         return sb.toString();
     }
-    
     private boolean dfs(int i, Map<Character, List<Character>> map,
                        int[] visited, Stack<Character> stack) {
         char ch = (char) (i + 'a');
