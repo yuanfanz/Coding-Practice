@@ -5,10 +5,11 @@ class Solution {
         for (int i = 0; i < t.length(); ++i) {
             hash2[t.charAt(i)]++;
         }
+        
         int j = 0;
+        int min = s.length() + 1;
         String[] result = new String[1];
         result[0] = "";
-        int min = s.length() + 1;
         for (int i = 0; i < s.length(); ++i) {
             while (j < s.length() && !isValid(hash1, hash2)) {
                 hash1[s.charAt(j++)]++;
