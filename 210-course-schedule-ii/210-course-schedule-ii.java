@@ -1,40 +1,33 @@
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        List<Integer> result = new ArrayList<>();
-        
-        int[] indegree = new int[numCourses];
-        Map<Integer, List<Integer>> map = new HashMap<>();
+        ArrayList[] map = new ArrayList[numCourses];
+        for (int i = 0; i < map.length; ++i) {
+            map[i] = new ArrayList<>();
+        }
         for (int[] cur : prerequisites) {
-            int precourse = cur[1];
-            int curcourse = cur[0];
-            List<Integer> list = map.getOrDefault(precourse, new ArrayList<>());
-            list.add(curcourse);
-            map.put(precourse, list);
-            indegree[curcourse]++;
+            int first = cur[1];
+            int second = cur[0];
+            map[first].add(second);
         }
-        Queue<Integer> queue = new LinkedList<>();
+        Deque<Integer> deque = new LinkedList<>();
+        int[] visited = new int[numCourses];
         for (int i = 0; i < numCourses; ++i) {
-            if (indegree[i] == 0) {
-                queue.offer(i);
+            if (dfs(i, visited, map, deque)) return new int[0];
+        }
+        return deque.stream().mapToInt(i -> i).toArray();
+    }
+    private boolean dfs(int cur, int[] visited, ArrayList[] map, Deque<Integer> deque) {
+        if (visited[cur] == 2) return false;
+        visited[cur] = 1;
+        for (int i = 0; i < map[cur].size(); ++i) {
+            int next = (int) map[cur].get(i);
+            if (visited[next] == 1) return true;
+            if (visited[next] == 0) {
+                if (dfs(next, visited, map, deque)) return true;
             }
         }
-        boolean[] visited = new boolean[numCourses];
-        int count = 0;
-        while (queue.size() != 0) {
-            int cur = queue.poll();
-            if (visited[cur]) continue;
-            visited[cur] = true;
-            result.add(cur);
-            count++;
-            if (map.containsKey(cur)) {
-                for (int next : map.get(cur)) {
-                    indegree[next]--;
-                    if (indegree[next] == 0) {
-                        queue.offer(next);
-                    }
-                }
-            }
-        }
-        return count != numCourses ? new int[0] : result.stream().mapToInt(i -> i).toArray();
+        deque.addFirst(cur);
+        visited[cur] = 2;
+        return false;
     }
 }
