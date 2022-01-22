@@ -1,3 +1,4 @@
+
 class Solution {
     public void reorderList(ListNode head) {
         if (head == null || head.next == null) {
@@ -12,8 +13,8 @@ class Solution {
             fast = fast.next.next;
         }
         prev.next = null;
-        ListNode newHead = reverse(slow);
-        merge(head, newHead);
+        ListNode node = reverse(slow);
+        merge(head, node);
     }
     private void merge(ListNode l1, ListNode l2) {
         while (l1 != null) {
