@@ -19,29 +19,27 @@ class WordDictionary {
     }
     
     public boolean search(String word) {
-        return dfs(root, 0, word);
+        return helper(root, word, 0);
     }
     
-    private boolean dfs(TrieNode cur, int i, String word) {
-        if (i == word.length()) {
+    private boolean helper(TrieNode cur, String word, int index) {
+        if (index == word.length()) {
             return cur.isWord;
         }
-        char ch = word.charAt(i);
-        if (ch != '.') {
-            if (!cur.map.containsKey(ch)) {
-                return false;
-            }
-            return dfs(cur.map.get(ch), i + 1, word);
-        } else {
+        char ch = word.charAt(index);
+        if (ch == '.') {
             for (char next : cur.map.keySet()) {
-                if (dfs(cur.map.get(next), i + 1, word)) {
-                    return true;
-                }
+                if (helper(cur.map.get(next), word, index + 1)) return true;
+            }
+        } else {
+            if (cur.map.containsKey(ch)) {
+                return helper(cur.map.get(ch), word, index + 1);
+            } else {
+                return false;
             }
         }
         return false;
     }
-    
     class TrieNode{
         char ch;
         Map<Character, TrieNode> map;
