@@ -1,4 +1,3 @@
-
 class BSTIterator {
     private Stack<TreeNode> stack;
     public BSTIterator(TreeNode root) {
@@ -17,10 +16,10 @@ class BSTIterator {
         return !stack.isEmpty();
     }
     
-    private void addAll(TreeNode root) {
-        while (root != null) {
-            stack.push(root);
-            root = root.left;
+    private void addAll(TreeNode node) {
+        while (node != null) {
+            stack.push(node);
+            node = node.left;
         }
     }
 }
