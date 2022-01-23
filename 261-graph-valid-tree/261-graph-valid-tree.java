@@ -1,34 +1,35 @@
 class Solution {
     public boolean validTree(int n, int[][] edges) {
-        Map<Integer, List<Integer>> map = new HashMap<>();
+        ArrayList[] chart = new ArrayList[n];
+        
+        for (int i = 0; i < n; ++i) {
+            chart[i] = new ArrayList<>();
+        }
         for (int[] cur : edges) {
             int first = cur[0];
             int second = cur[1];
-            List<Integer> list1 = map.getOrDefault(first, new ArrayList<>());
-            List<Integer> list2 = map.getOrDefault(second, new ArrayList<>());
-            list1.add(second);
-            list2.add(first);
-            map.put(first, list1);
-            map.put(second, list2);
+            chart[first].add(second);
+            chart[second].add(first);
         }
+        int[] visited = new int[n];
+        if (dfs(0, -1, visited, chart)) return false;
         
-        boolean[] visited = new boolean[n];
-        if (dfs(0, -1, visited, map)) return false;
-        for (boolean cur : visited) {
-            if (!cur) return false;
+        for (int i = 0; i < n; ++i) {
+            if (visited[i] == 0) return false;
         }
         return true;
     }
-    private boolean dfs(int cur, int parent, boolean[] visited, Map<Integer, List<Integer>> map) {
-        visited[cur] = true;
-        if (map.containsKey(cur)) {
-            for (int next : map.get(cur)) {
-                if (next == parent) continue;
-                if (visited[next] || dfs(next, cur, visited, map)) {
-                    return true;
-                }
+    private boolean dfs(int cur, int parent, int[] visited, ArrayList[] chart) {
+        visited[cur] = 1;
+        for (int i = 0; i < chart[cur].size(); ++i) {
+            int next = (int) chart[cur].get(i);
+            if (next == parent) continue;
+            if (visited[next] == 1) return true;
+            if (visited[next] == 0) {
+                if (dfs(next, cur, visited, chart)) return true;
             }
         }
+        visited[cur] = 2;
         return false;
     }
 }
