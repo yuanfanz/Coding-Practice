@@ -1,12 +1,12 @@
 class WordDistance {
-    Map<String, List<Integer>> map;
+    private Map<String, List<Integer>> map;
     public WordDistance(String[] wordsDict) {
         map = new HashMap<>();
         for (int i = 0; i < wordsDict.length; ++i) {
-            String s = wordsDict[i];
-            List<Integer> list = map.getOrDefault(s, new ArrayList<>());
+            String word = wordsDict[i];
+            List<Integer> list = map.getOrDefault(word, new ArrayList<>());
             list.add(i);
-            map.put(s, list);
+            map.put(word, list);
         }
     }
     
@@ -33,8 +33,5 @@ class WordDistance {
 /**
  * Your WordDistance object will be instantiated and called as such:
  * WordDistance obj = new WordDistance(wordsDict);
- * int param_1 = obj.shortest(word1,word2)
-;
- 
-
-*/
+ * int param_1 = obj.shortest(word1,word2);
+ */
