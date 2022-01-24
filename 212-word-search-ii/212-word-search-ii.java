@@ -21,14 +21,13 @@ class Solution {
         if (j < 0 || j >= board[0].length) return;
         
         char ch = board[i][j];
-        if (ch == '#') return;
+        if (!cur.map.containsKey(ch)) {
+            return;
+        }
         sb.append(ch);
         board[i][j] = '#';
-
-        if (cur.map.containsKey(ch)) {
-            for (int[] dir : dirs) {
-                dfs(result, sb, board, i + dir[0], j + dir[1], dirs, cur.map.get(ch));
-            }
+        for (int[] dir : dirs) {
+            dfs(result, sb, board, i + dir[0], j + dir[1], dirs, cur.map.get(ch));
         }
         board[i][j] = ch;
         sb.setLength(sb.length() - 1);
