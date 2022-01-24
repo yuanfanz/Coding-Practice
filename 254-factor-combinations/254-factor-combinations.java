@@ -1,13 +1,12 @@
 class Solution {
     public List<List<Integer>> getFactors(int n) {
         List<List<Integer>> result = new ArrayList<>();
-        if (n < 2) {
-            return new ArrayList<>();
-        }
+        
         dfs(result, new ArrayList<>(), n, 2);
         return result;
     }
-    private void dfs(List<List<Integer>> result, List<Integer> list, int n, int index) {
+    private void dfs(List<List<Integer>> result, List<Integer> list,
+                    int n, int index) {
         if (n == 1) {
             if (list.size() > 1) {
                 result.add(new ArrayList<>(list));
