@@ -1,8 +1,5 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
-        // if (nums.length == 0) {
-        //     return new int[]{-1, -1};
-        // }
         int[] result = new int[2];
         int first = findFirstPosition(nums, target);
         if (first == nums.length || nums[first] != target) {
