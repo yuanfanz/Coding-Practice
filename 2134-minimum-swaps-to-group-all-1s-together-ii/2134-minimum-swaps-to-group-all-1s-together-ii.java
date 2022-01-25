@@ -3,22 +3,27 @@ class Solution {
         int n = nums.length;
         
         int ones = 0;
-        for (int i = 0; i < n; ++i) {
-            ones += nums[i];
-        }
-        int[] arr = new int[n * 2];
-        for (int i = 0; i < n * 2; ++i) {
+        int[] arr = new int[2*n];
+        for (int i = 0; i < arr.length; ++i) {
             arr[i] = nums[i % n];
+            if (arr[i] == 1) {
+                ones++;
+            }
         }
+        ones = ones / 2;
         int j = 0;
         int count = 0;
         int max = 0;
-        for (int i = 0; i < n * 2; ++i) {
-            while (j < n * 2 && j < i + ones) {
-                count += arr[j++];
+        for (int i = 0; i < arr.length; ++i) {
+            while (j < arr.length && j - i + 1 <= ones) {
+                if (arr[j++] == 1) {
+                    count++;
+                }
             }
             max = Math.max(max, count);
-            count -= arr[i];
+            if (arr[i] == 1) {
+                count--;
+            }
         }
         return ones - max;
     }
