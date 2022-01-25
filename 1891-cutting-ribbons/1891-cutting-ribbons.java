@@ -10,7 +10,7 @@ class Solution {
                 i = mid + 1;
             }
         }
-        return i - 1;
+        return j - 1;
     }
     private boolean isValid(int[] ribbons, int length, int k) {
         int count = 0;
