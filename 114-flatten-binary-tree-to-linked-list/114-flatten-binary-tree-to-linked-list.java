@@ -4,16 +4,21 @@ class Solution {
         if (root == null) {
             return;
         }
-        flatten(root.left);
-        flatten(root.right);
-        TreeNode left = root.left;
-        TreeNode right = root.right;
-        
-        root.left = null;
-        root.right = left;
-        while (root.right != null) {
-            root = root.right;
+        // we cannot edit root node
+        TreeNode cur = root;
+        while (cur != null) {
+            // always find the right most node in left tree
+            if (cur.left == null) {
+                cur = cur.right;
+            } else {
+                TreeNode prev = cur.left;
+                while (prev.right != null) {
+                    prev = prev.right;
+                }
+                prev.right = cur.right;
+                cur.right = cur.left;
+                cur.left = null;
+            }
         }
-        root.right = right;
     }
 }
