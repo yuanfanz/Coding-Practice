@@ -1,8 +1,7 @@
 class Solution {
     public int characterReplacement(String s, int k) {
-        int[] hash = new int[26];
-        
         int i = 0;
+        int[] hash = new int[26];
         int max = 0;
         for (int j = 0; j < s.length(); ++j) {
             hash[s.charAt(j) - 'A']++;
@@ -18,11 +17,11 @@ class Solution {
         return max;
     }
     private int getMax(int[] hash) {
-        int max = 0;
+        int count = 0;
+        
         for (int i = 0; i < hash.length; ++i) {
-            if (hash[i]== 0) continue;
-            max = Math.max(max, hash[i]);
+            count = Math.max(count, hash[i]);
         }
-        return max;
+        return count;
     }
 }
