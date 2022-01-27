@@ -1,4 +1,13 @@
-
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
     public void reorderList(ListNode head) {
         if (head == null || head.next == null) {
@@ -13,8 +22,8 @@ class Solution {
             fast = fast.next.next;
         }
         prev.next = null;
-        ListNode node = reverse(slow);
-        merge(head, node);
+        ListNode newHead = reverse(slow);
+        merge(head, newHead);
     }
     private void merge(ListNode l1, ListNode l2) {
         while (l1 != null) {
@@ -30,6 +39,9 @@ class Solution {
         }
     }
     private ListNode reverse(ListNode head) {
+        if (head == null) {
+            return head;
+        }
         ListNode prev = null;
         while (head != null) {
             ListNode tmp = head.next;
