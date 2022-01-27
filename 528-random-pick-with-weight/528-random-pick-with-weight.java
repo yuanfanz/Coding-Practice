@@ -1,9 +1,10 @@
 class Solution {
-    int[] wSum;
+    private int[] wSum;
     public Solution(int[] w) {
-        wSum = new int[w.length];
+        int n = w.length;
+        wSum = new int[n];
         wSum[0] = w[0];
-        for (int i = 1; i < w.length; ++i) {
+        for (int i = 1; i < n; ++i) {
             wSum[i] = wSum[i - 1] + w[i];
         }
     }
@@ -11,16 +12,17 @@ class Solution {
     public int pickIndex() {
         Random random = new Random();
         int index = random.nextInt(wSum[wSum.length - 1]) + 1;
+        
         int i = 0;
         int j = wSum.length - 1;
         while (i <= j) {
             int mid = i + (j - i) / 2;
             if (wSum[mid] == index) {
                 return mid;
-            } else if (wSum[mid] < index) {
-                i = mid + 1;
-            } else {
+            } else if (wSum[mid] > index) {
                 j = mid - 1;
+            } else {
+                i = mid + 1;
             }
         }
         return i;
