@@ -1,7 +1,6 @@
 class Solution {
     public String alienOrder(String[] words) {
         Map<Character, List<Character>> map = new HashMap<>();
-        
         int[] visited = new int[26];
         Arrays.fill(visited, -1);
         
@@ -31,38 +30,38 @@ class Solution {
         Stack<Character> stack = new Stack<>();
         for (int i = 0; i < 26; ++i) {
             if (visited[i] == 0) {
-                if (dfs(i, map, visited, stack)) return "";
+                if (dfs(i, map, visited, stack)) {
+                    return "";
+                }
             }
         }
         StringBuilder sb = new StringBuilder();
-        while (stack.size() != 0) {
+        while (!stack.isEmpty()) {
             sb.append(stack.pop());
+        }
+        if (sb.length() < map.keySet().size()) {
+            return "";
         }
         return sb.toString();
     }
-    private boolean dfs(int i, Map<Character, List<Character>> map,
-                       int[] visited, Stack<Character> stack) {
+    private boolean dfs(int i, Map<Character, List<Character>> map, int[] visited, Stack<Character> stack) {
         char ch = (char) (i + 'a');
         visited[i] = 1;
         for (char next : map.get(ch)) {
-            if (visited[next - 'a'] == 1) return true;
+            if (visited[next - 'a'] == 1) {
+                return true;
+            }
             if (visited[next - 'a'] == 0) {
-                if (dfs(next - 'a', map, visited, stack)) return true;
+                if (dfs(next - 'a', map, visited, stack)) {
+                    return true;
+                }
             }
         }
-        stack.push(ch);
+        stack.add(ch);
         visited[i] = 2;
         return false;
     }
 }
-
-
-
-
-
-
-
-
 
 
 
