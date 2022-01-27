@@ -2,12 +2,12 @@ class Solution {
     public int countSubstrings(String s) {
         int n = s.length();
         
-        boolean[][] dp = new boolean[n][n];
+        boolean[][] isPalin = new boolean[n][n];
         int count = 0;
-        for (int i = n - 1; i >= 0; --i) {
-            for (int j = i; j < n; ++j) {
-                dp[i][j] = s.charAt(i) == s.charAt(j) && (i + 1 > j - 1 || dp[i + 1][j - 1]);
-                if (dp[i][j]) {
+        for (int j = 0; j < s.length(); ++j) {
+            for (int i = 0; i <= j; ++i) {
+                if (s.charAt(i) == s.charAt(j) && (i + 1 > j - 1 || isPalin[i + 1][j - 1])) {
+                    isPalin[i][j]= isPalin[j][i] = true;
                     count++;
                 }
             }
