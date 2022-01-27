@@ -1,38 +1,38 @@
 class Solution {
-    private TrieNode root;
     public List<String> findWords(char[][] board, String[] words) {
         Set<String> result = new HashSet<>();
-        root = new TrieNode();
-        buildTrie(words);
-        int[][] dirs = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
+        TrieNode root = new TrieNode();
+        buildTrie(words, root);
+        int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
         for (int i = 0; i < board.length; ++i) {
             for (int j = 0; j < board[0].length; ++j) {
-                dfs(result, new StringBuilder(), board, i, j, dirs, root);
+                dfs(result, new StringBuilder(), board, i, j, root, dirs);
             }
         }
         return new ArrayList<>(result);
     }
     private void dfs(Set<String> result, StringBuilder sb, char[][] board,
-                    int i, int j, int[][] dirs, TrieNode cur) {
+                    int i, int j, TrieNode cur, int[][] dirs) {
         if (cur.isWord) {
             result.add(sb.toString());
         }
-        if (i < 0 || i >= board.length) return;
-        if (j < 0 || j >= board[0].length) return;
-        
+        if (i < 0 || j < 0 || i >= board.length || j >= board[0].length) {
+            return;
+        }
         char ch = board[i][j];
         if (!cur.map.containsKey(ch)) {
             return;
         }
-        sb.append(ch);
+        int len = sb.length();
         board[i][j] = '#';
+        sb.append(ch);
         for (int[] dir : dirs) {
-            dfs(result, sb, board, i + dir[0], j + dir[1], dirs, cur.map.get(ch));
+            dfs(result, sb, board, i + dir[0], j + dir[1], cur.map.get(ch), dirs);
         }
+        sb.setLength(len);
         board[i][j] = ch;
-        sb.setLength(sb.length() - 1);
     }
-    private void buildTrie(String[] words) {
+    private void buildTrie(String[] words, TrieNode root) {
         for (String word : words) {
             TrieNode cur = root;
             for (int i = 0; i < word.length(); ++i) {
