@@ -1,16 +1,19 @@
 class Solution {
     public int countSubstrings(String s) {
-        int n = s.length();
-        
-        boolean[][] isPalin = new boolean[n][n];
         int count = 0;
-        for (int j = 0; j < s.length(); ++j) {
-            for (int i = 0; i <= j; ++i) {
-                if (s.charAt(i) == s.charAt(j) && (i + 1 > j - 1 || isPalin[i + 1][j - 1])) {
-                    isPalin[i][j]= isPalin[j][i] = true;
-                    count++;
-                }
-            }
+        
+        for (int i = 0; i < s.length(); ++i) {
+            count += extend(s, i, i);
+            count += extend(s, i, i + 1);
+        }
+        return count;
+    }
+    private int extend(String s, int i, int j) {
+        int count = 0;
+        while (i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
+            count++;
+            i--;
+            j++;
         }
         return count;
     }
