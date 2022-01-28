@@ -4,6 +4,7 @@ class Solution {
         
         int[] start = new int[n];
         int[] end = new int[n];
+        
         int index = 0;
         for (int[] cur : intervals) {
             start[index] = cur[0];
@@ -11,11 +12,12 @@ class Solution {
         }
         Arrays.sort(start);
         Arrays.sort(end);
-        int rooms = 1;
+        
         int endPtr = 0;
-        for (int i = 1; i < n; ++i) {
+        int rooms = 0;
+        for (int i = 0; i < n; ++i) {
             if (start[i] < end[endPtr]) {
-                rooms++;
+                rooms++;    
             } else {
                 endPtr++;
             }
