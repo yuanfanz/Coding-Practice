@@ -4,16 +4,19 @@ class Solution {
         if (root == null) {
             return;
         }
-        TreeNode left = root.left;
-        TreeNode right = root.right;
-        flatten(left);
-        flatten(right);
-        
-        root.left = null;
-        root.right = left;
-        while (root.right != null) {
-            root = root.right;
+        TreeNode cur = root;
+        while (cur != null) {
+            if (cur.left == null) {
+                cur = cur.right;
+            } else {
+                TreeNode prev = cur.left;
+                while (prev.right != null) {
+                    prev = prev.right;
+                }
+                prev.right = cur.right;
+                cur.right = cur.left;
+                cur.left = null;
+            }
         }
-        root.right = right;
     }
 }
