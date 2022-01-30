@@ -10,16 +10,24 @@ class Solution {
             return false;
         }
         int target = sum / 2;
-        boolean[] dp = new boolean[target + 1];
         
-        dp[0] = true;
-        for (int j = 0; j < n; ++j) {
-            for (int i = target; i >= 0; --i) {
-                if (i >= nums[j]) {
-                    dp[i] = dp[i] || dp[i - nums[j]];
+        boolean[][] dp = new boolean[n + 1][target + 1];
+        
+        for (int i = 0; i <= nums.length; ++i) {
+            dp[i][0] = true;
+        }
+        for (int i = 0; i <= target; ++i) {
+            dp[0][i] = false;
+        }
+        
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 1; j <= target; ++j) {
+                dp[i][j] = dp[i - 1][j];
+                if (j >= nums[i - 1]) {
+                    dp[i][j] = dp[i][j] || dp[i - 1][j - nums[i - 1]];
                 }
             }
         }
-        return dp[target];
+        return dp[n][target];
     }
 }
