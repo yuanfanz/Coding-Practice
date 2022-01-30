@@ -3,10 +3,10 @@ class Solution {
         int zeroPtr = 0;
         int twoPtr = nums.length - 1;
         for (int i = 0; i < nums.length; ++i) {
-            while (i < twoPtr && nums[i] == 2) {
+            while (nums[i] == 2 && i < twoPtr) {
                 swap(nums, i, twoPtr--);
             }
-            while (i > zeroPtr && nums[i] == 0) {
+            while (nums[i] == 0 && zeroPtr < i) {
                 swap(nums, i, zeroPtr++);
             }
         }
