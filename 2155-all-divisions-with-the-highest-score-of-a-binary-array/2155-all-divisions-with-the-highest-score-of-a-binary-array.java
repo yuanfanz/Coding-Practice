@@ -10,13 +10,11 @@ class Solution {
         }
         // zeros to left: i - pre[i];
         // ones to right: pre[n] - pre[i];
-        
         int max = 0;
         int[] value = new int[n + 1];
         for (int i = 0; i <= n; ++i) {
-            int val = i - pre[i] + pre[n] - pre[i];
-            value[i] = val;
-            max = Math.max(max, val);
+            value[i] = i - pre[i] + pre[n] - pre[i];
+            max = Math.max(max, value[i]);
         }
         for (int i = 0; i <= n; ++i) {
             if (max == value[i]) {
