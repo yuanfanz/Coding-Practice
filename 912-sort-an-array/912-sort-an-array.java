@@ -13,6 +13,23 @@ class Solution {
         sort(nums, i, pivot);
         sort(nums, pivot + 1, j);
     }
+    private int[] merge(int[] left, int[] right) {
+        if (left.length == 0) {
+            return right;
+        }
+        if (right.length == 0) {
+            return left;
+        }
+        int[] res = new int[left.length + right.length];
+        int index = 0;
+        for (int i = 0; i < left.length; ++i) {
+            res[index++] = left[i];
+        }
+        for (int i = 0; i < right.length; ++i) {
+            res[index++] = right[i];
+        }
+        return res;
+    }
     private int partition(int[] nums, int i, int j) {
         int pivot = nums[i];
         while (i < j) {
