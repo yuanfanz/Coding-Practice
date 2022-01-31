@@ -6,9 +6,9 @@ class Solution {
             slow = nums[slow];
             fast = nums[nums[fast]];
         }
-        fast = 0;
-        while (slow != fast) {
-            fast = nums[fast];
+        int head = 0;
+        while (head != slow) {
+            head = nums[head];
             slow = nums[slow];
         }
         return slow;
