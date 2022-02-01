@@ -4,24 +4,25 @@ class Solution {
         
         int m = matrix.length;
         int n = matrix[0].length;
-        int up = 0;
+        int top = 0;
         int down = m - 1;
         int left = 0;
         int right = n - 1;
+        
         while (result.size() < m * n) {
-            for (int i = left; i <= right && result.size() < m * n; ++i) {
-                result.add(matrix[up][i]);
+            for (int j = left; j <= right && result.size() < m * n; ++j) {
+                result.add(matrix[top][j]);
             }
-            for (int i = up + 1; i <= down - 1 && result.size() < m * n; ++i) {
+            for (int i = top + 1; i <= down - 1 && result.size() < m * n; ++i) {
                 result.add(matrix[i][right]);
             }
-            for (int i = right; i >= left && result.size() < m * n; --i) {
-                result.add(matrix[down][i]);
+            for (int j = right; j >= left && result.size() < m * n; --j) {
+                result.add(matrix[down][j]);
             }
-            for (int i = down - 1; i >= up + 1 && result.size() < m * n; --i) {
+            for (int i = down - 1; i >= top + 1 && result.size() < m * n; --i) {
                 result.add(matrix[i][left]);
             }
-            up++;
+            top++;
             down--;
             left++;
             right--;
