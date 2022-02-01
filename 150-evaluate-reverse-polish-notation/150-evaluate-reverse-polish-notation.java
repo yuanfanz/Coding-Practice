@@ -2,23 +2,24 @@ class Solution {
     public int evalRPN(String[] tokens) {
         Stack<Integer> stack = new Stack<>();
         
-        for (String s : tokens) {
-            if (Character.isDigit(s.charAt(s.length() - 1))) {
-                stack.push(Integer.valueOf(s));
+        for (String cur : tokens) {
+            if (Character.isDigit(cur.charAt(cur.length() - 1))) {
+                int num = Integer.valueOf(cur);
+                stack.push(num);
             } else {
-                if (s.equals("+")) {
+                if (cur.equals("+")) {
                     stack.push(stack.pop() + stack.pop());
                 }
-                if (s.equals("-")) {
+                if (cur.equals("-")) {
                     stack.push(-stack.pop() + stack.pop());
                 }
-                if (s.equals("*")) {
+                if (cur.equals("*")) {
                     stack.push(stack.pop() * stack.pop());
                 }
-                if (s.equals("/")) {
+                if (cur.equals("/")) {
                     int first = stack.pop();
                     int second = stack.pop();
-                    stack.push(second / first);
+                    stack.push(second/first);
                 }
             }
         }
