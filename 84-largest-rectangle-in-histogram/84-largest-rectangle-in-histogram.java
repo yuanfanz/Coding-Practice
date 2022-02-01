@@ -13,7 +13,7 @@ class Solution {
                 } else {
                     while (!stack.isEmpty() && heights[stack.peek()] > heights[i]) {
                         int height = heights[stack.pop()];
-                        int width = i - (stack.isEmpty() ? 0 : (stack.peek() + 1));
+                        int width = i - (stack.isEmpty() ? 0 : stack.peek() + 1);
                         max = Math.max(max, height * width);
                     }
                     stack.push(i);
@@ -22,7 +22,7 @@ class Solution {
         }
         while (!stack.isEmpty() && heights[stack.peek()] > 0) {
             int height = heights[stack.pop()];
-            int width = n - (stack.isEmpty() ? 0 : (stack.peek() + 1));
+            int width = n - (stack.isEmpty() ? 0 : stack.peek() + 1);
             max = Math.max(max, height * width);
         }
         return max;
