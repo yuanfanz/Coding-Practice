@@ -1,0 +1,31 @@
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int i = 1;
+        int j = 500 * weights.length + 1;
+        while (i < j) {
+            int mid = i + (j - i) / 2;
+            if (!isValid(weights, mid, days)) {
+                i = mid + 1;
+            } else {
+                j = mid;
+            }
+        }
+        return j;
+    }
+    private boolean isValid(int[] weights, int cap, int days) {
+        int count = 0;
+        int i = 0;
+        
+        while (i < weights.length) {
+            int sum = 0;
+            if (cap < weights[i]) {
+                return false;
+            }
+            while (i < weights.length && sum + weights[i] <= cap) {
+                sum += weights[i++];
+            }
+            count++;
+        }
+        return count <= days;
+    }
+}
