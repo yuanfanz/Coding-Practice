@@ -6,10 +6,11 @@ class MinStack {
     
     public void push(int val) {
         if (head == null) {
-            head = new Node(val, val, null);
+            Node node = new Node(val, val, null);
+            head = node;
         } else {
-            Node newNode = new Node(val, Math.min(head.min, val), head);
-            head = newNode;
+            Node node = new Node(val, Math.min(val, head.min), head);
+            head = node;
         }
     }
     
