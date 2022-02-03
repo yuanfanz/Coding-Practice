@@ -1,7 +1,7 @@
 class Solution {
     public int splitArray(int[] nums, int m) {
         int i = 0;
-        int j = 1000000001;
+        int j = 1000000000;
         while (i < j) {
             int mid = i + (j - i) / 2;
             if (!isValid(nums, m, mid)) {
