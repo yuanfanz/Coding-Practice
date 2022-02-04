@@ -4,7 +4,7 @@ class Solution {
         return dfs(preorder, inorder, 0, 0, inorder.length - 1);
     }
     private TreeNode dfs(int[] preorder, int[] inorder, int prestart, int instart, int inend) {
-        if (prestart > preorder.length - 1 || instart > inend) {
+        if (prestart >= preorder.length || instart > inend) {
             return null;
         }
         int val = preorder[prestart];
@@ -15,8 +15,9 @@ class Solution {
                 index = i;
             }
         }
+        int size = index - instart;
         root.left = dfs(preorder, inorder, prestart + 1, instart, index - 1);
-        root.right = dfs(preorder, inorder, prestart + index - instart + 1, index + 1, inend);
+        root.right = dfs(preorder, inorder, prestart + size + 1, index + 1, inend);
         return root;
     }
 }
