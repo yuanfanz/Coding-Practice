@@ -9,7 +9,6 @@ class Solution {
             sum += nums[i];
             if (map.containsKey(sum - k)) {
                 max = Math.max(max, i - map.get(sum - k));
-                System.out.println(max);
             }
             if (!map.containsKey(sum)) {
                 map.put(sum, i);
