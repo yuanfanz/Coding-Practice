@@ -1,3 +1,4 @@
+
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode dummy = new ListNode(0);
@@ -7,7 +8,7 @@ class Solution {
         while (tmp != null) {
             ListNode klast = tmp;
             int num = k;
-            while (num > 0 && tmp != null) {
+            while (tmp != null && num > 0) {
                 tmp = tmp.next;
                 num--;
             }
