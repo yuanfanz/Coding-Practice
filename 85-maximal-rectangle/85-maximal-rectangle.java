@@ -15,10 +15,11 @@ class Solution {
     }
     private int helper(int[] dp) {
         Stack<Integer> stack = new Stack<>();
-        int max = 0;
+        
         int n = dp.length;
+        int max = 0;
         for (int i = 0; i < n; ++i) {
-            if (stack.isEmpty()){
+            if (stack.isEmpty()) {
                 stack.push(i);
             } else {
                 if (dp[stack.peek()] <= dp[i]) {
@@ -33,7 +34,7 @@ class Solution {
                 stack.push(i);
             }
         }
-        while (!stack.isEmpty() && dp[stack.peek()] > 0) {
+        while (!stack.isEmpty()) {
             int height = dp[stack.pop()];
             int width = n - (stack.isEmpty() ? 0 : stack.peek() + 1);
             max = Math.max(max, height * width);
