@@ -1,14 +1,14 @@
 class MyHashMap {
-    Node[] arr;
-    int SIZE = 10001;
+    private Node[] arr;
+    private final int SIZE = 10001;
     public MyHashMap() {
         arr = new Node[SIZE];
     }
     
     public void put(int key, int value) {
-        int hash = getHash(key);
-        if (arr[hash] != null) {
-            Node cur = arr[hash];
+        int index = getHash(key);
+        if (arr[index] != null) {
+            Node cur = arr[index];
             while (cur != null) {
                 if (cur.key == key) {
                     cur.val = value;
@@ -17,13 +17,15 @@ class MyHashMap {
                 cur = cur.next;
             }
         }
-        arr[hash] = new Node(key, value, arr[hash]);
+        Node node = new Node(key, value);
+        node.next = arr[index];
+        arr[index] = node;
     }
     
     public int get(int key) {
-        int hash = getHash(key);
-        if (arr[hash] != null) {
-            Node cur = arr[hash];
+        int index = getHash(key);
+        if (arr[index] != null) {
+            Node cur = arr[index];
             while (cur != null) {
                 if (cur.key == key) {
                     return cur.val;
@@ -35,16 +37,16 @@ class MyHashMap {
     }
     
     public void remove(int key) {
-        int hash = getHash(key);
-        if (arr[hash] != null) {
-            Node cur = arr[hash];
+        int index = getHash(key);
+        if (arr[index] != null) {
+            Node cur = arr[index];
             Node prev = null;
             while (cur != null) {
                 if (cur.key == key) {
                     if (prev != null) {
                         prev.next = cur.next;
                     } else {
-                        arr[hash] = cur.next;
+                        arr[index] = cur.next;
                     }
                     return;
                 }
@@ -54,18 +56,17 @@ class MyHashMap {
         }
     }
     
-    private int getHash(int key) {
-        return Integer.hashCode(key) % SIZE;
+    private int getHash(int val) {
+        return Integer.hashCode(val) % SIZE;
     }
     
     class Node{
         int key;
         int val;
         Node next;
-        public Node(int key, int val, Node next) {
+        public Node(int key, int val) {
             this.key = key;
             this.val = val;
-            this.next = next;
         }
     }
 }
