@@ -22,14 +22,10 @@ class Solution {
             if (stack.isEmpty()) {
                 stack.push(i);
             } else {
-                if (dp[stack.peek()] <= dp[i]) {
-                    stack.push(i);
-                } else {
-                    while (!stack.isEmpty() && dp[stack.peek()] > dp[i]) {
-                        int height = dp[stack.pop()];
-                        int width = i - (stack.isEmpty() ? 0 : stack.peek() + 1);
-                        max = Math.max(max, height * width);
-                    }
+                while (!stack.isEmpty() && dp[stack.peek()] > dp[i]) {
+                    int height = dp[stack.pop()];
+                    int width = i - (stack.isEmpty() ? 0 : stack.peek() + 1);
+                    max = Math.max(max, height * width);
                 }
                 stack.push(i);
             }
