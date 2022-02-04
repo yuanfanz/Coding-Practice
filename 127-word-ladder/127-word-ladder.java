@@ -13,8 +13,8 @@ class Solution {
         while (beginSet.size() != 0) {
             Set<String> next = new HashSet<>();
             for (String word : beginSet) {
+                for (int i = 0; i < word.length(); ++i) {
                 char[] arr = word.toCharArray();
-                for (int i = 0; i < arr.length; ++i) {
                     for (char ch = 'a'; ch <= 'z'; ++ch) {
                         arr[i] = ch;
                         String newWord = String.valueOf(arr);
