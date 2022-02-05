@@ -4,45 +4,73 @@ class Solution {
         
         int m = heights.length;
         int n = heights[0].length;
-        int[][] dirs = new int[][]{{0,-1},{-1,0},{0,1},{1,0}};
+            
+        int[][] ocean = new int[m][n];
+        int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+        Queue<int[]> queue = new LinkedList<>();
+        boolean[][] visited = new boolean[m][n];
+        for (int j = 0; j < n; ++j) {
+            ocean[0][j]++;
+            visited[0][j] = true;
+            queue.offer(new int[]{0, j});
+        }
+        for (int i = 1; i < m; ++i) {
+            ocean[i][0]++;
+            visited[i][0] = true;
+            queue.offer(new int[]{i, 0});
+        }
+        while (queue.size() != 0) {
+            int[] cur = queue.poll();
+            for (int[] dir : dirs) {
+                int row = cur[0] + dir[0];
+                int col = cur[1] + dir[1];
+                if (row < 0 || col < 0 || row >= m || col >= n
+                   || visited[row][col]) {
+                    continue;
+                }
+                if (heights[row][col] < heights[cur[0]][cur[1]]) {
+                    continue;
+                }
+                visited[row][col] = true;
+                ocean[row][col]++;
+                queue.offer(new int[]{row, col});
+            }
+        }
+        visited = new boolean[m][n];
+        for (int j = 0; j < n; ++j) {
+            ocean[m - 1][j]++;
+            visited[m - 1][j] = true;
+            queue.offer(new int[]{m - 1, j});
+        }
+        for (int i = 0; i < m - 1; ++i) {
+            ocean[i][n - 1]++;
+            visited[i][n - 1] = true;
+            queue.offer(new int[]{i, n - 1});
+        }
+        while (queue.size() != 0) {
+            int[] cur = queue.poll();
+            for (int[] dir : dirs) {
+                int row = cur[0] + dir[0];
+                int col = cur[1] + dir[1];
+                if (row < 0 || col < 0 || row >= m || col >= n
+                   || visited[row][col]) {
+                    continue;
+                }
+                if (heights[row][col] < heights[cur[0]][cur[1]]) {
+                    continue;
+                }
+                visited[row][col] = true;
+                ocean[row][col]++;
+                queue.offer(new int[]{row, col});
+            }
+        }
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
-                boolean pacific = false;
-                boolean atlantic = false;
-                if (dfs(dirs, i, j, new boolean[m][n], m, n, result, heights, Integer.MAX_VALUE, "pacific")) {
-                    pacific = true;
-                }
-                if (dfs(dirs, i, j, new boolean[m][n], m, n, result, heights, Integer.MAX_VALUE, "atlantic")) {
-                    atlantic = true;
-                }
-                if (pacific && atlantic) {
+                if (ocean[i][j] == 2) {
                     result.add(new ArrayList<>(Arrays.asList(i, j)));
                 }
             }
         }
         return result;
-    }
-    private boolean dfs(int[][] dirs, int i, int j, boolean[][] visited, int m, int n,
-                    List<List<Integer>> result, int[][] heights, int height, String ocean) {
-        if ((i < 0 || j < 0) && ocean.equals("pacific")) {
-            return true;
-        }
-        if ((i >= m || j >= n) && ocean.equals("atlantic")) {
-            return true;
-        }
-        if ((i < 0 || j < 0) || (i >= m || j >= n)) {
-            return false;
-        }
-        if (!visited[i][j] && heights[i][j] <= height) {
-            visited[i][j] = true;
-            for (int[] dir : dirs) {
-                int row = i + dir[0];
-                int col = j + dir[1];
-                if (dfs(dirs, row, col, visited, m, n, result, heights, heights[i][j], ocean)) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }
