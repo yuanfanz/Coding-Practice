@@ -19,23 +19,8 @@ class Solution {
             visited[i][0] = true;
             queue.offer(new int[]{i, 0});
         }
-        while (queue.size() != 0) {
-            int[] cur = queue.poll();
-            for (int[] dir : dirs) {
-                int row = cur[0] + dir[0];
-                int col = cur[1] + dir[1];
-                if (row < 0 || col < 0 || row >= m || col >= n
-                   || visited[row][col]) {
-                    continue;
-                }
-                if (heights[row][col] < heights[cur[0]][cur[1]]) {
-                    continue;
-                }
-                visited[row][col] = true;
-                ocean[row][col]++;
-                queue.offer(new int[]{row, col});
-            }
-        }
+        // pacific BFS
+        bfs(queue, dirs, heights, visited, ocean);
         visited = new boolean[m][n];
         for (int j = 0; j < n; ++j) {
             ocean[m - 1][j]++;
@@ -47,6 +32,21 @@ class Solution {
             visited[i][n - 1] = true;
             queue.offer(new int[]{i, n - 1});
         }
+        // atlantic BFS
+        bfs(queue, dirs, heights, visited, ocean);
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (ocean[i][j] == 2) {
+                    result.add(new ArrayList<>(Arrays.asList(i, j)));
+                }
+            }
+        }
+        return result;
+    }
+    private void bfs(Queue<int[]> queue, int[][] dirs, int[][] heights, 
+                     boolean[][] visited, int[][] ocean) {
+        int m = heights.length;
+        int n = heights[0].length;
         while (queue.size() != 0) {
             int[] cur = queue.poll();
             for (int[] dir : dirs) {
@@ -64,13 +64,5 @@ class Solution {
                 queue.offer(new int[]{row, col});
             }
         }
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (ocean[i][j] == 2) {
-                    result.add(new ArrayList<>(Arrays.asList(i, j)));
-                }
-            }
-        }
-        return result;
     }
 }
