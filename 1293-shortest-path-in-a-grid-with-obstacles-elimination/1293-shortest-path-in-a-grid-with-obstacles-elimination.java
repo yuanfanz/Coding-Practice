@@ -2,12 +2,12 @@ class Solution {
     public int shortestPath(int[][] grid, int k) {
         int m = grid.length;
         int n = grid[0].length;
+        
+        int[][] dirs = new int[][]{{0,1},{0,-1},{-1,0},{1,0}};
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{0, 0, 0});
-        int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
-        boolean[][][] visited = new boolean[m][n][k + 1];
-        visited[0][0][0] = true;
         int step = 0;
+        boolean[][][] visited = new boolean[m][n][k + 1];
         while (queue.size() != 0) {
             int size = queue.size();
             for (int h = 0; h < size; ++h) {
@@ -20,18 +20,17 @@ class Solution {
                 for (int[] dir : dirs) {
                     int row = i + dir[0];
                     int col = j + dir[1];
-                    int obs = cur[2];
+                    int curK = cur[2];
                     if (row < 0 || col < 0 || row >= m || col >= n) {
                         continue;
                     }
                     if (grid[row][col] == 1) {
-                        obs++;
+                        curK++;
                     }
-                    if (obs > k || visited[row][col][obs]) {
-                        continue;
+                    if (curK <= k && !visited[row][col][curK]) {
+                        visited[row][col][curK] = true;
+                        queue.offer(new int[]{row, col, curK});
                     }
-                    visited[row][col][obs] = true;
-                    queue.offer(new int[]{row, col, obs});
                 }
             }
             step++;
