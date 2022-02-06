@@ -1,5 +1,5 @@
 class WordDictionary {
-    private TrieNode root;
+private TrieNode root;
     public WordDictionary() {
         root = new TrieNode();
     }
@@ -19,27 +19,29 @@ class WordDictionary {
     }
     
     public boolean search(String word) {
-        return helper(root, word, 0);
+        return helper(word, 0, root);
     }
     
-    private boolean helper(TrieNode cur, String word, int index) {
+    private boolean helper(String word, int index, TrieNode cur) {
         if (index == word.length()) {
             return cur.isWord;
         }
         char ch = word.charAt(index);
         if (ch == '.') {
             for (char next : cur.map.keySet()) {
-                if (helper(cur.map.get(next), word, index + 1)) return true;
+                if (helper(word, index + 1, cur.map.get(next))) {
+                    return true;
+                }
             }
         } else {
-            if (cur.map.containsKey(ch)) {
-                return helper(cur.map.get(ch), word, index + 1);
-            } else {
+            if (!cur.map.containsKey(ch)) {
                 return false;
             }
+            return helper(word, index + 1, cur.map.get(ch));
         }
         return false;
     }
+    
     class TrieNode{
         char ch;
         Map<Character, TrieNode> map;
