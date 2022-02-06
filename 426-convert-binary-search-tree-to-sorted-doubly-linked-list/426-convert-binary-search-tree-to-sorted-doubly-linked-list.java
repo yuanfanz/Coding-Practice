@@ -1,33 +1,27 @@
 
-
 class Solution {
+    Node prev;
     public Node treeToDoublyList(Node root) {
         if (root == null) {
             return root;
         }
-        Node left = treeToDoublyList(root.left);
-        Node right = treeToDoublyList(root.right);
-        
-        root.left = root;
-        root.right = root;
-        return connect(connect(left, root), right);
+        Node dummy = new Node(0);
+        dummy.right = root;
+        prev = dummy;
+        dfs(root);
+        dummy.right.left = prev;
+        prev.right = dummy.right;
+        return dummy.right;
     }
-    private Node connect(Node left, Node right) {
-        if (left == null) {
-            return right;
+    private void dfs(Node root) {
+        if (root == null) {
+            return;
         }
-        if (right == null) {
-            return left;
-        }
-        Node tail1 = left.left;
-        Node tail2 = right.left;
-        
-        tail1.right = right;
-        tail2.right = left;
-        left.left = tail2;
-        right.left = tail1;
-        
-        return left;
+        dfs(root.left);
+        prev.right = root;
+        root.left = prev;
+        prev = root;
+        dfs(root.right);
     }
 }
 
