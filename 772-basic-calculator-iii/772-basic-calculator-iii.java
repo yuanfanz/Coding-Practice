@@ -10,9 +10,7 @@ class Solution {
                 while (i < s.length() && Character.isDigit(s.charAt(i))) {
                     num = num * 10 + (s.charAt(i++) - '0');
                 }
-                // System.out.println(num);
             } else if (ch == '(') {
-                // System.out.println("original i: " + i);
                 i++;
                 int index = i;
                 int count = 1;
@@ -25,34 +23,21 @@ class Solution {
                     }
                     i++;
                 }
-                // System.out.println("index: " + index);
-                // System.out.println("i - 2: " + (i - 2));
                 String str = s.substring(index, i - 1);
-                
-                // System.out.println(str);
                 num = calculate(str);
-                // System.out.println(num);
             }
-            // System.out.println("i"+i);
             if (i >= s.length() || !Character.isDigit(s.charAt(i)) && (s.charAt(i) != '(')) {
-                // System.out.println(sign);
                 if (sign == '+') {
-                    // System.out.println("+"+num);
                     stack.push(num);
                 }
                 if (sign == '-') {
-                    // System.out.println("-"+num);
                     stack.push(-num);
                 }
                 if (sign == '*') {
-                    int x = stack.pop() * num;
-                    // System.out.println("+"+x);
-                    stack.push(x);
+                    stack.push(stack.pop() * num);
                 }
                 if (sign == '/') {
-                    int x = stack.pop() / num;
-                    // System.out.println("+"+x);
-                    stack.push(x);
+                    stack.push(stack.pop() / num);
                 }
                 if (i < s.length()) {
                     sign = s.charAt(i);
