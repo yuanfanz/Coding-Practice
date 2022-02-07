@@ -4,7 +4,9 @@ class Solution {
         return helper(n, set);
     }
     private boolean helper(int n, Set<Integer> set) {
-        while (n != 1) {
+        if (n == 1) {
+            return true;
+        }
             if (set.contains(n)) {
                 return false;
             }
@@ -17,7 +19,5 @@ class Solution {
                 num /= 10;
             }
             return helper(sum, set);
-        }
-        return true;
     }
 }
