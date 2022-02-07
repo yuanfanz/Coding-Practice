@@ -4,7 +4,9 @@ public class Codec {
     public String encode(List<String> strs) {
         StringBuilder sb = new StringBuilder();
         for (String s : strs) {
-            sb.append(s.length()).append("/").append(s);
+            sb.append(s.length());
+            sb.append("/");
+            sb.append(s);
         }
         return sb.toString();
     }
@@ -17,8 +19,8 @@ public class Codec {
             int index = s.indexOf("/", i);
             int len = Integer.valueOf(s.substring(i, index));
             i = index + len + 1;
-            String newStr = s.substring(index + 1, i);
-            result.add(newStr);
+            String str = String.valueOf(s.substring(index + 1, i));
+            result.add(str);
         }
         return result;
     }
