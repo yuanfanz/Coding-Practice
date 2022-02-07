@@ -10,10 +10,11 @@ class Solution {
             }
             set.add(n);
             int sum = 0;
-            while (n > 0) {
-                int rem = n % 10;
+            int num = n;
+            while (num > 0) {
+                int rem = num % 10;
                 sum += rem * rem;
-                n /= 10;
+                num /= 10;
             }
             return helper(sum, set);
         }
