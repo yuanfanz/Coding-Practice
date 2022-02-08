@@ -5,10 +5,10 @@ class Solution {
         int[] prev = intervals[0];
         int count = 0;
         for (int i = 1; i < intervals.length; ++i) {
-            if (prev[1] > intervals[i][0]) {
-                count++;
-            } else {
+            if (prev[1] <= intervals[i][0]) {
                 prev = intervals[i];
+            } else {
+                count++;
             }
         }
         return count;
