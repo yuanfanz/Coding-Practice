@@ -13,18 +13,13 @@ class Solution {
                 return num2.compareTo(num1);
             }
         });
-        // print(strs);
-        if(strs[0].charAt(0) == '0')
-			return "0";
+        if(strs[0].charAt(0) == '0') {
+            return "0";
+        }
         StringBuilder sb = new StringBuilder();
         for (String s : strs) {
             sb.append(s);
         }
         return sb.toString();
-    }
-    private void print(String[] strs) {
-        for (String s : strs) {
-            System.out.print(s + " ");
-        }
     }
 }
