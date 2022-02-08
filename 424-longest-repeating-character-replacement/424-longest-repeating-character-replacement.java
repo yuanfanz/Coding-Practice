@@ -1,9 +1,8 @@
 class Solution {
     public int characterReplacement(String s, int k) {
         int[] hash = new int[26];
-        
-        int max = 1;
         int i = 0;
+        int max = 1;
         for (int j = 0; j < s.length(); ++j) {
             hash[s.charAt(j) - 'A']++;
             while (i < s.length() && j - i + 1 - getMax(hash) > k) {
