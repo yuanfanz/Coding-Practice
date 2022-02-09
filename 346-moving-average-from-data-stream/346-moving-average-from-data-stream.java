@@ -1,20 +1,19 @@
 class MovingAverage {
     private Deque<Integer> deque;
     private int cap;
+    private double sum;
     public MovingAverage(int size) {
         deque = new LinkedList<>();
         cap = size;
+        sum = 0;
     }
     
     public double next(int val) {
         if (deque.size() == cap) {
-            deque.pollFirst();
+            sum -= deque.pollFirst();
         }
         deque.addLast(val);
-        int sum = 0;
-        for (int i : deque) {
-            sum += i;
-        }
+        sum += val;
         return (double) sum / deque.size();
     }
 }
