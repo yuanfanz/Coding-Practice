@@ -5,12 +5,10 @@ class Solution {
         int num = 0;
         int i = 0;
         while (i < s.length()) {
-            char ch = s.charAt(i);
-            if (Character.isDigit(ch)) {
-                while (i < s.length() && Character.isDigit(s.charAt(i))) {
-                    num = num * 10 + (s.charAt(i++) - '0');
-                }
-            } else if (ch == '(') {
+            while (i < s.length() && Character.isDigit(s.charAt(i))) {
+                num = num * 10 + (s.charAt(i++) - '0');
+            }
+            if (i < s.length() && s.charAt(i) == '(') {
                 int index = ++i;
                 int count = 1;
                 while (i < s.length() && count > 0) {
