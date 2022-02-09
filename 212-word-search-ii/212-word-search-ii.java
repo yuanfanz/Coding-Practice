@@ -1,38 +1,40 @@
 class Solution {
     public List<String> findWords(char[][] board, String[] words) {
-        Set<String> result = new HashSet<>();
         TrieNode root = new TrieNode();
-        buildTrie(words, root);
+        buildTrie(root, words);
+        
+        int m = board.length;
+        int n = board[0].length;
         int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
-        for (int i = 0; i < board.length; ++i) {
-            for (int j = 0; j < board[0].length; ++j) {
-                dfs(result, new StringBuilder(), board, i, j, root, dirs);
+        
+        Set<String> result = new HashSet<>();
+        
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                dfs(result, board, root, dirs, i, j);
             }
         }
         return new ArrayList<>(result);
     }
-    private void dfs(Set<String> result, StringBuilder sb, char[][] board,
-                    int i, int j, TrieNode cur, int[][] dirs) {
-        if (cur.isWord) {
-            result.add(sb.toString());
+    private void dfs(Set<String> result, char[][] board,
+                    TrieNode root, int[][] dirs, int i, int j) {
+        if (root.isWord) {
+            result.add(root.word);
         }
         if (i < 0 || j < 0 || i >= board.length || j >= board[0].length) {
             return;
         }
         char ch = board[i][j];
-        if (!cur.map.containsKey(ch)) {
-            return;
-        }
-        int len = sb.length();
+        if (!root.map.containsKey(ch)) return;
         board[i][j] = '#';
-        sb.append(ch);
         for (int[] dir : dirs) {
-            dfs(result, sb, board, i + dir[0], j + dir[1], cur.map.get(ch), dirs);
+            int row = i + dir[0];
+            int col = j + dir[1];
+            dfs(result, board, root.map.get(ch), dirs, row, col);
         }
-        sb.setLength(len);
         board[i][j] = ch;
     }
-    private void buildTrie(String[] words, TrieNode root) {
+    private void buildTrie(TrieNode root, String[] words) {
         for (String word : words) {
             TrieNode cur = root;
             for (int i = 0; i < word.length(); ++i) {
@@ -43,6 +45,7 @@ class Solution {
                 cur = cur.map.get(ch);
                 if (i == word.length() - 1) {
                     cur.isWord = true;
+                    cur.word = word;
                 }
             }
         }
@@ -51,6 +54,7 @@ class Solution {
         char ch;
         Map<Character, TrieNode> map;
         boolean isWord;
+        String word;
         public TrieNode() {
             map = new HashMap<>();
             isWord = false;
