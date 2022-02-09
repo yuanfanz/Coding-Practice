@@ -11,20 +11,18 @@ class Solution {
                     num = num * 10 + (s.charAt(i++) - '0');
                 }
             } else if (ch == '(') {
-                i++;
-                int index = i;
+                int index = ++i;
                 int count = 1;
                 while (i < s.length() && count > 0) {
-                    if (s.charAt(i) == '(') {
-                        count++;
-                    }
                     if (s.charAt(i) == ')') {
                         count--;
                     }
+                    if (s.charAt(i) == '(') {
+                        count++;
+                    }
                     i++;
                 }
-                String str = s.substring(index, i - 1);
-                num = calculate(str);
+                num = calculate(s.substring(index, i - 1));
             }
             if (i >= s.length() || !Character.isDigit(s.charAt(i)) && (s.charAt(i) != '(')) {
                 if (sign == '+') {
@@ -53,3 +51,15 @@ class Solution {
         return res;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
