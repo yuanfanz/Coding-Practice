@@ -3,13 +3,13 @@ class Solution {
         int m = matrix.length;
         int n = matrix[0].length;
         
-        int[] dir = new int[]{0,1,0,-1,0};
+        int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
         int[][] indegree = new int[m][n];
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
-                for (int k = 0; k < dir.length - 1; ++k) {
-                    int row = i + dir[k];
-                    int col = j + dir[k + 1];
+                for (int[] dir : dirs) {
+                    int row = i + dir[0];
+                    int col = j + dir[1];
                     if (row < 0 || col < 0 || row >= m || col >= n) {
                         continue;
                     }
@@ -27,18 +27,20 @@ class Solution {
                 }
             }
         }
-        int len = 0;
+        int step = 0;
         while (queue.size() != 0) {
             int size = queue.size();
-            for (int i = 0; i < size; ++i) {
+            for (int k = 0; k < size; ++k) {
                 int[] cur = queue.poll();
-                for (int k = 0; k < dir.length - 1; ++k) {
-                    int row = cur[0] + dir[k];
-                    int col = cur[1] + dir[k + 1];
+                int i = cur[0];
+                int j = cur[1];
+                for (int[] dir : dirs) {
+                    int row = i + dir[0];
+                    int col = j + dir[1];
                     if (row < 0 || col < 0 || row >= m || col >= n) {
                         continue;
                     }
-                    if (matrix[row][col] > matrix[cur[0]][cur[1]]) {
+                    if (matrix[row][col] > matrix[i][j]) {
                         indegree[row][col]--;
                         if (indegree[row][col] == 0) {
                             queue.offer(new int[]{row, col});
@@ -46,23 +48,8 @@ class Solution {
                     }
                 }
             }
-            len++;
+            step++;
         }
-        return len;
+        return step;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
