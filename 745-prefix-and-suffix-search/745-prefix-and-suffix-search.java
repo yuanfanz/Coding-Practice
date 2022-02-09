@@ -1,13 +1,13 @@
 class WordFilter {
     private TrieNode root;
-    private Map<String, Integer> map;
+    private Map<String, Integer> indexMap;
     private int res;
     public WordFilter(String[] words) {
-        map = new HashMap<>();
+        indexMap = new HashMap<>();
         root = new TrieNode();
         int index = 0;
         for (String word : words) {
-            map.put(word, index++);
+            indexMap.put(word, index++);
             TrieNode cur = root;
             for (int i = 0; i < word.length(); ++i) {
                 char ch = word.charAt(i);
@@ -49,7 +49,7 @@ class WordFilter {
         if (cur.isWord) {
             int start = cur.word.length() - len;
             if (cur.word.substring(start).equals(suffix)) {
-                int index = map.get(cur.word);
+                int index = indexMap.get(cur.word);
                 if (index > res) {
                     res = index;
                 }
