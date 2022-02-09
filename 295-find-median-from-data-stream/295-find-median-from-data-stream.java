@@ -26,15 +26,11 @@ class MedianFinder {
         int minSize = minHeap.size();
         if (maxSize == minSize) {
             return (double) (maxHeap.peek() + minHeap.peek()) / 2;
-        }
-        
-        if (maxSize - 1 ==  minSize) {
+        } else if (maxSize > minSize) {
             return (double) (maxHeap.peek());
-        } 
-        if (minSize - 1 == maxSize) {
+        } else {
             return (double) (minHeap.peek());
         }
-        return 0;
     }
 }
 
