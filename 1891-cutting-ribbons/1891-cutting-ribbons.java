@@ -12,10 +12,11 @@ class Solution {
         }
         return j - 1;
     }
-    private boolean isValid(int[] ribbons, int mid, int k) {
+    private boolean isValid(int[] ribbons, int length, int k) {
         int count = 0;
+        
         for (int i = 0; i < ribbons.length; ++i) {
-            count += ribbons[i] / mid;
+            count += ribbons[i] / length;
         }
         return count >= k;
     }
