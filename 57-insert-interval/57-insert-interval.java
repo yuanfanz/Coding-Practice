@@ -18,7 +18,7 @@ class Solution {
         int[][] result = new int[list.size()][2];
         int index = 0;
         for (int[] cur : list) {
-            result[index++] = cur;
+            result[index++]= cur;
         }
         return result;
     }
