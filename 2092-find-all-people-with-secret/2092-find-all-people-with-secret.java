@@ -1,44 +1,44 @@
 class Solution {
     public List<Integer> findAllPeople(int n, int[][] meetings, int firstPerson) {
-        Arrays.sort(meetings, (a, b) -> a[2] - b[2]);
-        
         UnionFind uf = new UnionFind(n);
+        
         uf.union(0, firstPerson);
         int root = uf.find(0);
-        
-        Map<Integer, List<int[]>> map = new HashMap<>();
+        Map<Integer, List<Integer>> map = new HashMap<>();
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
-        for (int[] cur : meetings) {
-            List<int[]> list = map.getOrDefault(cur[2], new ArrayList<>());
-            list.add(cur);
-            map.put(cur[2], list);
-            min = Math.min(min, cur[2]);
-            max = Math.max(max, cur[2]);
+        for (int i = 0; i < meetings.length; ++i) {
+            int time = meetings[i][2];
+            List<Integer> list = map.getOrDefault(time, new ArrayList<>());
+            min = Math.min(min, time);
+            max = Math.max(max, time);
+            list.add(i);
+            map.put(time, list);
         }
-        for (int time = min; time <= max; ++time) {
-            if (!map.containsKey(time)) continue;
+        for (int i = min; i <= max; ++i) {
+            if (!map.containsKey(i)) continue;
             Set<Integer> set = new HashSet<>();
-            for (int[] cur : map.get(time)) {
+            for (int index : map.get(i)) {
+                int[] cur = meetings[index];
                 uf.union(cur[0], cur[1]);
                 set.add(cur[0]);
                 set.add(cur[1]);
             }
-            for (int num : set) {
-                if (uf.find(num) != root) {
-                    uf.reset(num);
+            for (int next : set) {
+                if (uf.find(next) != root) {
+                    uf.reset(next);
                 }
             }
         }
-        List<Integer> result = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
-            int cur = uf.find(i);
-            if (cur == root) {
-                result.add(i);
+            if (uf.find(i) == root) {
+                list.add(i);
             }
         }
-        return result;
+        return list;
     }
+    
     class UnionFind{
         int[] parent;
         public UnionFind(int n) {
