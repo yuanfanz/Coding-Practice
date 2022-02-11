@@ -2,37 +2,33 @@ class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
         Map<Integer, List<Integer>> map = new HashMap<>();
         
+        int[] indegree = new int[numCourses];
         for (int[] cur : prerequisites) {
             int pre = cur[1];
+            indegree[cur[0]]++;
             List<Integer> list = map.getOrDefault(pre, new ArrayList<>());
             list.add(cur[0]);
             map.put(pre, list);
         }
-        int[] visited = new int[numCourses];
-        Stack<Integer> deque = new Stack<>();
+        Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < numCourses; ++i) {
-            if (visited[i] != 0) continue;
-            if (dfs(visited, map, i, deque)) return new int[0];
+            if (indegree[i] == 0) {
+                queue.offer(i);
+            }
         }
-        int[] result = new int[deque.size()];
-        int index = 0;
-        while (deque.size() != 0) {
-            result[index++] = deque.pop();
-        }
-        return result;
-    }
-    private boolean dfs(int[] visited, Map<Integer, List<Integer>> map, int cur, Stack<Integer> deque) {
-        visited[cur] = 1;
-        if (map.containsKey(cur)) {
-            for (int next : map.get(cur)) {
-                if (visited[next] == 1) return true;
-                if (visited[next] == 0) {
-                    if (dfs(visited, map, next, deque)) return true;
+        List<Integer> list = new ArrayList<>();
+        while (queue.size() != 0) {
+            int cur = queue.poll();
+            list.add(cur);
+            if (map.containsKey(cur)) {
+                for (int next : map.get(cur)) {
+                    indegree[next]--;
+                    if (indegree[next] == 0) {
+                        queue.offer(next);
+                    }
                 }
             }
         }
-        visited[cur] = 2;
-        deque.push(cur);
-        return false;
+        return list.size() != numCourses ? new int[0] : list.stream().mapToInt(i -> i).toArray();
     }
 }
