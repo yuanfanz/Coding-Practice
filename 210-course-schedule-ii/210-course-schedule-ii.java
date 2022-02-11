@@ -1,33 +1,38 @@
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        ArrayList[] map = new ArrayList[numCourses];
-        for (int i = 0; i < map.length; ++i) {
-            map[i] = new ArrayList<>();
-        }
+        Map<Integer, List<Integer>> map = new HashMap<>();
+        
         for (int[] cur : prerequisites) {
-            int first = cur[1];
-            int second = cur[0];
-            map[first].add(second);
+            int pre = cur[1];
+            List<Integer> list = map.getOrDefault(pre, new ArrayList<>());
+            list.add(cur[0]);
+            map.put(pre, list);
         }
-        Deque<Integer> deque = new LinkedList<>();
         int[] visited = new int[numCourses];
+        Deque<Integer> deque = new LinkedList<>();
         for (int i = 0; i < numCourses; ++i) {
-            if (dfs(i, visited, map, deque)) return new int[0];
+            if (visited[i] != 0) continue;
+            if (dfs(visited, map, i, deque)) return new int[0];
         }
-        return deque.stream().mapToInt(i -> i).toArray();
+        int[] result = new int[deque.size()];
+        int index = 0;
+        while (deque.size() != 0) {
+            result[index++] = deque.pollLast();
+        }
+        return result;
     }
-    private boolean dfs(int cur, int[] visited, ArrayList[] map, Deque<Integer> deque) {
-        if (visited[cur] == 2) return false;
+    private boolean dfs(int[] visited, Map<Integer, List<Integer>> map, int cur, Deque<Integer> deque) {
         visited[cur] = 1;
-        for (int i = 0; i < map[cur].size(); ++i) {
-            int next = (int) map[cur].get(i);
-            if (visited[next] == 1) return true;
-            if (visited[next] == 0) {
-                if (dfs(next, visited, map, deque)) return true;
+        if (map.containsKey(cur)) {
+            for (int next : map.get(cur)) {
+                if (visited[next] == 1) return true;
+                if (visited[next] == 0) {
+                    if (dfs(visited, map, next, deque)) return true;
+                }
             }
         }
-        deque.addFirst(cur);
         visited[cur] = 2;
+        deque.addLast(cur);
         return false;
     }
 }
