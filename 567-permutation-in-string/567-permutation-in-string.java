@@ -4,12 +4,7 @@ class Solution {
         
         int[] target = getHash(s1);
         for (int i = 0; i <= s2.length() - len1; ++i) {
-            // System.out.println(i);
-            // System.out.println(i + len1);
             int[] hash = getHash(s2.substring(i, i + len1));
-            
-                // print(target);
-                // print(hash);
             if (isValid(target, hash)) {
                 return true;
             }
@@ -30,11 +25,5 @@ class Solution {
             }
         }
         return true;
-    }
-    private void print(int[] hash1) {
-        for (int i = 0; i < hash1.length; ++i) {
-            System.out.print(hash1[i] + " ");
-        }
-        System.out.println();
     }
 }
