@@ -9,7 +9,7 @@ class Solution {
             map.put(pre, list);
         }
         int[] visited = new int[numCourses];
-        Deque<Integer> deque = new LinkedList<>();
+        Stack<Integer> deque = new Stack<>();
         for (int i = 0; i < numCourses; ++i) {
             if (visited[i] != 0) continue;
             if (dfs(visited, map, i, deque)) return new int[0];
@@ -17,11 +17,11 @@ class Solution {
         int[] result = new int[deque.size()];
         int index = 0;
         while (deque.size() != 0) {
-            result[index++] = deque.pollLast();
+            result[index++] = deque.pop();
         }
         return result;
     }
-    private boolean dfs(int[] visited, Map<Integer, List<Integer>> map, int cur, Deque<Integer> deque) {
+    private boolean dfs(int[] visited, Map<Integer, List<Integer>> map, int cur, Stack<Integer> deque) {
         visited[cur] = 1;
         if (map.containsKey(cur)) {
             for (int next : map.get(cur)) {
@@ -32,7 +32,7 @@ class Solution {
             }
         }
         visited[cur] = 2;
-        deque.addLast(cur);
+        deque.push(cur);
         return false;
     }
 }
