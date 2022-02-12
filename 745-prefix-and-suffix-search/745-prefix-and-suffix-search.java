@@ -1,14 +1,14 @@
 class WordFilter {
     private TrieNode root;
     private Map<String, Integer> indexMap;
-    private int res;
+    private int ans;
     public WordFilter(String[] words) {
-        indexMap = new HashMap<>();
         root = new TrieNode();
+        indexMap = new HashMap<>();
         int index = 0;
         for (String word : words) {
-            indexMap.put(word, index++);
             TrieNode cur = root;
+            indexMap.put(word, index++);
             for (int i = 0; i < word.length(); ++i) {
                 char ch = word.charAt(i);
                 if (!cur.map.containsKey(ch)) {
@@ -28,9 +28,25 @@ class WordFilter {
         if (cur == null) {
             return -1;
         }
-        res = -1;
-        findSuf(cur, suffix, suffix.length());
-        return res;
+        ans = -1;
+        findSuffix(cur, suffix);
+        return ans;
+    }
+    
+    private void findSuffix(TrieNode cur, String suffix) {
+        if (cur.isWord) {
+            int start = cur.word.length() - suffix.length();
+            if (cur.word.substring(start).equals(suffix)) {
+                int index = indexMap.get(cur.word);
+                if (index > ans) {
+                    ans = index;
+                }
+            }
+        } else {
+            for (char next : cur.map.keySet()) {
+                findSuffix(cur.map.get(next), suffix);
+            }
+        }
     }
     
     private TrieNode findPre(String prefix) {
@@ -43,22 +59,6 @@ class WordFilter {
             cur = cur.map.get(ch);
         }
         return cur;
-    }
-    
-    private void findSuf(TrieNode cur, String suffix, int len) {
-        if (cur.isWord) {
-            int start = cur.word.length() - len;
-            if (cur.word.substring(start).equals(suffix)) {
-                int index = indexMap.get(cur.word);
-                if (index > res) {
-                    res = index;
-                }
-            }
-        } else {
-            for (char next : cur.map.keySet()) {
-                findSuf(cur.map.get(next), suffix, len);
-            }
-        }
     }
     
     class TrieNode{
