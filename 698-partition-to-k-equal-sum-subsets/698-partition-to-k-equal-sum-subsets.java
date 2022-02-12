@@ -4,7 +4,7 @@ class Solution {
         for (int i : nums) {
             sum += i;
         }
-        if (sum % k != 0) {
+        if (nums.length < k || sum % k != 0) {
             return false;
         }
         Arrays.sort(nums);
