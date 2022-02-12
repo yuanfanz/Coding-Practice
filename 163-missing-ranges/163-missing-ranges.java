@@ -1,7 +1,7 @@
 class Solution {
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> result = new ArrayList<>();
-        if (nums.length == 0) {
+        if (nums == null || nums.length == 0) {
             result.add(formRange(lower, upper));
             return result;
         }
@@ -9,7 +9,7 @@ class Solution {
             result.add(formRange(lower, nums[0] - 1));
         }
         for (int i = 0; i < nums.length - 1; ++i) {
-            if (nums[i + 1] > nums[i] + 1) {
+            if (nums[i] < nums[i + 1] - 1) {
                 result.add(formRange(nums[i] + 1, nums[i + 1] - 1));
             }
         }
@@ -19,6 +19,10 @@ class Solution {
         return result;
     }
     private String formRange(int low, int high) {
-        return low == high ? low + "" : low + "->" + high;
+        if (low == high) {
+            return low + "";
+        } else {
+            return low + "->" + high;
+        }
     }
 }
