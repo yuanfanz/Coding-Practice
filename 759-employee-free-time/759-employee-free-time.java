@@ -19,10 +19,7 @@ class Solution {
             if (people == 0 && start == -1) {
                 start = key;
             } else if (start != -1 && people != 0) {
-                // when people is not 0, means someone starts to work
-                if (people < 0) {
-                    System.out.println(people);
-                }
+                // when people is not 0, means someone starts to 
                 result.add(new Interval(start, key));
                 start = -1;
             }
