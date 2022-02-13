@@ -1,27 +1,23 @@
+
+
 class Solution {
     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
-        Map<Integer, Integer> map = new TreeMap<>();
+        PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> a.start - b.start);
         
-        for (List<Interval> list : schedule) {
+        for (List<Interval> list : schedule){
             for (Interval cur : list) {
-                int start = cur.start;
-                int end = cur.end;
-                map.put(start, map.getOrDefault(start, 0) + 1);
-                map.put(end, map.getOrDefault(end, 0) - 1);
+                pq.offer(cur);
             }
         }
         List<Interval> result = new ArrayList<>();
-        int start = -1;
-        int people = 0;
-        for (int key : map.keySet()) {
-            int val = map.get(key);
-            people += val;
-            if (people == 0 && start == -1) {
-                start = key;
-            } else if (start != -1 && people != 0) {
-                // when people is not 0, means someone starts to 
-                result.add(new Interval(start, key));
-                start = -1;
+        Interval prev = pq.poll();
+        while (pq.size() != 0) {
+            if (prev.end < pq.peek().start) {
+                result.add(new Interval(prev.end, pq.peek().start));
+                prev = pq.poll();
+            } else {
+                prev.end = Math.max(prev.end, pq.peek().end);
+                pq.poll();
             }
         }
         return result;
