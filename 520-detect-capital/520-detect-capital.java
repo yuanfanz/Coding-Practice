@@ -1,15 +1,17 @@
 class Solution {
     public boolean detectCapitalUse(String word) {
-        int upCount = 0;
-        int lowCount = 0;
+        int capital = 0;
+        boolean lower = false;
         for (int i = 0; i < word.length(); ++i) {
             if (Character.isUpperCase(word.charAt(i))) {
-                if (lowCount != 0) return false;
-                upCount++;
+                capital++;
+                if (capital > 1 && lower) {
+                    return false;
+                }
             } else {
-                lowCount++;
+                lower = true;
             }
         }
-        return upCount == word.length() || upCount == 1 || lowCount == word.length();
+        return capital == word.length() || capital == 1 && Character.isUpperCase(word.charAt(0)) || capital == 0;
     }
 }
