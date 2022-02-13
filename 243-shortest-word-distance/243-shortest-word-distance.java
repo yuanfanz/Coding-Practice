@@ -1,17 +1,17 @@
 class Solution {
     public int shortestDistance(String[] wordsDict, String word1, String word2) {
-        int p1 = -1;
-        int p2 = -1;
-        int min = wordsDict.length;
+        int left = -1;
+        int right = -1;
+        int min = wordsDict.length + 1;
         for (int i = 0; i < wordsDict.length; ++i) {
             if (word1.equals(wordsDict[i])) {
-                p1 = i;
+                left = i;
             }
             if (word2.equals(wordsDict[i])) {
-                p2 = i;
+                right = i;
             }
-            if (p1 != -1 && p2 != -1) {
-                min = Math.min(min, Math.abs(p1 - p2));
+            if (left != -1 && right != -1) {
+                min = Math.min(min, Math.abs(right - left));
             }
         }
         return min;
