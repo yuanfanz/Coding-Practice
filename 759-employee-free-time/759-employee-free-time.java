@@ -1,28 +1,31 @@
 
-
 class Solution {
     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
-        PriorityQueue<Interval> pq = new PriorityQueue<>((a, b) -> a.start - b.start);
+        PriorityQueue<int[]> pq = new PriorityQueue<>
+            ((a, b) -> schedule.get(a[0]).get(a[1]).start - schedule.get(b[0]).get(b[1]).start);
         
-        for (List<Interval> list : schedule){
-            for (Interval cur : list) {
-                pq.offer(cur);
-            }
+        for (int i = 0; i < schedule.size(); ++i) {
+            // add first shift of this employee
+            pq.offer(new int[]{i, 0});
         }
         List<Interval> result = new ArrayList<>();
-        Interval prev = pq.poll();
+        int prevEnd = schedule.get(pq.peek()[0]).get(pq.peek()[1]).end;
         while (pq.size() != 0) {
-            if (prev.end < pq.peek().start) {
-                result.add(new Interval(prev.end, pq.peek().start));
-                prev = pq.poll();
-            } else {
-                prev.end = Math.max(prev.end, pq.peek().end);
-                pq.poll();
+            int[] cur = pq.poll();
+            Interval interval = schedule.get(cur[0]).get(cur[1]);
+            if (prevEnd < interval.start) {
+                result.add(new Interval(prevEnd, interval.start));
+            }
+            prevEnd = Math.max(prevEnd, interval.end);
+            if (schedule.get(cur[0]).size() > cur[1] + 1) {
+                // add next shift of this employee
+                pq.offer(new int[]{cur[0], cur[1] + 1});
             }
         }
         return result;
     }
 }
+
 
 /*
 // Definition for an Interval.
