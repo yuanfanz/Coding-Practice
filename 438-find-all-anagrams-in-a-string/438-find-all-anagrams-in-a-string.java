@@ -3,26 +3,27 @@ class Solution {
         List<Integer> result = new ArrayList<>();
         
         int[] hash = new int[26];
-        int[] target = new int[26];
-        int len = p.length();
-        for (int i = 0; i < len; ++i) {
-            target[p.charAt(i) - 'a']++;
+        for (int i = 0; i < p.length(); ++i) {
+            hash[p.charAt(i) - 'a']++;
         }
-        int i = 0;
-        for (int j = 0; j < s.length(); ++j) {
-            hash[s.charAt(j) - 'a']++;
-            while (i < s.length() && j - i + 1 > len) {
-                hash[s.charAt(i++) - 'a']--;
+        int len = p.length();
+        int j = 0;
+        int[] cur = new int[26];
+        for (int i = 0; i <= s.length() - len; ++i) {
+            while (j < i + len) {
+                cur[s.charAt(j++) - 'a']++;
             }
-            if (isValid(hash, target)) {
+            // System.out.println(j);
+            if (isValid(cur, hash)) {
                 result.add(i);
             }
+            cur[s.charAt(i) - 'a']--;
         }
         return result;
     }
-    private boolean isValid(int[] hash1, int[] hash2) {
-        for (int i = 0; i < hash1.length; ++i) {
-            if (hash1[i] != hash2[i]) {
+    private boolean isValid(int[] cur, int[] hash) {
+        for (int i = 0; i < cur.length; ++i) {
+            if (cur[i] != hash[i]) {
                 return false;
             }
         }
