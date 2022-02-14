@@ -4,11 +4,13 @@ class Solution {
         for (int i = 0; i < s.length(); ++i) {
             hash[s.charAt(i) - 'a']++;
         }
-        boolean odd = false;
+        boolean single = false;
         for (int i = 0; i < hash.length; ++i) {
             if (hash[i] % 2 == 1) {
-                if (odd) return false;
-                odd = true;
+                if (single) {
+                    return false;
+                }
+                single = true;
             }
         }
         return true;
