@@ -1,54 +1,47 @@
 class Solution {
     public List<String> generatePalindromes(String s) {
         List<String> result = new ArrayList<>();
-        int[] map = new int[256];
-        int odd = 0;
+        int[] hash = new int[26];
         for (int i = 0; i < s.length(); ++i) {
-            map[s.charAt(i)]++;
-            if ((map[s.charAt(i)] & 1) == 1) {
-                odd++;
-            } else {
-                odd--;
-            }
+            hash[s.charAt(i) - 'a']++;
         }
-        if (odd > 1) return result;
-        String mid = "";
-        int length = 0;
-        for (int i = 0; i < 256; ++i) {
-            if (map[i] > 0) {
-                if ((map[i] & 1) == 1) {
-                    mid = (char) i + "";
-                    map[i]--;
+        boolean single = false;
+        for (int i = 0; i < hash.length; ++i) {
+            if (hash[i] % 2 == 1) {
+                if (single) {
+                    return result;
                 }
-                map[i] /= 2;
-                length += map[i];
+                single = true;
             }
         }
-        dfs(result, map, length, "", mid);
+        String mid = "";
+        int len = 0;
+        for (int i = 0; i < hash.length; ++i) {
+            if (hash[i] > 0) {
+                if (hash[i] % 2 == 1) {
+                    mid = (char) (i + 'a') + "";
+                    hash[i]--;
+                }
+                hash[i] /= 2;
+                len += hash[i];
+            }
+        }
+        dfs(result, hash, mid, len, "");
         return result;
     }
-    private void dfs(List<String> result, int[] map, int length, String s, String mid) {
-        if (s.length() == length) {
-            StringBuilder suffix = new StringBuilder(s).reverse();
-            result.add(s + mid + suffix);
+    private void dfs(List<String> result, int[] hash, String mid, int len, String cur) {
+        if (len == cur.length()) {
+            StringBuilder half = new StringBuilder(cur).reverse();
+            String newStr = cur + mid + half;
+            result.add(newStr);
+            return;
         }
-        for (int i = 0; i < map.length; ++i) {
-            if (map[i] > 0) {
-                map[i]--;
-                dfs(result, map, length, s + (char) i, mid);
-                map[i]++;
+        for (int i = 0; i < hash.length; ++i) {
+            if (hash[i] > 0) {
+                hash[i]--;
+                dfs(result, hash, mid, len, cur + (char)(i + 'a'));
+                hash[i]++;
             }
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
