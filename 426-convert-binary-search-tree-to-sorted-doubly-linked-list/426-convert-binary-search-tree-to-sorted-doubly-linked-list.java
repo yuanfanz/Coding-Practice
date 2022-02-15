@@ -1,16 +1,13 @@
-
 class Solution {
-    Node prev;
+    private Node prev;
     public Node treeToDoublyList(Node root) {
-        if (root == null) {
-            return root;
-        }
+        if (root == null) return root;
         Node dummy = new Node(0);
         dummy.right = root;
         prev = dummy;
         dfs(root);
-        dummy.right.left = prev;
         prev.right = dummy.right;
+        dummy.right.left = prev;
         return dummy.right;
     }
     private void dfs(Node root) {
@@ -24,7 +21,6 @@ class Solution {
         dfs(root.right);
     }
 }
-
 /*
 // Definition for a Node.
 class Node {
