@@ -1,19 +1,20 @@
 class MyCalendar {
-    TreeMap<Integer, Integer> calendar;
+    private TreeMap<Integer, Integer> map;
     public MyCalendar() {
-        calendar = new TreeMap<>();
+        map = new TreeMap<>();
+        
     }
     
     public boolean book(int start, int end) {
-        Integer prevStart = calendar.floorKey(start);
-        if (prevStart != null && calendar.get(prevStart) > start) {
+        Integer prev = map.floorKey(start);
+        if (prev != null && map.get(prev) > start) {
             return false;
         }
-        Integer nextStart = calendar.ceilingKey(start);
-        if (nextStart != null && nextStart < end) {
+        Integer next = map.ceilingKey(start);
+        if (next != null && next < end) {
             return false;
         }
-        calendar.put(start, end);
+        map.put(start, end);
         return true;
     }
 }
