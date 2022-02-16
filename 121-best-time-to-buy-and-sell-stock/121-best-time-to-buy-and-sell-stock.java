@@ -4,11 +4,10 @@ class Solution {
         
         int[] diff = new int[n];
         for (int i = 1; i < n; ++i) {
-            diff[i] = prices[i] - prices[i - 1];
+            diff[i]= prices[i] - prices[i - 1];
         }
-        int[] presum = new int[n + 1];
         int max = 0;
-        
+        int[] presum = new int[n + 1];
         for (int i = 1; i < n; ++i) {
             presum[i] = diff[i] + (presum[i - 1] > 0 ? presum[i - 1] : 0);
             max = Math.max(max, presum[i]);
