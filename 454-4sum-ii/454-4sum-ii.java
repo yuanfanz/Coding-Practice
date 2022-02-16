@@ -4,15 +4,17 @@ class Solution {
         
         for (int i = 0; i < nums1.length; ++i) {
             for (int j = 0; j < nums2.length; ++j) {
-                int num = nums1[i] + nums2[j];
-                map.put(num, map.getOrDefault(num, 0) + 1);
+                int sum = nums1[i] + nums2[j];
+                map.put(sum, map.getOrDefault(sum, 0) + 1);
             }
         }
         int count = 0;
         for (int i = 0; i < nums3.length; ++i) {
             for (int j = 0; j < nums4.length; ++j) {
-                int num = nums3[i] + nums4[j];
-                count += map.getOrDefault(-num, 0);
+                int sum = nums3[i] + nums4[j];
+                if (map.containsKey(-sum)) {
+                    count += map.get(-sum);
+                }
             }
         }
         return count;
