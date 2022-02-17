@@ -2,13 +2,11 @@ class Solution {
     public int change(int amount, int[] coins) {
         int[] dp = new int[amount + 1];
         
-        int n = coins.length;
-        
         dp[0] = 1;
-        for (int i = 0; i < n; ++i) {
-            for (int j = 1; j <= amount; ++j) {
-                if (j >= coins[i]) {
-                    dp[j] += dp[j - coins[i]];
+        for (int j = 0; j < coins.length; ++j) {
+            for (int i = 1; i <= amount; ++i) {
+                if (i >= coins[j]) {
+                    dp[i] += dp[i - coins[j]];
                 }
             }
         }
