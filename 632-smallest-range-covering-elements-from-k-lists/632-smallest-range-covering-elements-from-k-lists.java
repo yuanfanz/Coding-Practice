@@ -1,37 +1,28 @@
 class Solution {
     public int[] smallestRange(List<List<Integer>> nums) {
-        PriorityQueue<Tuple> pq = new PriorityQueue<>((a, b) -> a.val - b.val);
-        int max = Integer.MIN_VALUE;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
+        
+        int max = 0;
         for (int i = 0; i < nums.size(); ++i) {
-            pq.offer(new Tuple(i, 0, nums.get(i).get(0)));
+            pq.offer(new int[]{i, 0, nums.get(i).get(0)});
             max = Math.max(max, nums.get(i).get(0));
         }
         int range = Integer.MAX_VALUE;
-        int start = -1, end = -1;
+        int start = -1;
+        int end = -1;
         while (pq.size() == nums.size()) {
-            Tuple cur = pq.poll();
-            if (max - cur.val < range) {
-                start = cur.val;
+            int[] cur = pq.poll();
+            if (max - cur[2] < range) {
+                range = max - cur[2];
+                start = cur[2];
                 end = max;
-                range = max - cur.val;
             }
-            if (cur.index + 1 < nums.get(cur.row).size()) {
-                int nextVal = nums.get(cur.row).get(cur.index + 1);
-                Tuple newTuple = new Tuple(cur.row, cur.index + 1, nextVal);
-                pq.offer(newTuple);
-                max = Math.max(max, nextVal);
+            if (cur[1] + 1 < nums.get(cur[0]).size()) {
+                int val = nums.get(cur[0]).get(cur[1] + 1);
+                pq.offer(new int[]{cur[0], cur[1] + 1, val});
+                max = Math.max(max, val);
             }
         }
         return new int[]{start, end};
-    }
-    class Tuple{
-        int row;
-        int index;
-        int val;
-        public Tuple(int row, int index, int val) {
-            this.row = row;
-            this.index = index;
-            this.val = val;
-        }
     }
 }
