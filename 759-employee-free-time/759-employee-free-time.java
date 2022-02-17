@@ -1,31 +1,43 @@
 
+
 class Solution {
     public List<Interval> employeeFreeTime(List<List<Interval>> schedule) {
         List<Interval> result = new ArrayList<>();
         
-        TreeMap<Integer, Integer> map = new TreeMap<>();
-        for (List<Interval> list : schedule) {
-            for (Interval cur : list) {
-                map.put(cur.start, map.getOrDefault(cur.start, 0) + 1);
-                map.put(cur.end, map.getOrDefault(cur.end, 0) - 1);
-            }
+        PriorityQueue<int[]> pq = new PriorityQueue<>
+            ((a, b) -> schedule.get(a[0]).get(a[1]).start - schedule.get(b[0]).get(b[1]).start);
+        
+        // row, index
+        for (int i = 0; i < schedule.size(); ++i) {
+            pq.offer(new int[]{i, 0});
         }
-        int start = -1;
-        int sum = 0;
-        for (int key : map.keySet()) {
-            sum += map.get(key);
-            if (sum == 0) {
-                if (start == -1) {
-                    start = key;
-                }
-            } else {
-                if (start != -1) {
-                    int end = key;
-                    result.add(new Interval(start, end));
-                    start = -1;
-                }
+        int prevEnd = schedule.get(pq.peek()[0]).get(pq.peek()[1]).end;
+        while (pq.size() != 0) {
+            int[] cur = pq.poll();
+            int nextStart = schedule.get(cur[0]).get(cur[1]).start;
+            if (prevEnd < nextStart) {
+                result.add(new Interval(prevEnd, nextStart));
+            }
+            prevEnd = Math.max(prevEnd, schedule.get(cur[0]).get(cur[1]).end);
+            if (cur[1] + 1 < schedule.get(cur[0]).size()) {
+                pq.offer(new int[]{cur[0], cur[1] + 1});
             }
         }
         return result;
     }
 }
+
+/*
+// Definition for an Interval.
+class Interval {
+    public int start;
+    public int end;
+
+    public Interval() {}
+
+    public Interval(int _start, int _end) {
+        start = _start;
+        end = _end;
+    }
+};
+*/
