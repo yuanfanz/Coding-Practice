@@ -6,14 +6,14 @@ class Solution {
     }
     private void dfs(List<List<Integer>> result, List<Integer> list,
                     int k, int n, int sum, int index) {
-        if (list.size() > k || sum > n) {
+        if (sum > n) {
             return;
         }
-        if (list.size() == k && sum == n) {
+        if (sum == n && list.size() == k) {
             result.add(new ArrayList<>(list));
             return;
         }
-        for (int i = index; i < 10; ++i) {
+        for (int i = index; i <= 9; ++i) {
             if (list.contains(i)) continue;
             list.add(i);
             dfs(result, list, k, n, sum + i, i + 1);
