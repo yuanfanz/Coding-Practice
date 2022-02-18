@@ -10,7 +10,7 @@ class Solution {
                 arr[index++] = i;
             }
         }
-        
+        // print(arr);
         int i = 0;
         int j = arr.length - 1;
         while (i <= j) {
@@ -39,5 +39,11 @@ class Solution {
         }
         nums[i] = pivot;
         return i;
+    }
+    private void print(int[] grid) {
+        for (int i = 0; i < grid.length; ++i) {
+            System.out.print(grid[i] + " ");
+        }
+        System.out.println();
     }
 }
