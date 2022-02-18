@@ -9,29 +9,29 @@ class Solution {
             for (int j = 0; j < n; ++j) {
                 dp[j] = matrix[i][j] == '1' ? dp[j] + 1 : 0;
             }
-            max = Math.max(max, helper(dp));
+            max = Math.max(max, histogram(dp));
         }
         return max;
     }
-    private int helper(int[] dp) {
+    private int histogram(int[] nums) {
         Stack<Integer> stack = new Stack<>();
-        
-        int n = dp.length;
+        int n = nums.length;
         int max = 0;
-        for (int i = 0; i < n; ++i) {
-            if (stack.isEmpty()) {
+        for (int i = 0; i < nums.length; ++i) {
+            if (stack.size() == 0) {
                 stack.push(i);
             } else {
-                while (!stack.isEmpty() && dp[stack.peek()] > dp[i]) {
-                    int height = dp[stack.pop()];
+                while (stack.size() > 0 && nums[i] < nums[stack.peek()]) {
+                    int index = stack.pop();
+                    int height = nums[index];
                     int width = i - (stack.isEmpty() ? 0 : stack.peek() + 1);
                     max = Math.max(max, height * width);
                 }
                 stack.push(i);
             }
         }
-        while (!stack.isEmpty()) {
-            int height = dp[stack.pop()];
+        while (stack.size() > 0) {
+            int height = nums[stack.pop()];
             int width = n - (stack.isEmpty() ? 0 : stack.peek() + 1);
             max = Math.max(max, height * width);
         }
