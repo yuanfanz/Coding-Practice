@@ -3,14 +3,15 @@ class Solution {
         int m = grid.length;
         int n = grid[0].length;
         
-        int[][] dirs = new int[][]{{0,1},{0,-1},{-1,0},{1,0}};
+        
+        int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+        boolean[][][] visited = new boolean[m][n][k + 1];
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{0, 0, 0});
         int step = 0;
-        boolean[][][] visited = new boolean[m][n][k + 1];
-        while (queue.size() != 0) {
+        while (queue.size() > 0) {
             int size = queue.size();
-            for (int h = 0; h < size; ++h) {
+            for (int g = 0; g < size; ++g) {
                 int[] cur = queue.poll();
                 int i = cur[0];
                 int j = cur[1];
@@ -27,10 +28,11 @@ class Solution {
                     if (grid[row][col] == 1) {
                         curK++;
                     }
-                    if (curK <= k && !visited[row][col][curK]) {
-                        visited[row][col][curK] = true;
-                        queue.offer(new int[]{row, col, curK});
+                    if (curK > k || visited[row][col][curK]) {
+                        continue;
                     }
+                    visited[row][col][curK] = true;
+                    queue.offer(new int[]{row, col, curK});
                 }
             }
             step++;
@@ -38,3 +40,16 @@ class Solution {
         return -1;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
