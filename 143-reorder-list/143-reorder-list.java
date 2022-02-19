@@ -20,6 +20,7 @@ class Solution {
         while (l1 != null) {
             ListNode n1 = l1.next;
             ListNode n2 = l2.next;
+            
             l1.next = l2;
             if (n1 == null) {
                 break;
@@ -40,3 +41,13 @@ class Solution {
         return prev;
     }
 }
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
