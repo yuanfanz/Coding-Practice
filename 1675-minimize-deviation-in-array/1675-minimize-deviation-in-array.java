@@ -1,19 +1,25 @@
 class Solution {
-     public int minimumDeviation(int[] A) {
-        PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
-        int n = A.length, mi = Integer.MAX_VALUE, res = Integer.MAX_VALUE;
-        for (int a : A) {
-            if (a % 2 == 1) a *= 2;
-            pq.add(-a);
-            mi = Math.min(mi, a);
+    public int minimumDeviation(int[] nums) {
+        TreeSet<Integer> set = new TreeSet<>();
+        for (int i : nums) {
+            if (i % 2 == 0) {
+                set.add(i);
+            } else {
+                set.add(i * 2);
+            }
         }
+        int min = Integer.MAX_VALUE;
         while (true) {
-            int a = -pq.poll();
-            res = Math.min(res, a - mi);
-            if (a % 2 == 1) break;
-            mi = Math.min(mi, a / 2);
-            pq.add(-a / 2);
+            // last() returns the highest number
+            int high = set.last();
+            min = Math.min(min, high - set.first());
+            if (high % 2 == 0) {
+                set.remove(high);
+                set.add(high / 2);
+            } else {
+                break;
+            }
         }
-        return res;
+        return min;
     }
 }
