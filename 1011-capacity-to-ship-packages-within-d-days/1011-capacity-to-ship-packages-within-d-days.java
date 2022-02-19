@@ -1,10 +1,10 @@
 class Solution {
     public int shipWithinDays(int[] weights, int days) {
         int i = 0;
-        int j = weights.length * 500;
+        int j = 500 * weights.length;
         while (i < j) {
             int mid = i + (j - i) / 2;
-            if (!isValid(weights, days, mid)) {
+            if (!isValid(weights, mid, days)) {
                 i = mid + 1;
             } else {
                 j = mid;
@@ -12,14 +12,11 @@ class Solution {
         }
         return i;
     }
-    private boolean isValid(int[] weights, int days, int cap) {
+    private boolean isValid(int[] weights, int cap, int days) {
         int count = 0;
         int i = 0;
-        
         while (i < weights.length) {
-            if (weights[i] > cap) {
-                return false;
-            }
+            if (weights[i] > cap) return false;
             int sum = 0;
             while (i < weights.length && sum + weights[i] <= cap) {
                 sum += weights[i++];
