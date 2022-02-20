@@ -1,25 +1,29 @@
 class Vector2D {
-    int[][] vec;
-    int i = 0;
-    int j = 0;
+    private Iterator<int[]> rowIter;
+    private Iterator<Integer> colIter;
     public Vector2D(int[][] vec) {
-        this.vec = vec;
+        rowIter = Arrays.stream(vec).iterator();
+        if (rowIter.hasNext()) {
+            colIter = Arrays.stream(rowIter.next()).iterator();
+        }
     }
     
     public int next() {
-        if (hasNext()) {
-            return vec[i][j++];
-        } else {
+        if (!hasNext()) {
             return -1;
+        } else {
+            return colIter.next();
         }
     }
     
     public boolean hasNext() {
-        while (i < vec.length && j == vec[i].length) {
-            i++;
-            j = 0;
+        if (colIter == null) {
+            return false;
         }
-        return i < vec.length;
+        while (!colIter.hasNext() && rowIter.hasNext()) {
+            colIter = Arrays.stream(rowIter.next()).iterator();
+        }
+        return colIter.hasNext();
     }
 }
 
