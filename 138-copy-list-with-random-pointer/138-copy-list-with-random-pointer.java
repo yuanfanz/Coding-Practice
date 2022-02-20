@@ -7,9 +7,10 @@ class Solution {
         Node dummy = new Node(0);
         dummy.next = head;
         while (head != null) {
-            Node newNode = new Node(head.val);
-            newNode.next = head.next;
-            head.next = newNode;
+            Node node = new Node(head.val);
+            Node tmp = head.next;
+            head.next = node;
+            node.next = tmp;
             head = head.next.next;
         }
         head = dummy.next;
@@ -20,17 +21,32 @@ class Solution {
             head = head.next.next;
         }
         head = dummy.next;
-        Node newDummy = new Node(0);
-        newDummy.next = head.next;
-        Node cur = newDummy.next;
+        Node copyHead = new Node(0);
+        copyHead.next = head.next;
+        Node cur = copyHead.next;
         while (cur.next != null) {
             head.next = head.next.next;
-            head = head.next;
             cur.next = cur.next.next;
+            head = head.next;
             cur = cur.next;
         }
-        head.next = null;
         cur.next = null;
-        return newDummy.next;
+        head.next = null;
+        return copyHead.next;
     }
 }
+
+/*
+// Definition for a Node.
+class Node {
+    int val;
+    Node next;
+    Node random;
+
+    public Node(int val) {
+        this.val = val;
+        this.next = null;
+        this.random = null;
+    }
+}
+*/
