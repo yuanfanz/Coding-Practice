@@ -1,7 +1,7 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int m = nums1.length;
-        int n = nums2.length;     
+        int n = nums2.length;
         if (m > n) {
             return findMedianSortedArrays(nums2, nums1);
         }
@@ -19,10 +19,8 @@ class Solution {
                 // left is too big
                 max = i - 1;
             } else if (i < m && nums1[i] < nums2[j - 1]) {
-                // right is too big
                 min = i + 1;
             } else {
-                // left and right balanced
                 int leftMax = Integer.MIN_VALUE;
                 if (i == 0) {
                     leftMax = nums2[j - 1];
@@ -48,11 +46,3 @@ class Solution {
         return 0;
     }
 }
-
-
-
-
-
-
-
-
