@@ -9,9 +9,9 @@ class Solution {
                 min = max;
                 max = tmp;
             }
-            min = Math.min(nums[i], min * nums[i]);
-            max = Math.max(nums[i], max * nums[i]);
-            res = Math.max(max, res);
+            min = Math.min(min * nums[i], nums[i]);
+            max = Math.max(max * nums[i], nums[i]);
+            res = Math.max(res, max);
         }
         return res;
     }
