@@ -1,16 +1,14 @@
 class Solution {
     public List<List<String>> wordSquares(String[] words) {
         List<List<String>> result = new ArrayList<>();
-        if (words == null || words.length == 0) {
-            return result;
-        }
+        
         TrieNode root = new TrieNode();
         buildTrie(words, root);
-        int len = words[0].length();
+        
         List<String> list = new ArrayList<>();
         for (String word : words) {
             list.add(word);
-            dfs(result, list, root, len);
+            dfs(result, list, root, word.length());
             list.remove(list.size() - 1);
         }
         return result;
@@ -18,37 +16,33 @@ class Solution {
     
     private void dfs(List<List<String>> result, List<String> list, TrieNode root, int len) {
         if (len == list.size()) {
-            // there is enough words to form a square
             result.add(new ArrayList<>(list));
             return;
         }
-        // find the prefix we need based on strings in list
-        int index = list.size();
         StringBuilder sb = new StringBuilder();
+        int index = list.size();
         for (String s : list) {
             sb.append(s.charAt(index));
         }
-        String prefix = sb.toString();
-        List<String> startsWithList = findByPrefix(prefix, root);
-        for (String sw : startsWithList) {
-            list.add(sw);
+        List<String> startsWith = find(sb.toString(), root);
+        for (int i = 0; i < startsWith.size(); ++i) {
+            list.add(startsWith.get(i));
             dfs(result, list, root, len);
             list.remove(list.size() - 1);
         }
+        
     }
     
-    private List<String> findByPrefix(String prefix, TrieNode root) {
-        List<String> result = new ArrayList<>();
+    private List<String> find(String prefix, TrieNode root) {
         TrieNode cur = root;
         for (int i = 0; i < prefix.length(); ++i) {
             char ch = prefix.charAt(i);
             if (!cur.map.containsKey(ch)) {
-                return result;
+                return new ArrayList<>();
             }
             cur = cur.map.get(ch);
         }
-        result.addAll(cur.startsWith);
-        return result;
+        return cur.startsWith;
     }
     
     private void buildTrie(String[] words, TrieNode root) {
