@@ -34,10 +34,9 @@ private TrieNode root;
                 }
             }
         } else {
-            if (!cur.map.containsKey(ch)) {
-                return false;
+            if (cur.map.containsKey(ch)) {
+                return helper(word, index + 1, cur.map.get(ch));
             }
-            return helper(word, index + 1, cur.map.get(ch));
         }
         return false;
     }
