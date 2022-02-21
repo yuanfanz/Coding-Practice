@@ -7,9 +7,7 @@ class Solution {
         dfs(robot, dirs, set, 0, 0, 0);
     }
     private void dfs(Robot robot, int[][] dirs, Set<String> set, int i, int j, int turn) {
-        String str = i + "->" + j;
-        if (set.contains(str)) return;
-        set.add(str);
+        set.add(i + "->" + j);
         robot.clean();
         for (int cur = turn; cur < turn + 4; ++cur) {
             int row = i + dirs[cur % 4][0];
