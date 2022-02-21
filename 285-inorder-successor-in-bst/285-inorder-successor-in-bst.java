@@ -9,6 +9,9 @@
  */
 class Solution {
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+        if (root == null) {
+            return root;
+        }
         Stack<TreeNode> stack = new Stack<>();
         addAll(root, stack);
         while (stack.size() > 0) {
@@ -18,7 +21,7 @@ class Solution {
                 return stack.isEmpty() ? null : stack.pop();
             }
         }
-        return root;
+        return null;
     }
     private void addAll(TreeNode root, Stack<TreeNode> stack) {
         while (root != null) {
