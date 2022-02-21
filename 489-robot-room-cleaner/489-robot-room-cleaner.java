@@ -1,33 +1,32 @@
 
-
 class Solution {
     public void cleanRoom(Robot robot) {
         int[][] dirs = new int[][]{{-1,0},{0,1},{1,0},{0,-1}};
         
         Set<String> set = new HashSet<>();
-        dfs(set, 0, 0, 0, dirs, robot);
+        dfs(robot, dirs, set, 0, 0, 0);
     }
-    private void dfs(Set<String> set, int i, int j, int direction, int[][] dirs, Robot robot) {
+    private void dfs(Robot robot, int[][] dirs, Set<String> set, int i, int j, int turn) {
         String str = i + "->" + j;
+        if (set.contains(str)) return;
         set.add(str);
         robot.clean();
-        for (int cur = direction; cur < direction + 4; ++cur) {
+        for (int cur = turn; cur < turn + 4; ++cur) {
             int row = i + dirs[cur % 4][0];
             int col = j + dirs[cur % 4][1];
             String next = row + "->" + col;
             if (!set.contains(next) && robot.move()) {
-                dfs(set, row, col, cur % 4, dirs, robot);
+                dfs(robot, dirs, set, row, col, cur % 4);
             }
-            robot.turnRight();
+            robot.turnLeft();
         }
-        robot.turnRight();
-        robot.turnRight();
+        robot.turnLeft();
+        robot.turnLeft();
         robot.move();
-        robot.turnRight();
-        robot.turnRight();
+        robot.turnLeft();
+        robot.turnLeft();
     }
 }
-
 
 /**
  * // This is the robot's control interface.
