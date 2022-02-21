@@ -7,7 +7,7 @@ class Solution {
             map.put(ch, map.getOrDefault(ch, 0) + 1);
         }
         PriorityQueue<Character> pq = new PriorityQueue<>
-            ((a, b) -> map.get(b) == map.get(a) ? b - a : map.get(b) - map.get(a));
+            ((a, b) -> map.get(b) - map.get(a));
         for (char key : map.keySet()) {
             pq.offer(key);
         }
