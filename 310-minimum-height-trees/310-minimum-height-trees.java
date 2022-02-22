@@ -20,7 +20,6 @@ class Solution {
                 leaves.add(i);
             }
         }
-        
         while (n > 2) {
             n -= leaves.size();
             List<Integer> newLeaves = new ArrayList<>();
