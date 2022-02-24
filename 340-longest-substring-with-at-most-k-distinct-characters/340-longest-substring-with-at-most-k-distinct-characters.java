@@ -4,24 +4,20 @@ class Solution {
         
         int i = 0;
         int max = 0;
-        int count = 0;
         for (int j = 0; j < s.length(); ++j) {
             char ch = s.charAt(j);
             map.put(ch, map.getOrDefault(ch, 0) + 1);
-            count++;
             while (i < s.length() && map.size() > k) {
-                int freq = map.get(s.charAt(i));
-                freq--;
-                count--;
-                if (freq == 0) {
-                    map.remove(s.charAt(i));
+                char cur = s.charAt(i++);
+                int count = map.get(cur);
+                if (--count > 0) {
+                    map.put(cur, count);
                 } else {
-                    map.put(s.charAt(i), freq);
+                    map.remove(cur);
                 }
-                i++;
             }
             if (map.size() <= k) {
-                max = Math.max(max, count);
+                max = Math.max(max, j - i + 1);
             }
         }
         return max;
