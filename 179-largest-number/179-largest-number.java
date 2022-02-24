@@ -1,16 +1,17 @@
 class Solution {
     public String largestNumber(int[] nums) {
-        List<String> list = new ArrayList<>();
-        for (int i : nums) {
-            list.add(String.valueOf(i));
+        PriorityQueue<String> pq = new PriorityQueue<>((a, b) -> (b + a).compareTo(a + b));
+        
+        for (int cur : nums) {
+            String str = String.valueOf(cur);
+            pq.offer(str);
         }
-        Collections.sort(list, (a, b) -> (b+a).compareTo(a+b));
-        if (list.get(0).charAt(0) == '0'){
+        if (pq.peek().charAt(0) == '0'){
             return "0";
         }
         StringBuilder sb = new StringBuilder();
-        for (String s : list) {
-            sb.append(s);
+        while (pq.size() > 0) {
+            sb.append(pq.poll());
         }
         return sb.toString();
     }
