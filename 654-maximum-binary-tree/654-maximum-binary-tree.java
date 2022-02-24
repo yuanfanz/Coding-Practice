@@ -1,28 +1,17 @@
 class Solution {
     public TreeNode constructMaximumBinaryTree(int[] nums) {
-        if (nums.length == 0) {
-            return null;
-        }
-        return divideAndConquer(nums, 0, nums.length - 1);
-    }
-    private TreeNode divideAndConquer(int[] nums, int start, int end) {
-        if (start > end) {
-            return null;
-        }
-        if (start == end) {
-            return new TreeNode(nums[start]);
-        }
-        int index = start;
-        int max = nums[start];
-        for (int i = start; i <= end; ++i) {
-            if (max < nums[i]) {
-                max = nums[i];
-                index = i;
+        Deque<TreeNode> deque = new LinkedList<>();
+        
+        for (int i = 0; i < nums.length; ++i) {
+            TreeNode cur = new TreeNode(nums[i]);
+            while (deque.size() > 0 && deque.peekFirst().val < nums[i]) {
+                cur.left = deque.pollFirst();
             }
+            if (deque.size() > 0) {
+                deque.peekFirst().right = cur;
+            }
+            deque.addFirst(cur);
         }
-        TreeNode node = new TreeNode(max);
-        node.left = divideAndConquer(nums, start, index - 1);
-        node.right = divideAndConquer(nums, index + 1, end);
-        return node;
+        return deque.size() == 0 ? null : deque.pollLast();
     }
 }
