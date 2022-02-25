@@ -3,7 +3,6 @@ class Solution {
         String[] arr1 = version1.split("\\.");
         String[] arr2 = version2.split("\\.");
         
-        
         if (arr1.length > arr2.length) {
             return -compareVersion(version2, version1);
         }
@@ -31,11 +30,5 @@ class Solution {
         } else {
             return 0;
         }
-    }
-    private void print(String[] grid) {
-        for (int i = 0; i < grid.length; ++i) {
-            System.out.print(grid[i] + " ");
-        }
-        System.out.println();
     }
 }
