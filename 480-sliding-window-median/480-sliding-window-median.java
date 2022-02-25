@@ -20,8 +20,6 @@ class Solution {
             }
             balance(left, right);
             if (i - k + 1 >= 0) {
-                // print(left, nums);
-                // print(right, nums);
                 int leftSize = left.size();
                 int rightSize = right.size();
                 if (leftSize == rightSize) {
@@ -31,8 +29,6 @@ class Solution {
                 } else {
                     result[i - k + 1] = (double) nums[right.first()];
                 }
-                // System.out.println(result[i - k + 1]);
-                // System.out.println();
             }
         }
         return result;
@@ -45,11 +41,5 @@ class Solution {
                 left.add(right.pollFirst());
             }
         }
-    }
-    private void print(TreeSet<Integer> left, int[] nums) {
-        for (int i : left) {
-            System.out.print(nums[i] + " ");
-        }
-        System.out.println();
     }
 }
