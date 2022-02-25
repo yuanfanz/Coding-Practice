@@ -1,20 +1,19 @@
 class Solution {
     public int maximumSwap(int num) {
-        char[] arr = String.valueOf(num).toCharArray();
-        int[] bucket = new int[10];
+        int[] pos = new int[10];
         
-        for (int i = 0; i < arr.length; ++i) {
-            char ch = arr[i];
-            bucket[ch - '0'] = i;
+        String str = String.valueOf(num);
+        for (int i = 0; i < str.length(); ++i) {
+            pos[str.charAt(i) - '0'] = i;
         }
+        char[] arr = str.toCharArray();
         for (int i = 0; i < arr.length; ++i) {
-            char ch = arr[i];
-            int cur = ch - '0';
+            int cur = arr[i] - '0';
             for (int j = 9; j > cur; --j) {
-                if (bucket[j] > i) {
-                    char tmp = arr[bucket[j]];
-                    arr[bucket[j]] = ch;
-                    arr[i] = tmp;
+                if (pos[j] > i) {
+                    char tmp = arr[i];
+                    arr[i] = (char) (j + '0');
+                    arr[pos[j]] = tmp;
                     return Integer.valueOf(String.valueOf(arr));
                 }
             }
