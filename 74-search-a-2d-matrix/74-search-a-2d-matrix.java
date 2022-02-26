@@ -7,23 +7,22 @@ class Solution {
         int j = m - 1;
         while (i <= j) {
             int mid = i + (j - i) / 2;
-            if (matrix[mid][0] > target) {
-                j = mid - 1;
-            } else {
+            if (matrix[mid][0] <= target && target <= matrix[mid][n - 1]) {
+                return search(matrix[mid], 0, n - 1, target);
+            } else if (matrix[mid][0] < target) {
                 i = mid + 1;
+            } else {
+                j = mid - 1;
             }
         }
-        if (j < 0 || matrix[j][0] > target) {
-            return false;
-        }
-        int index = j;
-        i = 0;
-        j = n - 1;
+        return false;
+    }
+    private boolean search(int[] nums, int i, int j, int target) {
         while (i <= j) {
             int mid = i + (j - i) / 2;
-            if (matrix[index][mid] == target) {
+            if (nums[mid] == target) {
                 return true;
-            } else if (matrix[index][mid] < target) {
+            } else if (nums[mid] < target) {
                 i = mid + 1;
             } else {
                 j = mid - 1;
