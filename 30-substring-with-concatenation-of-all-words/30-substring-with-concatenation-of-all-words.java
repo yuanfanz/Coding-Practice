@@ -2,20 +2,20 @@ class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> result = new ArrayList<>();
         
-        Map<String, Integer> count = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>();
         for (String word : words) {
-            count.put(word, count.getOrDefault(word, 0) + 1);
+            map.put(word, map.getOrDefault(word, 0) + 1);
         }
-        int num = words.length;
         int len = words[0].length();
+        int num = words.length;
         for (int i = 0; i < s.length() - num * len + 1; ++i) {
-            Map<String, Integer> seen = new HashMap<>();
+            Map<String, Integer> countMap = new HashMap<>();
             int j = 0;
             while (j < num) {
-                String cur = s.substring(i + j * len, i + (j + 1) * len);
-                if (count.containsKey(cur)) {
-                    seen.put(cur, seen.getOrDefault(cur, 0) + 1);
-                    if (seen.get(cur) > count.get(cur)) {
+                String next = s.substring(i + j * len, i + (j + 1) * len);
+                if (map.containsKey(next)) {
+                    countMap.put(next, countMap.getOrDefault(next, 0) + 1);
+                    if (countMap.get(next) > map.get(next)) {
                         break;
                     }
                 } else {
