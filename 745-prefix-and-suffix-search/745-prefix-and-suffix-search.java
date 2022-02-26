@@ -33,6 +33,18 @@ class WordFilter {
         return ans;
     }
     
+    private TrieNode findPre(String prefix) {
+        TrieNode cur = root;
+        for (int i = 0; i < prefix.length(); ++i) {
+            char ch = prefix.charAt(i);
+            if (!cur.map.containsKey(ch)) {
+                return null;
+            }
+            cur = cur.map.get(ch);
+        }
+        return cur;
+    }
+    
     private void findSuffix(TrieNode cur, String suffix) {
         if (cur.isWord) {
             int start = cur.word.length() - suffix.length();
@@ -47,18 +59,6 @@ class WordFilter {
                 findSuffix(cur.map.get(next), suffix);
             }
         }
-    }
-    
-    private TrieNode findPre(String prefix) {
-        TrieNode cur = root;
-        for (int i = 0; i < prefix.length(); ++i) {
-            char ch = prefix.charAt(i);
-            if (!cur.map.containsKey(ch)) {
-                return null;
-            }
-            cur = cur.map.get(ch);
-        }
-        return cur;
     }
     
     class TrieNode{
