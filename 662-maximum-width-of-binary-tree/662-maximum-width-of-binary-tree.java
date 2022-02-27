@@ -15,8 +15,12 @@ class Solution {
             int end = 0;
             for (int i = 0; i < size; ++i) {
                 TreeNode cur = queue.poll();
-                if (i == 0) start = map.get(cur);
-                if (i == size - 1) end = map.get(cur);
+                if (i == 0) {
+                    start = map.get(cur);
+                }
+                if (i == size - 1) {
+                    end = map.get(cur);
+                }
                 if (cur.left != null) {
                     map.put(cur.left, map.get(cur) * 2);
                     queue.offer(cur.left);
