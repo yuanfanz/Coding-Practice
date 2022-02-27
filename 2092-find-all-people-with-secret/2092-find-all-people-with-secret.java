@@ -1,42 +1,42 @@
 class Solution {
     public List<Integer> findAllPeople(int n, int[][] meetings, int firstPerson) {
         UnionFind uf = new UnionFind(n);
-        
         uf.union(0, firstPerson);
         int root = uf.find(0);
-        Map<Integer, List<Integer>> map = new HashMap<>();
+        Map<Integer, List<int[]>> map = new HashMap<>();
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < meetings.length; ++i) {
             int time = meetings[i][2];
-            List<Integer> list = map.getOrDefault(time, new ArrayList<>());
+            List<int[]> list = map.getOrDefault(time, new ArrayList<>());
+            list.add(new int[]{meetings[i][0], meetings[i][1]});
             min = Math.min(min, time);
             max = Math.max(max, time);
-            list.add(i);
             map.put(time, list);
         }
         for (int i = min; i <= max; ++i) {
             if (!map.containsKey(i)) continue;
             Set<Integer> set = new HashSet<>();
-            for (int index : map.get(i)) {
-                int[] cur = meetings[index];
-                uf.union(cur[0], cur[1]);
-                set.add(cur[0]);
-                set.add(cur[1]);
+            for (int[] cur : map.get(i)) {
+                int first = cur[0];
+                int second = cur[1];
+                set.add(first);
+                set.add(second);
+                uf.union(first, second);
             }
-            for (int next : set) {
-                if (uf.find(next) != root) {
-                    uf.reset(next);
+            for (int num : set) {
+                if (uf.find(num) != root) {
+                    uf.reset(num);
                 }
             }
         }
-        List<Integer> list = new ArrayList<>();
+        List<Integer> result = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
             if (uf.find(i) == root) {
-                list.add(i);
+                result.add(i);
             }
         }
-        return list;
+        return result;
     }
     
     class UnionFind{
