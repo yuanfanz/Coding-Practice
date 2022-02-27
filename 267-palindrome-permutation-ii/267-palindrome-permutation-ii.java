@@ -1,47 +1,56 @@
 class Solution {
     public List<String> generatePalindromes(String s) {
-        List<String> result = new ArrayList<>();
-        int[] hash = new int[26];
+        Set<String> set = new HashSet<>();
+        
+        int[] map = new int[26];
         for (int i = 0; i < s.length(); ++i) {
-            hash[s.charAt(i) - 'a']++;
+            map[s.charAt(i) - 'a']++;
         }
-        boolean single = false;
-        for (int i = 0; i < hash.length; ++i) {
-            if (hash[i] % 2 == 1) {
-                if (single) {
-                    return result;
-                }
-                single = true;
+        boolean flag = false;
+        for (int i = 0; i < 26; ++i) {
+            if (map[i] % 2 == 1) {
+                if (!flag) {
+                    flag = true;
+                } else return new ArrayList<>();
             }
         }
-        String mid = "";
         int len = 0;
-        for (int i = 0; i < hash.length; ++i) {
-            if (hash[i] > 0) {
-                if (hash[i] % 2 == 1) {
+        String mid = "";
+        for (int i = 0; i < 26; ++i) {
+            if (map[i] > 0) {
+                if (map[i] % 2 == 1) {
                     mid = (char) (i + 'a') + "";
-                    hash[i]--;
+                    map[i]--;
                 }
-                hash[i] /= 2;
-                len += hash[i];
+                map[i] = map[i] / 2;
+                len += map[i];
             }
         }
-        dfs(result, hash, mid, len, "");
-        return result;
+        dfs(set, "", map, len, mid);
+        return new ArrayList<>(set);
     }
-    private void dfs(List<String> result, int[] hash, String mid, int len, String cur) {
+    private void dfs(Set<String> set, String cur, int[] map, int len, String mid) {
         if (len == cur.length()) {
+            String prefix = cur;
             StringBuilder half = new StringBuilder(cur).reverse();
-            String newStr = cur + mid + half;
-            result.add(newStr);
+            String suffix = half.toString();
+            set.add(prefix + mid + suffix);
             return;
         }
-        for (int i = 0; i < hash.length; ++i) {
-            if (hash[i] > 0) {
-                hash[i]--;
-                dfs(result, hash, mid, len, cur + (char)(i + 'a'));
-                hash[i]++;
+        for (int i = 0; i < map.length; ++i) {
+            if (map[i] > 0) {
+                char ch = (char) (i + 'a');
+                map[i]--;
+                dfs(set, cur + (char) (i + 'a'), map, len, mid);
+                map[i]++;
             }
         }
     }
 }
+
+
+
+
+
+
+
