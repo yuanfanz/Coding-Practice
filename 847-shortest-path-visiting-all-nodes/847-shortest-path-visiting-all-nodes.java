@@ -1,59 +1,35 @@
 class Solution {
-    
     public int shortestPathLength(int[][] graph) {
+        int n = graph.length;
+        int fullMask = (1 << n) - 1;
         
-        int N = graph.length;
+        Set<String> visited = new HashSet<>();
+        Queue<int[]> queue = new LinkedList<>();
         
-        Queue<Tuple> queue = new LinkedList<>();
-        Set<Tuple> set = new HashSet<>();
-
-        for(int i = 0; i < N; i++){
-            int tmp = (1 << i);
-            set.add(new Tuple(tmp, i, 0));
-            queue.add(new Tuple(tmp, i, 1));
+        for (int i = 0; i < n; ++i) {
+            queue.offer(new int[]{i, 1 << i});
+            visited.add(i + "->" + (1 << i));
         }
         
-        while(!queue.isEmpty()){
-            Tuple curr = queue.remove();
-    
-            if(curr.bitMask == (1 << N) - 1){
-                return curr.cost - 1;
-            } else {
-                int[] neighbors = graph[curr.curr];
-                
-                for(int v : neighbors){
-                    int bitMask = curr.bitMask;
-                    bitMask = bitMask | (1 << v);
-                    
-                    Tuple t = new Tuple(bitMask, v, 0);
-                    if(!set.contains(t)){
-                        queue.add(new Tuple(bitMask, v, curr.cost + 1));
-                        set.add(t);
-                    }         
+        int level = 0;
+        while (queue.size() > 0) {
+            int size = queue.size();
+            for (int i = 0; i < size; ++i) {
+                int[] cur = queue.poll();
+                int node = cur[0];
+                int mask = cur[1];
+                if (mask == fullMask) return level; // found all nodes
+                for (int next : graph[node]) {
+                    int nextMask = mask | (1 << next);
+                    if (visited.contains(next + "->" + nextMask)) {
+                        continue; // already have this path
+                    }
+                    queue.offer(new int[]{next, nextMask});
+                    visited.add(next + "->" + nextMask);
                 }
             }
+            level++;
         }
-        return -1;
-    }
-}
-
-class Tuple{
-    int bitMask;
-    int curr;
-    int cost;
-    
-    public Tuple(int bit, int n, int c){
-        bitMask = bit;
-        curr = n;
-        cost = c;
-    }
-    
-    public boolean equals(Object o){
-        Tuple p = (Tuple) o;
-        return bitMask == p.bitMask && curr == p.curr && cost == p.cost;
-    }
-    
-    public int hashCode(){
-        return 1331 * bitMask + 7193 * curr + 727 * cost;
+        return level;
     }
 }
