@@ -1,13 +1,17 @@
 class Solution {
     public int nearestValidPoint(int x, int y, int[][] points) {
-        int index = -1; 
-        for (int i = 0, smallest = Integer.MAX_VALUE; i < points.length; ++i) {
-            int dx = x - points[i][0], dy = y - points[i][1];
-            if (dx * dy == 0 && Math.abs(dy + dx) < smallest) {
-                smallest = Math.abs(dx + dy);
-                index = i;
+        int[] target = new int[]{x, y};
+        PriorityQueue<Integer> pq = new PriorityQueue<>
+            ((a, b) -> getDistance(points[a], target) != getDistance(points[b], target) 
+             ? getDistance(points[a], target) - getDistance(points[b], target) : a - b);
+        for (int i = 0; i < points.length; ++i) {
+            if (points[i][0] == x || points[i][1] == y) {
+                pq.offer(i);
             }
         }
-        return index;
+        return pq.size() > 0 ? pq.poll() : -1;
+    }
+    private int getDistance(int[] a, int[] b) {
+        return Math.abs(a[0] + a[1] - b[0] - b[1]);
     }
 }
