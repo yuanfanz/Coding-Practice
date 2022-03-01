@@ -9,7 +9,7 @@ class Solution {
         for (int i = 0; i < nums.length; ++i) {
             if (i - k >= 0) {
                 if (!left.remove(i - k)) {
-                    right.remove(i - k); // should only remove one element
+                    right.remove(i - k);
                 }
             }
             balance(left, right);
