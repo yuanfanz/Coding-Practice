@@ -1,13 +1,13 @@
 class NumArray {
-    int[] fenwickTree;
-    int len;
     int[] arr;
+    
+    int[] fenwickTree;
+    
     public NumArray(int[] nums) {
-        len = nums.length;
-        arr = new int[len];
-        fenwickTree = new int[len + 1];
-        
-        for (int i = 0; i < len; ++i) {
+        int n = nums.length;
+        arr = new int[n];
+        fenwickTree = new int[n + 1];
+        for (int i = 0; i < nums.length; ++i) {
             update(i, nums[i]);
         }
     }
@@ -15,7 +15,7 @@ class NumArray {
     public void update(int index, int val) {
         int diff = val - arr[index];
         arr[index] = val;
-        for (int i = index + 1; i <= len; i += (i & -i)) {
+        for (int i = index + 1; i < fenwickTree.length; i += (i & -i)) {
             fenwickTree[i] += diff;
         }
     }
@@ -24,11 +24,11 @@ class NumArray {
         return getSum(right + 1) - getSum(left);
     }
     
-    private int getSum(int i) {
+    private int getSum(int index) {
         int sum = 0;
-        while (i > 0) {
-            sum += fenwickTree[i];
-            i -= (i & -i);
+        while (index > 0) {
+            sum += fenwickTree[index];
+            index -= (index & -index);
         }
         return sum;
     }
