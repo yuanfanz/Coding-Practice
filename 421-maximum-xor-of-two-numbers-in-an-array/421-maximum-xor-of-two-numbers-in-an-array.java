@@ -5,17 +5,16 @@ class Solution {
         
         for (int i = 31; i >= 0; --i) {
             mask = mask | (1 << i);
-            
             Set<Integer> set = new HashSet<>();
             for (int cur : nums) {
-                int leftPart = cur & mask;
-                set.add(leftPart);
+                int left = cur & mask;
+                set.add(left);
             }
-            int greedyTry = max | (1 << i);
-            for (int leftPart : set) {
-                int anotherNum = leftPart ^ greedyTry;
+            int tmp = max | (1 << i);
+            for (int left : set) {
+                int anotherNum = left ^ tmp;
                 if (set.contains(anotherNum)) {
-                    max = greedyTry;
+                    max = tmp;
                     break;
                 }
             }
