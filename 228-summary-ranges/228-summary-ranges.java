@@ -15,8 +15,7 @@ class Solution {
     private String formRange(int low, int high) {
         if (low == high) {
             return low + "";
-        } else {
-            return low + "->" + high;
         }
+        return low + "->" + high;
     }
 }
