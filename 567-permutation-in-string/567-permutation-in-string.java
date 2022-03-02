@@ -4,7 +4,7 @@ class Solution {
         int[] hash = new int[26];
         int len = s1.length();
         int j = 0;
-        for (int i = 0; i <= s2.length() - len; ++i) {
+        for (int i = 0; i < s2.length() - len + 1; ++i) {
             while (j < i + len) {
                 hash[s2.charAt(j++) - 'a']++;
             }
