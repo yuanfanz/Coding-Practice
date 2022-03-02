@@ -1,11 +1,16 @@
 class Solution {
     public int countComponents(int n, int[][] edges) {
         UnionFind uf = new UnionFind(n);
+        
         for (int[] cur : edges) {
-            uf.union(cur[0], cur[1]);
+            int first = cur[0];
+            int second = cur[1];
+            
+            uf.union(first, second);
         }
         return uf.count;
     }
+    
     class UnionFind{
         int[] parent;
         int count;
