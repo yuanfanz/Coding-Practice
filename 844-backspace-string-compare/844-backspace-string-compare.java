@@ -14,7 +14,7 @@ class Solution {
                 }
                 i--;
             }
-            char left = i < 0 ? '@' : s.charAt(i);
+            char left = i >= 0 ? s.charAt(i) : '@';
             while (j >= 0 && (countT > 0 || t.charAt(j) == '#')) {
                 if (t.charAt(j) == '#') {
                     countT++;
@@ -23,7 +23,7 @@ class Solution {
                 }
                 j--;
             }
-            char right = j < 0 ? '@' : t.charAt(j);
+            char right = j >= 0 ? t.charAt(j) : '@';
             if (left != right) {
                 return false;
             }
