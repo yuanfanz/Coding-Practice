@@ -8,7 +8,7 @@ class Solution {
             while (deque.size() > 0 && (i - k + 1) > deque.peekFirst()) {
                 deque.pollFirst();
             }
-            while (deque.size() > 0 && nums[i] > nums[deque.peekLast()]) {
+            while (deque.size() > 0 && nums[i] >= nums[deque.peekLast()]) {
                 deque.pollLast();
             }
             deque.addLast(i);
