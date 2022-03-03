@@ -23,6 +23,7 @@ class Solution {
     }
     private int[] buildDebt(int[][] transactions) {
         Map<Integer, Integer> map = new HashMap<>();
+        
         for (int[] cur : transactions) {
             int giver = cur[0];
             int taker = cur[1];
