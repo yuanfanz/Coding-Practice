@@ -14,19 +14,18 @@ class Solution {
             return head;
         }
         int len = getLen(head);
-        int rotate = k % len;
-        if (rotate == 0) {
+        k = k % len;
+        if (k == 0) {
             return head;
         }
-        ListNode fast = head;
+        ListNode dummy = new ListNode(0);
         ListNode slow = head;
-        ListNode prev = null;
-        while (rotate > 0) {
+        ListNode fast = head;
+        while (k > 0) {
             fast = fast.next;
-            rotate--;
+            k--;
         }
         while (fast.next != null) {
-            prev = slow;
             slow = slow.next;
             fast = fast.next;
         }
