@@ -4,24 +4,22 @@ class Solution {
         int n = board[0].length;
         
         int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
-        Queue<int[]> queue = new LinkedList<>();
         for (int i = 0; i < m; ++i) {
             if (board[i][0] == 'O') {
-                queue.offer(new int[]{i, 0});
+                dfs(i, 0, board, dirs);
             }
             if (board[i][n - 1] == 'O') {
-                queue.offer(new int[]{i, n - 1});
+                dfs(i, n - 1, board, dirs);
             }
         }
         for (int j = 0; j < n; ++j) {
             if (board[0][j] == 'O') {
-                queue.offer(new int[]{0, j});
+                dfs(0, j, board, dirs);
             }
             if (board[m - 1][j] == 'O') {
-                queue.offer(new int[]{m - 1, j});
+                dfs(m - 1, j, board, dirs);
             }
         }
-        mark(queue, dirs, board);
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (board[i][j] == 'O') {
@@ -33,37 +31,17 @@ class Solution {
             }
         }
     }
-    private void mark(Queue<int[]> queue, int[][] dirs, char[][] board) {
-        while (queue.size() != 0) {
-            int[] cur = queue.poll();
-            int i = cur[0];
-            int j = cur[1];
+    private void dfs(int i, int j, char[][] board, int[][] dirs) {
+        int m = board.length;
+        int n = board[0].length;
+        if (i < 0 || j < 0 || i >= m || j >= n) {
+            return;
+        }
+        if (board[i][j] == 'O') {
             board[i][j] = '*';
             for (int[] dir : dirs) {
-                int row = i + dir[0];
-                int col = j + dir[1];
-                if (row < 0 || col < 0 || row >= board.length || col >= board[0].length) {
-                    continue;
-                }
-                if (board[row][col] == 'O') {
-                    queue.offer(new int[]{row, col});
-                }
+                dfs(i + dir[0], j + dir[1], board, dirs);
             }
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
