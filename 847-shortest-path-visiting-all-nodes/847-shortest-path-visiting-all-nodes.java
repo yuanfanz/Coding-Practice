@@ -18,14 +18,15 @@ class Solution {
                 int[] cur = queue.poll();
                 int node = cur[0];
                 int mask = cur[1];
-                if (mask == fullMask) return level; // found all nodes
+                if (mask == fullMask) return level;
                 for (int next : graph[node]) {
                     int nextMask = mask | (1 << next);
-                    if (visited.contains(next + "->" + nextMask)) {
-                        continue; // already have this path
+                    String path = next + "->" + nextMask;
+                    if (visited.contains(path)) {
+                        continue;
                     }
+                    visited.add(path);
                     queue.offer(new int[]{next, nextMask});
-                    visited.add(next + "->" + nextMask);
                 }
             }
             level++;
