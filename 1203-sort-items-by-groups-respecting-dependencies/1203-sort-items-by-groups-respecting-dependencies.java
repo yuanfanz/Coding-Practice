@@ -47,16 +47,16 @@ class Solution {
     private List<Integer> topologicalSort(Map<Integer, List<Integer>> graph, int[] indegree, int n) {
         List<Integer> result = new ArrayList<>();
         Queue<Integer> queue = new LinkedList<>();
-        // for (int i = 0; i < n; ++i) {
-        //     if (indegree[i] == 0) {
-        //         queue.offer(i);
-        //     }
-        // }
-        for (int key : graph.keySet()) {
-            if (indegree[key] == 0) {
-                queue.offer(key);
+        for (int i = 0; i < n; ++i) {
+            if (indegree[i] == 0) {
+                queue.offer(i);
             }
         }
+        // for (int key : graph.keySet()) {
+        //     if (indegree[key] == 0) {
+        //         queue.offer(key);
+        //     }
+        // }
         while (queue.size() > 0) {
             int cur = queue.poll();
             n--;
