@@ -52,11 +52,6 @@ class Solution {
                 queue.offer(i);
             }
         }
-        // for (int key : graph.keySet()) {
-        //     if (indegree[key] == 0) {
-        //         queue.offer(key);
-        //     }
-        // }
         while (queue.size() > 0) {
             int cur = queue.poll();
             n--;
