@@ -1,9 +1,9 @@
 class Solution {
     public int[] sortItems(int n, int m, int[] group, List<List<Integer>> beforeItems) {
-        Map<Integer, List<Integer>> groupGraph = new HashMap<>();
         Map<Integer, List<Integer>> itemGraph = new HashMap<>();
+        Map<Integer, List<Integer>> groupGraph = new HashMap<>();
         
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < group.length; ++i) {
             if (group[i] == -1) {
                 group[i] = m++;
             }
@@ -24,6 +24,7 @@ class Solution {
         List<Integer> itemList = topologicalSort(itemGraph, itemIndegree, n);
         
         if (groupList.size() == 0 || itemList.size() == 0) {
+            System.out.println("YES");
             return new int[0];
         }
         Map<Integer, List<Integer>> groupToItems = new HashMap<>();
@@ -46,6 +47,11 @@ class Solution {
     private List<Integer> topologicalSort(Map<Integer, List<Integer>> graph, int[] indegree, int n) {
         List<Integer> result = new ArrayList<>();
         Queue<Integer> queue = new LinkedList<>();
+        // for (int i = 0; i < n; ++i) {
+        //     if (indegree[i] == 0) {
+        //         queue.offer(i);
+        //     }
+        // }
         for (int key : graph.keySet()) {
             if (indegree[key] == 0) {
                 queue.offer(key);
@@ -64,31 +70,29 @@ class Solution {
         }
         return n != 0 ? new ArrayList<>() : result;
     }
-    private void buildItemGraph(Map<Integer, List<Integer>> itemGraph, int[] itemIndegree,
-                                List<List<Integer>> beforeItems, int n) {
-        for (int i = 0; i < n; ++i) {
-            List<Integer> fromItems = beforeItems.get(i);
-            for (int cur : fromItems) {
-                List<Integer> itemList = itemGraph.getOrDefault(cur, new ArrayList<>());
-                itemList.add(i);
-                itemGraph.put(cur, itemList);
-                itemIndegree[i]++;
-            }
-        }
-    }
     private void buildGroupGraph(Map<Integer, List<Integer>> groupGraph, int[] groupIndegree,
                                 int[] group, List<List<Integer>> beforeItems, int n) {
         for (int i = 0; i < n; ++i) {
             int toGroup = group[i];
-            List<Integer> fromItems = beforeItems.get(i);
-            for (int cur : fromItems) {
-                int fromGroup = group[cur];
+            for (int prev : beforeItems.get(i)) {
+                int fromGroup = group[prev];
                 if (fromGroup != toGroup) {
-                    List<Integer> groupList = groupGraph.getOrDefault(fromGroup, new ArrayList<>());
-                    groupList.add(toGroup);
-                    groupGraph.put(fromGroup, groupList);
+                    List<Integer> list = groupGraph.getOrDefault(fromGroup, new ArrayList<>());
+                    list.add(toGroup);
+                    groupGraph.put(fromGroup, list);
                     groupIndegree[toGroup]++;
                 }
+            }
+        }
+    }
+    private void buildItemGraph(Map<Integer, List<Integer>> itemGraph, int[] itemIndegree,
+                                List<List<Integer>> beforeItems, int n) {
+        for (int i = 0; i < n; ++i) {
+            for (int prev : beforeItems.get(i)) {
+                List<Integer> list = itemGraph.getOrDefault(prev, new ArrayList<>());
+                list.add(i);
+                itemGraph.put(prev, list);
+                itemIndegree[i]++;
             }
         }
     }
