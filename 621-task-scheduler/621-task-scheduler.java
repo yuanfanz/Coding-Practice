@@ -13,14 +13,14 @@ class Solution {
         }
         int total = 0;
         while (pq.size() > 0 || timeMap.size() > 0) {
-            if (timeMap.containsKey(total - n - 1)) {
-                pq.offer(timeMap.remove(total - n - 1));
+            if (timeMap.containsKey(total)) {
+                pq.offer(timeMap.remove(total));
             }
             if (pq.size() > 0) {
                 int cur = pq.poll();
                 cur--;
                 if (cur > 0) {
-                    timeMap.put(total, cur);
+                    timeMap.put(total + n + 1, cur);
                 }
             }
             total++;
