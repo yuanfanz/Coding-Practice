@@ -4,7 +4,7 @@ class Solution {
         
         PriorityQueue<int[]> pq = new PriorityQueue<>
             ((a, b) -> nums1[a[0]] + nums2[a[1]] - nums1[b[0]] - nums2[b[1]]);
-        for (int i = 0; i < nums1.length; ++i) {
+        for (int i = 0; i < nums1.length && pq.size() < k; ++i) {
             pq.offer(new int[]{i, 0});
         }
         while (pq.size() > 0 && k > 0) {
