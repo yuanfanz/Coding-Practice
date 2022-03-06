@@ -5,21 +5,18 @@ class Solution {
         if (m > n) {
             return findMedianSortedArrays(nums2, nums1);
         }
-        /**
-        A[0], A[1], ..., A[i-1]  |  A[i], A[i+1], ..., A[m-1]
-        B[0], B[1], ..., B[j-1]  |  B[j], B[j+1], ..., B[n-1]
-        */
+        // nums1: 1 2 3 4 ....i - 1 | i, ... m - 1
+        // nums2: 1 2 3 4 ....j - 1 | j, ... n - 1
         int mid = (m + n + 1) / 2;
-        int min = 0;
-        int max = m;
-        while (min <= max) {
-            int i = min + (max - min) / 2;
+        int left = 0;
+        int right = m;
+        while (left <= right) {
+            int i = left + (right - left) / 2;
             int j = mid - i;
             if (i > 0 && nums1[i - 1] > nums2[j]) {
-                // left is too big
-                max = i - 1;
-            } else if (i < m && nums1[i] < nums2[j - 1]) {
-                min = i + 1;
+                right = i - 1;
+            } else if (i < m && nums2[j - 1] > nums1[i]) {
+                left = i + 1;
             } else {
                 int leftMax = Integer.MIN_VALUE;
                 if (i == 0) {
@@ -46,3 +43,19 @@ class Solution {
         return 0;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
