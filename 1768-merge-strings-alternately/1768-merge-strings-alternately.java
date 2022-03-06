@@ -3,18 +3,13 @@ class Solution {
         int i = 0;
         int j = 0;
         StringBuilder sb = new StringBuilder();
-        while (i < word1.length() && j < word2.length()) {
-            if (i <= j) {
-                sb.append(word1.charAt(i++));
-            } else {
-                sb.append(word2.charAt(j++));
-            }
-        }
-        while (i < word1.length()) {
-            sb.append(word1.charAt(i++));
-        }
-        while (j < word2.length()) {
-            sb.append(word2.charAt(j++));
+        while (i < word1.length() || j < word2.length()) {
+            String ch1 = i < word1.length() ? word1.charAt(i) + "" : "";
+            String ch2 = j < word2.length() ? word2.charAt(j) + "" : "";
+            sb.append(ch1);
+            sb.append(ch2);
+            i++;
+            j++;
         }
         return sb.toString();
     }
