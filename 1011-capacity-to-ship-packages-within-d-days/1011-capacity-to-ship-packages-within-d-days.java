@@ -10,7 +10,7 @@ class Solution {
                 j = mid;
             }
         }
-        return j;
+        return i;
     }
     private boolean isValid(int[] weights, int mid, int days) {
         int i = 0;
