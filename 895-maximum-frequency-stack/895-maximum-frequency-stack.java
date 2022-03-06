@@ -1,10 +1,10 @@
 class FreqStack {
     Map<Integer, Integer> map;
-    Map<Integer, Stack<Integer>> freqMap;
+    Map<Integer, Stack<Integer>> stackMap;
     int max;
     public FreqStack() {
         map = new HashMap<>();
-        freqMap = new HashMap<>();
+        stackMap = new HashMap<>();
         max = 0;
     }
     
@@ -12,15 +12,15 @@ class FreqStack {
         int freq = map.getOrDefault(val, 0) + 1;
         map.put(val, freq);
         max = Math.max(max, freq);
-        Stack<Integer> stack = freqMap.getOrDefault(freq, new Stack<>());
+        Stack<Integer> stack = stackMap.getOrDefault(freq, new Stack<>());
         stack.push(val);
-        freqMap.put(freq, stack);
+        stackMap.put(freq, stack);
     }
     
     public int pop() {
-        int val = freqMap.get(max).pop();
+        int val = stackMap.get(max).pop();
         map.put(val, max - 1);
-        if (freqMap.get(max).size() == 0) {
+        if (stackMap.get(max).size() == 0) {
             max--;
         }
         return val;
