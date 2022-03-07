@@ -1,29 +1,20 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
+
 class Solution {
+    Stack<TreeNode> stack;
     public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
-        if (root == null) {
-            return root;
-        }
-        Stack<TreeNode> stack = new Stack<>();
-        addAll(root, stack);
+        stack = new Stack<>();
+        addAll(root);
         while (stack.size() > 0) {
-            TreeNode node = stack.pop();
-            addAll(node.right, stack);
-            if (node == p) {
-                return stack.isEmpty() ? null : stack.pop();
+            TreeNode cur = stack.pop();
+            addAll(cur.right);
+            if (cur == p) {
+                if (stack.size() == 0) return null;
+                return stack.pop();
             }
         }
         return null;
     }
-    private void addAll(TreeNode root, Stack<TreeNode> stack) {
+    private void addAll(TreeNode root) {
         while (root != null) {
             stack.push(root);
             root = root.left;
