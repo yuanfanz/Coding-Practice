@@ -1,29 +1,36 @@
 class AutocompleteSystem {
-    TrieNode root;
-    String prefix;
+    private TrieNode root;
+    private String prefix;
     public AutocompleteSystem(String[] sentences, int[] times) {
         root = new TrieNode();
         prefix = "";
+        buildTrie(sentences, times);
+        
+    }
+    
+    private void buildTrie(String[] sentences, int[] times) {
         for (int i = 0; i < sentences.length; ++i) {
-            add(sentences[i], times[i]);
+            int freq = times[i];
+            String str = sentences[i];
+            update(str, freq);
         }
     }
     
-    private void add(String s, int count) {
+    private void update(String str, int freq) {
         TrieNode cur = root;
-        for (int i = 0; i < s.length(); ++i) {
-            char ch = s.charAt(i);
+        for (int i = 0; i < str.length(); ++i) {
+            char ch = str.charAt(i);
             if (!cur.map.containsKey(ch)) {
                 cur.map.put(ch, new TrieNode(ch));
             }
             cur = cur.map.get(ch);
-            cur.countMap.put(s, cur.countMap.getOrDefault(s, 0) + count);
+            cur.countMap.put(str, cur.countMap.getOrDefault(str, 0) + freq);
         }
     }
     
     public List<String> input(char c) {
         if (c == '#') {
-            add(prefix, 1);
+            update(prefix, 1);
             prefix = "";
             return new ArrayList<>();
         }
@@ -43,7 +50,7 @@ class AutocompleteSystem {
         }
         int k = 3;
         List<String> result = new ArrayList<>();
-        while (pq.size() != 0 && k > 0) {
+        while (pq.size() > 0 && k > 0) {
             result.add(pq.poll().sentence);
             k--;
         }
@@ -61,8 +68,8 @@ class AutocompleteSystem {
     
     class TrieNode{
         char ch;
-        Map<Character, TrieNode> map;
         Map<String, Integer> countMap;
+        Map<Character, TrieNode> map;
         public TrieNode() {
             map = new HashMap<>();
         }
