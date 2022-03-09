@@ -1,7 +1,7 @@
 class Solution {
     public int countOrders(int n) {
         int mod = (int) Math.pow(10, 9) + 7;
-        long[] dp = new long[501];
+        long[] dp = new long[n + 2];
         dp[1] = 1L;
         dp[2] = 6L;
         for (int i = 3; i <= n; ++i) {
