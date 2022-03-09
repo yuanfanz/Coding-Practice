@@ -1,52 +1,42 @@
 class Solution {
     public String reorganizeString(String s) {
-        int[] hash = new int[26];
+        Map<Character, Integer> map = new HashMap<>();
         
         for (int i = 0; i < s.length(); ++i) {
-            hash[s.charAt(i) - 'a']++;
-            if (hash[s.charAt(i) - 'a'] * 2 > s.length() + 1) {
-                return "";
-            }
+            char ch = s.charAt(i);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+            if (map.get(ch) * 2 > s.length() + 1) return "";
         }
-        PriorityQueue<Tuple> pq = new PriorityQueue<>((a, b) -> b.count - a.count);
-        for (int i = 0; i < hash.length; ++i) {
-            if (hash[i] > 0) {
-                pq.offer(new Tuple((char) (i + 'a'), hash[i]));
-            }
+        PriorityQueue<Character> pq = new PriorityQueue<>((a, b) -> map.get(b) - map.get(a));
+        for (char ch : map.keySet()) {
+            pq.offer(ch);
         }
         StringBuilder sb = new StringBuilder();
-        while (pq.size() != 0) {
-            Tuple t1 = pq.poll();
-            char ch = t1.ch;
-            int count = t1.count;
-            if (sb.length() == 0 || sb.charAt(sb.length() - 1) != ch) {
-                sb.append(ch);
-                count--;
-                if (count > 0) {
-                    pq.offer(new Tuple(ch, count));
+        while (pq.size() > 0) {
+            char cur = pq.poll();
+            System.out.println(cur);
+            if (sb.length() == 0 || sb.charAt(sb.length() - 1) != cur) {
+                sb.append(cur);
+                int val = map.get(cur);
+                val--;
+                if (val > 0) {
+                    map.put(cur, val);
+                    pq.offer(cur);
                 }
             } else {
-                Tuple t2 = pq.poll();
-                sb.append(t2.ch);
-                int count2 = t2.count;
-                count2--;
-                if (count2 > 0) {
-                    pq.offer(new Tuple(t2.ch, count2));
+                if (pq.size() == 0) return "";
+                char next = pq.poll();
+                sb.append(next);
+                int val = map.get(next);
+                val--;
+                if (val > 0) {
+                    map.put(next, val);
+                    pq.offer(next);
                 }
-                pq.offer(t1);
+                pq.offer(cur);
             }
+            // System.out.println(sb.toString());
         }
         return sb.toString();
     }
-    class Tuple{
-        char ch;
-        int count;
-        public Tuple(char ch, int count) {
-            this.ch = ch;
-            this.count = count;
-        }
-    }
 }
-
-
- 
