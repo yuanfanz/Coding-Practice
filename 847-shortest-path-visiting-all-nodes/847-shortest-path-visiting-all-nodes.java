@@ -10,7 +10,6 @@ class Solution {
             queue.offer(new int[]{i, 1 << i});
             visited.add(i + "->" + (1 << i));
         }
-        
         int level = 0;
         while (queue.size() > 0) {
             int size = queue.size();
