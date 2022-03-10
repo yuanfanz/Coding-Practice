@@ -1,7 +1,7 @@
 class Solution {
     public int nextGreaterElement(int n) {
-        String s = String.valueOf(n);
-        char[] arr = s.toCharArray();
+        char[] arr = String.valueOf(n).toCharArray();
+        
         int i = arr.length - 2;
         while (i >= 0) {
             if (arr[i] - '0' < arr[i + 1] - '0') {
@@ -17,8 +17,8 @@ class Solution {
             swap(arr, i, j);
         }
         reverse(arr, i + 1);
-        long res = Long.valueOf(String.valueOf(arr));
-        return res > Integer.MAX_VALUE || res <= n ? -1 : (int) res;
+        long result = Long.valueOf(String.valueOf(arr));
+        return result <= Integer.MAX_VALUE && result > n ? (int) result : -1;
     }
     private void reverse(char[] arr, int start) {
         int i = start;
