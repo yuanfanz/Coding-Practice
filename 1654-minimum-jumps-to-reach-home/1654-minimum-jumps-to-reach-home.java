@@ -1,12 +1,13 @@
 class Solution {
     public int minimumJumps(int[] forbidden, int a, int b, int x) {
+        int max = x + a + b + 1;
         Set<Integer> set = new HashSet<>();
         for (int i : forbidden) {
             set.add(i);
+            max = Math.max(max, i + a + b + 1);
         }
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{0, 0});
-        int max = x + 20*b + 1;
         boolean[] visited = new boolean[max];
         int step = 0;
         while (queue.size() > 0) {
