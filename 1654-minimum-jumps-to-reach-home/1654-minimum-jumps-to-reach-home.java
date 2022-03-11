@@ -6,7 +6,7 @@ class Solution {
         }
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{0, 0});
-        int max = x + 200*b + 1;
+        int max = x + 20*b + 1;
         boolean[] visited = new boolean[max];
         int step = 0;
         while (queue.size() > 0) {
