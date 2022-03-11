@@ -3,22 +3,23 @@ class Solution {
         Map<Character, Integer> map = new HashMap<>();
         
         int i = 0;
+        int count = 0;
         int max = 0;
         for (int j = 0; j < s.length(); ++j) {
-            char ch = s.charAt(j);
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
+            map.put(s.charAt(j), map.getOrDefault(s.charAt(j), 0) + 1);
+            count++;
             while (i < s.length() && map.size() > k) {
-                char cur = s.charAt(i++);
-                int count = map.get(cur);
-                if (--count > 0) {
-                    map.put(cur, count);
+                int val = map.get(s.charAt(i));
+                val--;
+                if (val == 0) {
+                    map.remove(s.charAt(i));
                 } else {
-                    map.remove(cur);
+                    map.put(s.charAt(i), val);
                 }
+                count--;
+                i++;
             }
-            if (map.size() <= k) {
-                max = Math.max(max, j - i + 1);
-            }
+            max = Math.max(max, count);
         }
         return max;
     }
