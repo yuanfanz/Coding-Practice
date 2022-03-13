@@ -1,38 +1,37 @@
 class Solution {
     public List<Integer> findAllPeople(int n, int[][] meetings, int firstPerson) {
         UnionFind uf = new UnionFind(n);
-        uf.union(0, firstPerson);
-        int root = uf.find(0);
+        
         Map<Integer, List<int[]>> map = new HashMap<>();
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
-        for (int i = 0; i < meetings.length; ++i) {
-            int time = meetings[i][2];
-            List<int[]> list = map.getOrDefault(time, new ArrayList<>());
-            list.add(new int[]{meetings[i][0], meetings[i][1]});
-            min = Math.min(min, time);
-            max = Math.max(max, time);
-            map.put(time, list);
+        for (int[] cur : meetings) {
+            min = Math.min(min, cur[2]);
+            max = Math.max(max, cur[2]);
+            List<int[]> list = map.getOrDefault(cur[2], new ArrayList<>());
+            list.add(cur);
+            map.put(cur[2], list);
         }
-        for (int i = min; i <= max; ++i) {
-            if (!map.containsKey(i)) continue;
+        uf.union(0, firstPerson);
+        for (int time = min; time <= max; ++time) {
+            if (!map.containsKey(time)) continue;
             Set<Integer> set = new HashSet<>();
-            for (int[] cur : map.get(i)) {
+            for (int[] cur : map.get(time)) {
                 int first = cur[0];
                 int second = cur[1];
-                set.add(first);
-                set.add(second);
                 uf.union(first, second);
+                set.add(cur[0]);
+                set.add(cur[1]);
             }
-            for (int num : set) {
-                if (uf.find(num) != root) {
-                    uf.reset(num);
+            for (int i : set) {
+                if (uf.find(i) != 0) {
+                    uf.reset(i);
                 }
             }
         }
         List<Integer> result = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
-            if (uf.find(i) == root) {
+            if (uf.find(i) == 0) {
                 result.add(i);
             }
         }
@@ -47,6 +46,7 @@ class Solution {
                 parent[i] = i;
             }
         }
+        
         public int find(int p) {
             while (p != parent[p]) {
                 parent[p] = parent[parent[p]];
@@ -54,6 +54,7 @@ class Solution {
             }
             return p;
         }
+        
         public void union(int p, int q) {
             int rootP = find(p);
             int rootQ = find(q);
@@ -64,6 +65,7 @@ class Solution {
                 parent[rootP] = rootQ;
             }
         }
+        
         public void reset(int p) {
             parent[p] = p;
         }
