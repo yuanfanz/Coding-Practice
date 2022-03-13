@@ -1,40 +1,61 @@
 class Solution {
     public List<Integer> findMinHeightTrees(int n, int[][] edges) {
-        if (n == 1) {
-            return new ArrayList<>(Arrays.asList(0));
-        }
-        HashSet[] map = new HashSet[n];
-        for (int i = 0; i < n; ++i) {
-            map[i] = new HashSet<>();
-        }
+        List<Integer> result = new ArrayList<>();
+        
+        Map<Integer, List<Integer>> map = new HashMap<>();
         int[] indegree = new int[n];
         for (int[] cur : edges) {
-            int first = cur[0];
-            int second = cur[1];
-            map[first].add(second);
-            map[second].add(first);
+            int p = cur[0];
+            int q = cur[1];
+            List<Integer> list1 = map.getOrDefault(p, new ArrayList<>());
+            List<Integer> list2 = map.getOrDefault(q, new ArrayList<>());
+            list1.add(q);
+            list2.add(p);
+            map.put(p, list1);
+            map.put(q, list2);
+            indegree[p]++;
+            indegree[q]++;
+        }
+        int min = n + 1;
+        for (int i = 0; i < n; ++i) {
+            min = Math.min(min, indegree[i]);
         }
         Queue<Integer> queue = new LinkedList<>();
-        List<Integer> leaves = new ArrayList<>();
         for (int i = 0; i < n; ++i) {
-            if (map[i].size() == 1) {
-                leaves.add(i);
+            if (indegree[i] == min) {
+                queue.offer(i);
             }
         }
-        while (n > 2) {
-            n -= leaves.size();
-            List<Integer> list = new ArrayList<>();
-            for (int cur : leaves) {
-                for (int j = 0; j < map[cur].size(); ++j) {
-                    int next = (int) map[cur].iterator().next();
-                    map[next].remove(cur);
-                    if (map[next].size() == 1) {
-                        list.add(next);
+        while (n > 2 && queue.size() > 0) {
+            int size = queue.size();
+            for (int i = 0; i < size; ++i) {
+                int cur = queue.poll();
+                if (map.containsKey(cur)) {
+                    for (int next : map.get(cur)) {
+                        indegree[next]--;
+                        if (indegree[next] == 1) {
+                            queue.offer(next);
+                        }
                     }
                 }
             }
-            leaves = list;
+            n -= size;
         }
-        return leaves;
+        while (queue.size() > 0) {
+            result.add(queue.poll());
+        }
+        return result;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
