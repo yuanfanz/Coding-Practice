@@ -24,9 +24,7 @@ class Solution {
                 j--;
             }
             char right = j >= 0 ? t.charAt(j) : '@';
-            if (left != right) {
-                return false;
-            }
+            if (left != right) return false;
             i--;
             j--;
         }
