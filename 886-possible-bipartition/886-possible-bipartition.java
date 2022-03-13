@@ -11,8 +11,9 @@ class Solution {
             graph[p].add(q);
             graph[q].add(p);
         }
-        for (int i = 1; i <= n; ++i) {
             int[] colors = new int[n + 1];
+        for (int i = 1; i <= n; ++i) {
+            if (colors[i] != 0) continue;
             colors[i] = 1;
             if (!dfs(graph, i, colors, 1)) return false;
         }
