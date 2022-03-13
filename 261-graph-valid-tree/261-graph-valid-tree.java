@@ -1,40 +1,36 @@
 class Solution {
     public boolean validTree(int n, int[][] edges) {
-        ArrayList[] map = new ArrayList[n];
+        UnionFind uf = new UnionFind(n);
         
-        for (int i = 0; i < n; ++i) {
-            map[i] = new ArrayList<>();
-        }
         for (int[] cur : edges) {
-            int first = cur[0];
-            int second = cur[1];
-            map[first].add(second);
-            map[second].add(first);
+            uf.union(cur[0], cur[1]);
         }
-        int[] visited = new int[n];
-        if (dfs(visited, map, 0, -1)) {
-            return false;
-        }
-        for (int i = 0; i < visited.length; ++i) {
-            if (visited[i] == 0) {
-                return false;
-            }
-        }
-        return true;
+        return uf.count == 1 && edges.length == n - 1;
     }
-    private boolean dfs(int[] visited, ArrayList[] map, int cur, int parent) {
-        visited[cur] = 1;
-        for (int i = 0; i < map[cur].size(); ++i) {
-            int next = (int) map[cur].get(i);
-            if (next == parent) continue;
-            if (visited[next] == 1) return true;
-            if (visited[next] == 0) {
-                if (dfs(visited, map, next, cur)) {
-                    return true;
-                }
+    
+    class UnionFind{
+        int[] parent;
+        int count;
+        public UnionFind(int n) {
+            parent = new int[n];
+            count = n;
+            for (int i = 0; i < n; ++i) {
+                parent[i] = i;
             }
         }
-        visited[cur] = 2;
-        return false;
+        public int find(int p) {
+            while (p != parent[p]) {
+                parent[p] = parent[parent[p]];
+                p = parent[p];
+            }
+            return p;
+        }
+        public void union(int p, int q) {
+            int rootP = find(p);
+            int rootQ = find(q);
+            if (rootP == rootQ) return;
+            parent[rootP] = rootQ;
+            count--;
+        }
     }
 }
