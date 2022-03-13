@@ -6,7 +6,7 @@ class Solution {
             return result;
         }
         
-        if (nums[0] > lower) {
+        if (lower < nums[0]) {
             result.add(formRange(lower, nums[0] - 1));
         }
         int i = 0;
