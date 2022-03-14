@@ -25,7 +25,7 @@ class Solution {
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{0, 0});
         queue.offer(new int[]{0, 1});
-        int step = 1;
+        int step = 0;
         Set<String> visited = new HashSet<>();
         while (queue.size() > 0) {
             int size = queue.size();
@@ -33,11 +33,11 @@ class Solution {
                 int[] cur = queue.poll();
                 int node = cur[0];
                 int color = cur[1];
+                if (!visited.add(node + "->" + color)) continue;
+                result[node] = Math.min(result[node], step);
                 int nextColor = 1 - color;
                 for (int next : map[nextColor][node]) {
-                    if (!visited.add(next + "->" + nextColor)) continue;
                     queue.offer(new int[]{next, nextColor});
-                    result[next] = Math.min(result[next], step);
                 }
             }
             step++;
