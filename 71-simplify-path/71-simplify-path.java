@@ -5,10 +5,9 @@ class Solution {
         String[] arr = path.split("/");
         for (int i = 0; i < arr.length; ++i) {
             String cur = arr[i];
-            if (cur.equals("") || cur.equals(".")) {
-                continue;
-            } else if (cur.equals("..")) {
-                if (!stack.isEmpty()) {
+            if (cur.equals("") || cur.equals(".")) continue;
+            if (cur.equals("..")) {
+                if (stack.size() > 0) {
                     stack.pop();
                 }
             } else {
@@ -16,10 +15,8 @@ class Solution {
             }
         }
         StringBuilder sb = new StringBuilder();
-        if (stack.size() == 0) {
-            return "/";
-        }
-        while (!stack.isEmpty()) {
+        if (stack.isEmpty()) return "/";
+        while (stack.size() > 0) {
             sb.insert(0, "/" + stack.pop());
         }
         return sb.toString();
