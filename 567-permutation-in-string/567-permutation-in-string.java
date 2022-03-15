@@ -1,17 +1,18 @@
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
         int[] target = getHash(s1);
+        
+        int i = 0;
         int[] hash = new int[26];
         int len = s1.length();
-        int j = 0;
-        for (int i = 0; i < s2.length() - len + 1; ++i) {
-            while (j < i + len) {
-                hash[s2.charAt(j++) - 'a']++;
+        for (int j = 0; j < s2.length(); ++j) {
+            hash[s2.charAt(j) - 'a']++;
+            while (j - i + 1 > len) {
+                hash[s2.charAt(i++) - 'a']--;
             }
             if (isValid(hash, target)) {
                 return true;
             }
-            hash[s2.charAt(i) - 'a']--;
         }
         return false;
     }
