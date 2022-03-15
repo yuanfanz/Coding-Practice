@@ -11,16 +11,6 @@ class Solution {
         }
         return -1;
     }
-    class Log{
-        int time;
-        int a;
-        int b;
-        public Log(int[] log) {
-            this.time = log[0];
-            a = log[1];
-            b = log[2];
-        }
-    }
     class UnionFind{
         int[] parent;
         int count;
