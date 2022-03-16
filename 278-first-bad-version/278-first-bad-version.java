@@ -13,9 +13,9 @@ public class Solution extends VersionControl {
                 i = mid + 1;
             }
         }
-        if (i > n || !isBadVersion(i)) {
-            return i - 1;
-        }
+        // if (i > n || !isBadVersion(i)) {
+        //     return i - 1;
+        // }
         return i;
     }
 }
