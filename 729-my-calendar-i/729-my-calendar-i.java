@@ -1,5 +1,5 @@
 class MyCalendar {
-    private TreeMap<Integer, Integer> map;
+    TreeMap<Integer, Integer> map;
     public MyCalendar() {
         map = new TreeMap<>();
     }
