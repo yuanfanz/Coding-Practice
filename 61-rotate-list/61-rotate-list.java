@@ -5,16 +5,19 @@ class Solution {
             return head;
         }
         int len = getLen(head);
-        k %= len;
+        
+        k = k % len;
         if (k == 0) {
             return head;
         }
+        // ListNode dummy = new ListNode(0);
+        // dummy.next = head;
+        ListNode slow = head;
         ListNode fast = head;
         while (k > 0) {
             fast = fast.next;
             k--;
         }
-        ListNode slow = head;
         while (fast.next != null) {
             slow = slow.next;
             fast = fast.next;
@@ -27,9 +30,20 @@ class Solution {
     private int getLen(ListNode head) {
         int count = 0;
         while (head != null) {
-            count++;
             head = head.next;
+            count++;
         }
         return count;
     }
 }
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
