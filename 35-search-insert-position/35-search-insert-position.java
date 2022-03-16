@@ -12,9 +12,9 @@ class Solution {
                 j = mid - 1;
             }
         }
-        if (j < 0 || nums[j] != target) {
-            return j + 1;
-        }
+        // if (j < 0 || nums[j] != target) {
+        //     return j + 1;
+        // }
         return j + 1;
     }
 }
