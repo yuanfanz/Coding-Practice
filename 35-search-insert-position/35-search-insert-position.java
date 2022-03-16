@@ -15,6 +15,6 @@ class Solution {
         // if (j < 0 || nums[j] != target) {
         //     return j + 1;
         // }
-        return j + 1;
+        return i;
     }
 }
