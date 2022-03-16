@@ -24,6 +24,7 @@ class Solution {
                 visited[cur] = true;
                 for (int j = 0; j < toMap[cur].size(); ++j) {
                     int next = (int) toMap[cur].get(j);
+                    if (visited[next]) continue;
                     queue.offer(next);
                 }
                 for (int j = 0; j < fromMap[cur].size(); ++j) {
