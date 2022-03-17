@@ -8,7 +8,7 @@ class Solution {
     private int robStartWith(int[] nums) {
         if (nums.length < 2) return nums[0];
         int n = nums.length;
-        int[] dp = new int[n];
+        int[] dp = new int[2];
         
         dp[0] = nums[0];
         dp[1] = Math.max(nums[0], nums[1]);
