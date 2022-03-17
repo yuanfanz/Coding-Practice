@@ -1,16 +1,16 @@
 class Solution {
     public int deleteAndEarn(int[] nums) {
-        int n = 10001;
-        int[] bucket = new int[n];
+        int[] buckets = new int[10001];
+        
         for (int i : nums) {
-            bucket[i] += i;
+            buckets[i]++;
         }
-        int[] dp = new int[n];
-        dp[0] = bucket[0];
-        dp[1] = Math.max(bucket[1], bucket[0]);
-        for (int i = 2; i < n; ++i) {
-            dp[i] = Math.max(dp[i - 1], dp[i - 2] + bucket[i]);
+        int[] dp = new int[10001];
+        dp[0] = buckets[0];
+        dp[1] = Math.max(buckets[0], buckets[1]);
+        for (int i = 2; i < buckets.length; ++i) {
+            dp[i] = Math.max(dp[i - 2] + buckets[i]*i, dp[i - 1]);
         }
-        return dp[n - 1];
+        return dp[10000];
     }
 }
