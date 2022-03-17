@@ -3,17 +3,17 @@ class Solution {
         int m = matrix.length;
         int n = matrix[0].length;
         
-        int start = 0;
-        int end = m - 1;
-        while (start < end) {
-            int[] tmp = matrix[start];
-            matrix[start] = matrix[end];
-            matrix[end] = tmp;
-            start++;
-            end--;
+        int i = 0;
+        int j = m - 1;
+        while (i < j) {
+            int[] tmp = matrix[i];
+            matrix[i] = matrix[j];
+            matrix[j] = tmp;
+            i++;
+            j--;
         }
-        for (int i = 0; i < m; ++i) {
-            for (int j = i + 1; j < n; ++j) {
+        for (i = 0; i < m; ++i) {
+            for (j = i + 1; j < n; ++j) {
                 int tmp = matrix[i][j];
                 matrix[i][j] = matrix[j][i];
                 matrix[j][i] = tmp;
