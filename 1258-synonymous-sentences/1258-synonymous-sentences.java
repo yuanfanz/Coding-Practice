@@ -10,7 +10,6 @@ class Solution {
             String second = list.get(1);
             if (!map.containsKey(first)) map.put(first, count);
             if (!map.containsKey(second)) map.put(second, count);
-            // int root = uf.find(count);
             uf.union(map.get(first), map.get(second));
             count++;
         }
@@ -22,23 +21,12 @@ class Solution {
                 setMap.put(root, set);
             }
         }
-        // print(setMap);
         Set<String> result = new HashSet<>();
         String[] strs = text.split(" ");
         dfs(result, new StringBuilder(), strs, 0, uf, text, setMap, map);
         List<String> list = new ArrayList<>(result);
         Collections.sort(list);
         return list;
-    }
-    private void print(Map<Integer, Set<String>> map) {
-        for (int num : map.keySet()) {
-            System.out.print(num + " ");
-            List<String> list = new ArrayList<>(map.get(num));
-            for (String i : list) {
-                System.out.print(i + " ");
-            }
-        }
-        System.out.println();
     }
     private void dfs(Set<String> result, StringBuilder sb, String[] strs, int index, UnionFind uf, String text,
                      Map<Integer, Set<String>> setMap, Map<String, Integer> map) {
