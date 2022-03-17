@@ -5,12 +5,12 @@ class Solution {
         for (int i : nums) {
             buckets[i]++;
         }
-        int[] dp = new int[10001];
+        int[] dp = new int[2];
         dp[0] = buckets[0];
         dp[1] = Math.max(buckets[0], buckets[1]);
         for (int i = 2; i < buckets.length; ++i) {
-            dp[i] = Math.max(dp[i - 2] + buckets[i]*i, dp[i - 1]);
+            dp[i%2] = Math.max(dp[(i - 2)%2] + buckets[i]*i, dp[(i - 1)%2]);
         }
-        return dp[10000];
+        return dp[0];
     }
 }
