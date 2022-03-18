@@ -4,6 +4,7 @@ class Solution {
         int jump = 0;
         int end = 0;
         for (int i = 0; i < nums.length - 1; ++i) {
+            if (i > max) return -1;
             max = Math.max(max, nums[i] + i);
             if (i == end) {
                 jump++;
