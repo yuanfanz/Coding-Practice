@@ -1,60 +1,60 @@
 class Solution {
     public int[] findRedundantDirectedConnection(int[][] edges) {
         int n = edges.length;
-        UnionFind uf = new UnionFind(n);
         
+        UnionFind uf = new UnionFind(n);
+        int[] directParent = new int[n + 1];
         int[] edge1 = null;
         int[] edge2 = null;
-        int[] lastEdgeInCycle = null;
-        int[] directParent = new int[n + 1];
+        int[] lastCycle = null;
         for (int[] cur : edges) {
             int p = cur[0];
             int q = cur[1];
             if (directParent[q] != 0) {
-                // means q already has a parent connected
+                // already has an indegree of q
                 edge1 = new int[]{directParent[q], q};
                 edge2 = new int[]{p, q};
             } else {
-                // make p is parent of q
                 directParent[q] = p;
-                int rootP = uf.findRoot(p);
-                int rootQ = uf.findRoot(q);
-                if (rootP != rootQ) {
+                int root = uf.find(q);
+                if (root != uf.find(p)) {
                     uf.union(p, q);
                 } else {
-                    // means there is a cycle
-                    lastEdgeInCycle = new int[]{p, q};
+                    lastCycle = new int[]{p, q};
                 }
             }
         }
         if (edge1 != null && edge2 != null) {
-            return lastEdgeInCycle == null ? edge2 : edge1;
+            return lastCycle == null ? edge2 : edge1;
         } else {
-            return lastEdgeInCycle;
+            return lastCycle;
         }
     }
     
     class UnionFind{
-        int[] root;
+        int[] parent;
         public UnionFind(int n) {
-            root = new int[n + 1];
+            parent = new int[n + 1];
             for (int i = 0; i <= n; ++i) {
-                root[i] = i;
+                parent[i] = i;
             }
         }
-        public int findRoot(int p) {
-            while (p != root[p]) {
-                root[p] = root[root[p]];
-                p = root[p];
+        public int find(int p) {
+            while (p != parent[p]) {
+                parent[p] = parent[parent[p]];
+                p = parent[p];
             }
             return p;
         }
-        // here union will make directed union
         public void union(int p, int q) {
-            int rootP = findRoot(p);
-            int rootQ = findRoot(q);
+            int rootP = find(p);
+            int rootQ = find(q);
             if (rootP == rootQ) return;
-            root[rootQ] = rootP;
+            if (rootP < rootQ) {
+                parent[rootQ] = rootP;
+            } else {
+                parent[rootP] = rootQ;
+            }
         }
     }
 }
