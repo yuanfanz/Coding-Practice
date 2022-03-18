@@ -1,7 +1,6 @@
 class Solution {
     public int minTransfers(int[][] transactions) {
         int[] debt = buildDebt(transactions);
-        // int[] debt = build(transactions);
         
         return dfs(debt, 0);
     }
@@ -32,26 +31,5 @@ class Solution {
             debt[to] += amount;
         }
         return debt;
-    }
-    private int[] build(int[][] transactions) {
-        Map<Integer, Integer> map = new HashMap<>();
-        
-        for (int[] cur : transactions) {
-            int giver = cur[0];
-            int taker = cur[1];
-            int num = cur[2];
-            map.put(giver, map.getOrDefault(giver, 0) + num);
-            map.put(taker, map.getOrDefault(taker, 0) - num);
-        }
-        int[] arr = new int[map.size()];
-        // System.out.println(map.size());
-        // int[] arr = new int[25];
-        int index = 0;
-        for (int key : map.keySet()) {
-            arr[index] = map.get(key);
-            index++;
-            // index+=2;
-        }
-        return arr;
     }
 }
