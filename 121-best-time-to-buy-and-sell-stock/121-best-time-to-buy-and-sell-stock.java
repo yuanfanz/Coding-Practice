@@ -6,8 +6,6 @@ class Solution {
         for (int i = 1; i < n; ++i) {
             diff[i] = prices[i] - prices[i - 1];
         }
-        int[] presum = new int[n];
-        presum[0] = diff[0];
         int sum = diff[0];
         int max = diff[0];
         for (int i = 1; i < n; ++i) {
