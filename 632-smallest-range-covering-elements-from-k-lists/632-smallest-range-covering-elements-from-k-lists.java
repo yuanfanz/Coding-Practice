@@ -1,28 +1,29 @@
 class Solution {
     public int[] smallestRange(List<List<Integer>> nums) {
-        PriorityQueue<int[]> pq = new PriorityQueue<>(
-            (a, b) -> nums.get(a[0]).get(a[1]) - nums.get(b[0]).get(b[1]));
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
         
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < nums.size(); ++i) {
-            pq.offer(new int[]{i, 0});
-            max = Math.max(max, nums.get(i).get(0));
+            int val = nums.get(i).get(0);
+            pq.offer(new int[]{i, 0, val});
+            max = Math.max(max, val);
         }
-        int res = Integer.MAX_VALUE;
+        int range = Integer.MAX_VALUE;
         int start = -1;
         int end = -1;
         while (pq.size() == nums.size()) {
             int[] cur = pq.poll();
-            int val = nums.get(cur[0]).get(cur[1]);
-            if (max - val < res) {
-                res = max - val;
-                start = val;
+            int min = cur[2];
+            if (max - min < range) {
+                start = min;
                 end = max;
+                range = max - min;
             }
-            if (cur[1] + 1 < nums.get(cur[0]).size()) {
-                int next = nums.get(cur[0]).get(cur[1] + 1);
-                pq.offer(new int[]{cur[0], cur[1] + 1});
-                max = Math.max(max, next);
+            int index = cur[1];
+            if (index + 1 < nums.get(cur[0]).size()) {
+                int val = nums.get(cur[0]).get(index + 1);
+                max = Math.max(max, val);
+                pq.offer(new int[]{cur[0], index + 1, val});
             }
         }
         return new int[]{start, end};
