@@ -1,27 +1,39 @@
 class Solution {
     public int minTransfers(int[][] transactions) {
         int[] debt = buildDebt(transactions);
+        // int[] debt = build(transactions);
         
-        return getNum(0, debt);
+        return dfs(debt, 0);
     }
-    private int getNum(int cur, int[] arr) {
-        while (cur < arr.length && arr[cur] == 0) {
-            cur++;
+    private int dfs(int[] debt, int index) {
+        while (index < debt.length && debt[index] == 0) {
+            index++;
         }
-        if (cur == arr.length) {
+        if (index == debt.length) {
             return 0;
         }
         int min = Integer.MAX_VALUE;
-        for (int i = cur + 1; i < arr.length; ++i) {
-            if (arr[cur] * arr[i] < 0) {
-                arr[i] += arr[cur];
-                min = Math.min(min, getNum(cur + 1, arr) + 1);
-                arr[i] -= arr[cur];
+        for (int i = index + 1; i < debt.length; ++i) {
+            if (debt[index] * debt[i] < 0) {
+                debt[i] += debt[index];
+                min = Math.min(min, dfs(debt, index + 1) + 1);
+                debt[i] -= debt[index];
             }
         }
         return min;
     }
     private int[] buildDebt(int[][] transactions) {
+        int[] debt = new int[13];
+        for (int[] cur : transactions) {
+            int from = cur[0];
+            int to = cur[1];
+            int amount = cur[2];
+            debt[from] -= amount;
+            debt[to] += amount;
+        }
+        return debt;
+    }
+    private int[] build(int[][] transactions) {
         Map<Integer, Integer> map = new HashMap<>();
         
         for (int[] cur : transactions) {
@@ -32,9 +44,13 @@ class Solution {
             map.put(taker, map.getOrDefault(taker, 0) - num);
         }
         int[] arr = new int[map.size()];
+        // System.out.println(map.size());
+        // int[] arr = new int[25];
         int index = 0;
         for (int key : map.keySet()) {
-            arr[index++] = map.get(key);
+            arr[index] = map.get(key);
+            index++;
+            // index+=2;
         }
         return arr;
     }
