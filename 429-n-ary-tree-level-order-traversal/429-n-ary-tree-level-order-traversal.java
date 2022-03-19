@@ -4,22 +4,18 @@ class Solution {
         List<List<Integer>> result = new ArrayList<>();
         if (root == null) return result;
         
-        Queue<Node> queue = new LinkedList<>();
-        queue.offer(root);
-        while (queue.size() > 0) {
-            int size = queue.size();
-            List<Integer> list = new ArrayList<>();
-            for (int i = 0; i < size; ++i) {
-                Node cur = queue.poll();
-                if (cur == null) continue;
-                list.add(cur.val);
-                for (Node next : cur.children) {
-                    queue.offer(next);
-                }
-            }
-            result.add(list);
-        }
+        dfs(result, root, 0);
         return result;
+    }
+    private void dfs(List<List<Integer>> result, Node root, int level) {
+        if (root == null) return;
+        if (result.size() == level) {
+            result.add(new ArrayList<>());
+        }
+        result.get(level).add(root.val);
+        for (Node next : root.children) {
+            dfs(result, next, level + 1);
+        }
     }
 }
 
