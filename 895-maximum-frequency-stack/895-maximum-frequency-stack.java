@@ -9,8 +9,8 @@ class FreqStack {
     }
     
     public void push(int val) {
-        int freq = map.getOrDefault(val, 0) + 1;
-        map.put(val, freq);
+        map.put(val, map.getOrDefault(val, 0) + 1);
+        int freq = map.get(val);
         max = Math.max(max, freq);
         Stack<Integer> stack = stackMap.getOrDefault(freq, new Stack<>());
         stack.push(val);
