@@ -18,9 +18,11 @@ class FreqStack {
     }
     
     public int pop() {
-        int val = stackMap.get(max).pop();
+        int freq = max;
+        Stack<Integer> stack = stackMap.get(freq);
+        int val = stack.pop();
         map.put(val, max - 1);
-        if (stackMap.get(max).size() == 0) {
+        if (stack.size() == 0) {
             max--;
         }
         return val;
