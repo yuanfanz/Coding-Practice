@@ -7,24 +7,24 @@ class Solution {
         
         double[] result = new double[nums.length - k + 1];
         for (int i = 0; i < nums.length; ++i) {
-            if (i - k >= 0) {
-                if (!left.remove(i - k)) {
-                    right.remove(i - k);
+            if (i - k + 1 > 0) {
+                int indexToBeRemoved = i - k;
+                if (!left.remove(indexToBeRemoved)) {
+                    right.remove(indexToBeRemoved);
                 }
+                balance(left, right);
             }
-            balance(left, right);
-            if (left.size() == 0 || nums[i] <= nums[left.last()]) {
+            if (left.size() == 0 || nums[left.last()] >= nums[i]) {
                 left.add(i);
             } else {
                 right.add(i);
             }
             balance(left, right);
             if (i - k + 1 >= 0) {
-                int leftSize = left.size();
-                int rightSize = right.size();
-                if (leftSize == rightSize) {
-                    result[i - k + 1] = ((double) nums[right.first()] + nums[left.last()]) / 2;
-                } else if (leftSize > rightSize) {
+                if (left.size() == right.size()) {
+                    result[i - k + 1] = ((double) nums[left.last()]
+                                         + nums[right.first()]) / 2;
+                } else if (left.size() > right.size()) {
                     result[i - k + 1] = (double) nums[left.last()];
                 } else {
                     result[i - k + 1] = (double) nums[right.first()];
