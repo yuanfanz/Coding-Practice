@@ -1,18 +1,18 @@
 
 class Solution {
+    int sum = 0;
     public int depthSum(List<NestedInteger> nestedList) {
-        return getSum(nestedList, 1);
+        dfs(nestedList, 1);
+        return sum;
     }
-    private int getSum(List<NestedInteger> nestedList, int depth) {
-        int result = 0;
+    private void dfs(List<NestedInteger> nestedList, int level) {
         for (NestedInteger ni : nestedList) {
             if (ni.isInteger()) {
-                result += ni.getInteger() * depth;
+                sum += level * ni.getInteger();
             } else {
-                result += getSum(ni.getList(), depth + 1);
+                dfs(ni.getList(), level + 1);
             }
         }
-        return result;
     }
 }
 
