@@ -1,8 +1,6 @@
 class NumArray {
-    int[] arr;
-    
     int[] fenwickTree;
-    
+    int[] arr;
     public NumArray(int[] nums) {
         int n = nums.length;
         arr = new int[n];
@@ -12,7 +10,7 @@ class NumArray {
         }
     }
     
-    public void update(int index, int val) {
+    public void update (int index, int val) {
         int diff = val - arr[index];
         arr[index] = val;
         for (int i = index + 1; i < fenwickTree.length; i += (i & -i)) {
