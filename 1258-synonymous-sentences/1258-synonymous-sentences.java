@@ -28,23 +28,23 @@ class Solution {
         Collections.sort(list);
         return list;
     }
-    private void dfs(Set<String> result, StringBuilder sb, String[] strs, int index, UnionFind uf, String text,
-                     Map<Integer, Set<String>> setMap, Map<String, Integer> map) {
+    
+    private void dfs(Set<String> result, StringBuilder sb, String[] strs, int index,
+                    UnionFind uf, String text, Map<Integer, Set<String>> setMap, Map<String, Integer> map) {
         if (index == strs.length) {
             sb.setLength(sb.length() - 1);
             result.add(sb.toString());
             return;
         }
         int len = sb.length();
-        if (!map.containsKey(strs[index])) {
-            sb.append(strs[index] + " ");
+        String cur = strs[index];
+        if (!map.containsKey(cur)) {
+            sb.append(cur + " ");
             dfs(result, sb, strs, index + 1, uf, text, setMap, map);
             sb.setLength(len);
         } else {
-            int root = uf.find(map.get(strs[index]));
-            Set<String> set = setMap.get(root);
-            if (set.size() == 0) return;
-            for (String next : set) {
+            int root = uf.find(map.get(cur));
+            for (String next : setMap.get(root)) {
                 sb.append(next + " ");
                 dfs(result, sb, strs, index + 1, uf, text, setMap, map);
                 sb.setLength(len);
