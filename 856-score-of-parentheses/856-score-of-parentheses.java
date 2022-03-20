@@ -1,7 +1,8 @@
 class Solution {
     public int scoreOfParentheses(String s) {
-        Stack<Integer> stack = new Stack<>();
+        int score = 0;
         
+        Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < s.length(); ++i) {
             char ch = s.charAt(i);
             if (ch == '(') {
@@ -15,10 +16,9 @@ class Solution {
                 stack.push(Math.max(cur * 2, 1));
             }
         }
-        int sum = 0;
         while (stack.size() > 0) {
-            sum += stack.pop();
+             score += stack.pop();
         }
-        return sum;
+        return score;
     }
 }
