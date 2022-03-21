@@ -1,21 +1,17 @@
 class Solution {
     public String removeDuplicateLetters(String s) {
-        boolean[] seen = new boolean[26];
-        int[] lastIndex = new int[26];
-        
+        int[] pos = new int[26];
         for (int i = 0; i < s.length(); ++i) {
-            char ch = s.charAt(i);
-            lastIndex[ch - 'a'] = i;
+            pos[s.charAt(i) - 'a'] = i;
         }
         Stack<Character> stack = new Stack<>();
+        boolean[] seen = new boolean[26];
         for (int i = 0; i < s.length(); ++i) {
             char ch = s.charAt(i);
             if (seen[ch - 'a']) continue;
-            // if there is same char we can use later in the string
-            while (stack.size() > 0 && i < lastIndex[stack.peek() - 'a'] 
-                   && stack.peek() > ch) {
-                char last = stack.pop();
-                seen[last - 'a'] = false;
+            while (stack.size() > 0 && stack.peek() > ch && i < pos[stack.peek() - 'a']) {
+                char prev = stack.pop();
+                seen[prev - 'a'] = false;
             }
             stack.push(ch);
             seen[ch - 'a'] = true;
