@@ -6,7 +6,7 @@ class Solution {
         int count = 1;
         for (int i = 1; i < points.length; ++i) {
             if (prev < points[i][0]) {
-                prev = Math.max(prev, points[i][1]);
+                prev = points[i][1];
                 count++;
             }
         }
