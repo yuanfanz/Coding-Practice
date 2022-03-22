@@ -2,13 +2,14 @@
 class Solution {
     public List<List<Integer>> levelOrder(Node root) {
         List<List<Integer>> result = new ArrayList<>();
-        if (root == null) return result;
         
         dfs(result, root, 0);
         return result;
     }
     private void dfs(List<List<Integer>> result, Node root, int level) {
-        if (root == null) return;
+        if (root == null) {
+            return;
+        }
         if (result.size() == level) {
             result.add(new ArrayList<>());
         }
