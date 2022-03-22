@@ -13,11 +13,9 @@ class Solution {
         return dfs(nums, target, k, 0, nums.length - 1, visited);
     }
     private boolean dfs(int[] nums, int target, int k, int sum, int index, boolean[] visited) {
-        if (k == 0) {
-            return true;
-        }
-        if (sum == target && dfs(nums, target, k - 1, 0, nums.length - 1, visited)) {
-            return true;
+        if (k == 0) return true;
+        if (sum == target) {
+            return dfs(nums, target, k - 1, 0, nums.length - 1, visited);
         }
         for (int i = index; i >= 0; --i) {
             if (!visited[i] && sum + nums[i] <= target) {
