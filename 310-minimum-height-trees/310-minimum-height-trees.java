@@ -24,10 +24,6 @@ class Solution {
             indegree[p]++;
             indegree[q]++;
         }
-        int min = n + 1;
-        for (int i = 0; i < n; ++i) {
-            min = Math.min(min, indegree[i]);
-        }
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < n; ++i) {
             if (indegree[i] == 1) {
