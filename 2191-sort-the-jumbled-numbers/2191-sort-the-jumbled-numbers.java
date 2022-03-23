@@ -1,20 +1,23 @@
 class Solution {
     public int[] sortJumbled(int[] mapping, int[] nums) {
-        List<int[]> list = new ArrayList<>();
+        PriorityQueue<int[]> pq = new PriorityQueue<>
+            ((a, b) -> a[1] == b[1] ? a[2] - b[2] : a[1] - b[1]);
         
-        for (int num : nums) {
-            char[] arr = String.valueOf(num).toCharArray();
-            StringBuilder sb = new StringBuilder();
-            for (char ch : arr) {
-                sb.append(mapping[ch - '0']);
+        for (int i = 0; i < nums.length; ++i) {
+            String s = String.valueOf(nums[i]);
+            int num = 0;
+            // System.out.println(nums[i]);
+            for (int j = 0; j < s.length(); ++j) {
+                // if (s.charAt(j) == '0') continue;
+                num = num * 10 + (mapping[s.charAt(j) - '0']);
             }
-            list.add(new int[]{Integer.valueOf(sb.toString()), num});
+            // System.out.println(num);
+            pq.offer(new int[]{nums[i], num, i});
         }
-        Collections.sort(list, (a, b) -> a[0] - b[0]);
-        int index = 0;
         int[] result = new int[nums.length];
-        for (int[] cur : list) {
-            result[index++] = cur[1];
+        int index = 0;
+        while (pq.size() > 0) {
+            result[index++] = pq.poll()[0];
         }
         return result;
     }
