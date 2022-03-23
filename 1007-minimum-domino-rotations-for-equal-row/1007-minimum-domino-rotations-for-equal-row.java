@@ -3,7 +3,9 @@ class Solution {
         int[] toparr = new int[7];
         int[] bottomarr = new int[7];
         int[] same = new int[7];
-        for (int i = 0; i < tops.length; ++i) {
+        
+        int n = tops.length;
+        for (int i = 0; i < n; ++i) {
             toparr[tops[i]]++;
             bottomarr[bottoms[i]]++;
             if (tops[i] == bottoms[i]) {
@@ -13,8 +15,8 @@ class Solution {
         for (int i = 1; i < 7; ++i) {
             int l1 = toparr[i];
             int l2 = bottomarr[i];
-            if (l1 + l2 - same[i] == tops.length) {
-                return Math.min(tops.length - l1, tops.length - l2);
+            if (l1 + l2 - same[i] == n) {
+                return Math.min(n - l1, n - l2);
             }
         }
         return -1;
