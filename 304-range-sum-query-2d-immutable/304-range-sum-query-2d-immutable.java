@@ -5,19 +5,12 @@ class NumMatrix {
         int n = matrix[0].length;
         
         dp = new int[m + 1][n + 1];
-        // dp[0][0] = matrix[0][0];
-        for (int i = 1; i <= m; ++i) {
-            dp[i][0] = dp[i - 1][0] + matrix[i - 1][0];
-        }
-        for (int i = 1; i <= n; ++i) {
-            dp[0][i] = dp[0][i - 1] + matrix[0][i - 1];
-        }
         for (int i = 1; i <= m; ++i) {
             for (int j = 1; j <= n; ++j) {
                 dp[i][j] = dp[i - 1][j] + dp[i][j - 1] - dp[i - 1][j - 1] + matrix[i - 1][j - 1];
             }
         }
-        // print(dp);
+        print(dp);
     }
     
     private void print(int[][] grid) {
@@ -30,12 +23,13 @@ class NumMatrix {
             System.out.println();
         }
     }
-    // 3  6  6  7  11 13 
-    // 6  12 12 14 22 26 
-    // 11 22 28 33 43 48 
-    // 12 24 32 37 48 58 
-    // 16 32 41 46 58 75 
-    // 17 34 43 51 63 85 
+    // 0  3  3  4  8  10 
+    // 3  9  9  11 19 23 
+    // 8  19 25 30 40 45 
+    // 9  21 29 34 45 55 
+    // 13 29 38 43 55 72 
+    // 14 31 40 48 60 82 
+
     public int sumRegion(int row1, int col1, int row2, int col2) {
         int rowMin = Math.min(row1, row2);
         int rowMax = Math.max(row1, row2);
