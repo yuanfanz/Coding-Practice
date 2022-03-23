@@ -9,7 +9,7 @@ class StockSpanner {
         if (stack.isEmpty()) {
             stack.push(new int[]{price, 1});
         } else {
-            while (stack.size() > 0 && price >= stack.peek()[0]) {
+            while (stack.size() > 0 && stack.peek()[0] <= price) {
                 count += stack.pop()[1];
             }
             stack.push(new int[]{price, count});
