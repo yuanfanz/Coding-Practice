@@ -5,7 +5,7 @@ class NumMatrix {
         int n = matrix[0].length;
         
         dp = new int[m + 1][n + 1];
-        dp[0][0] = matrix[0][0];
+        // dp[0][0] = matrix[0][0];
         for (int i = 1; i <= m; ++i) {
             dp[i][0] = dp[i - 1][0] + matrix[i - 1][0];
         }
