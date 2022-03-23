@@ -7,7 +7,7 @@ class Solution {
         for (int i = 1; i <= n; ++i) {
             for (int j = 0; j < i; ++j) {
                 if (wordDict.contains(s.substring(j, i))) {
-                    dp[i] = dp[i] | dp[j];
+                    dp[i] = dp[i] || dp[j];
                 }
             }
         }
