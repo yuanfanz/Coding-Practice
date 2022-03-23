@@ -1,4 +1,5 @@
 
+
 class Solution {
     public Node copyRandomList(Node head) {
         if (head == null) {
@@ -21,18 +22,18 @@ class Solution {
             head = head.next.next;
         }
         head = dummy.next;
-        Node copyHead = new Node(0);
-        copyHead.next = head.next;
-        Node cur = copyHead.next;
-        while (cur.next != null) {
+        Node copyDummy = new Node(0);
+        copyDummy.next = head.next;
+        Node copy = copyDummy.next;
+        while (copy.next != null) {
             head.next = head.next.next;
-            cur.next = cur.next.next;
+            copy.next = copy.next.next;
             head = head.next;
-            cur = cur.next;
+            copy = copy.next;
         }
-        cur.next = null;
         head.next = null;
-        return copyHead.next;
+        copy.next = null;
+        return copyDummy.next;
     }
 }
 
@@ -50,3 +51,10 @@ class Node {
     }
 }
 */
+
+
+
+
+
+
+
