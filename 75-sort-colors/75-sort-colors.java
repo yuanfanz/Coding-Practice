@@ -1,15 +1,14 @@
 class Solution {
     public void sortColors(int[] nums) {
         int n = nums.length;
-        int zero = 0;
-        int two = n - 1;
-        
-        for (int i = 0; i <= two; ++i) {
-            while (i < two && nums[i] == 2) {
-                swap(nums, i, two--);
+        int twoPtr = n - 1;
+        int zeroPtr = 0;
+        for (int i = 0; i < n; ++i) {
+            while (i < twoPtr && nums[i] == 2) {
+                swap(nums, i, twoPtr--);
             }
-            while (zero < i && nums[i] == 0) {
-                swap(nums, i, zero++);
+            while (i > zeroPtr && nums[i] == 0) {
+                swap(nums, i, zeroPtr++);
             }
         }
     }
