@@ -1,9 +1,18 @@
 class Solution {
     public int[] sortByBits(int[] arr) {
-        Integer[] input = Arrays.stream(arr).boxed().toArray(Integer[]::new);
-        Arrays.sort(input, (a, b) -> getBit(a) == getBit(b) ? 
-                    a - b : getBit(a) - getBit(b));
-        return Arrays.stream(input).mapToInt(Integer::intValue).toArray();
+        int n = arr.length;
+        int[][] res = new int[n][2];
+        for (int i = 0; i < n; ++i) {
+            res[i] = new int[]{getBit(arr[i]), arr[i]};
+        }
+        
+        Arrays.sort(res, (a, b) -> a[0] == b[0] ? a[1] - b[1] : a[0] - b[0]);
+        int[] result = new int[n];
+        int index = 0;
+        for (int[] cur : res) {
+            result[index++] = cur[1];
+        }
+        return result;
     }
     private int getBit(int a) {
         int count = 0;
