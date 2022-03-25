@@ -5,13 +5,11 @@ class Solution {
         int m = grid.length;
         int n = grid[0].length;
         int fresh = 0;
-        int rotten = 0;
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (grid[i][j] == 0) continue;
                 if (grid[i][j] == 2) {
                     queue.offer(new int[]{i, j});
-                    rotten++;
                 } else {
                     fresh++;
                 }
