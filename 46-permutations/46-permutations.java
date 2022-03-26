@@ -1,14 +1,11 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
-        if (nums == null || nums.length == 0) {
-            return result;
-        }
+        
         dfs(result, new ArrayList<>(), nums);
         return result;
     }
-    private void dfs(List<List<Integer>> result, List<Integer> list,
-                     int[] nums) {
+    private void dfs(List<List<Integer>> result, List<Integer> list, int[] nums) {
         if (list.size() == nums.length) {
             result.add(new ArrayList<>(list));
             return;
