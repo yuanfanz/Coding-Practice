@@ -26,6 +26,7 @@ class Solution {
             bob[index] = 0;
         }
         // 2. or no arrow and move on to next point
+        bob[index] = 0;
         calculate(alice, bob, index - 1, remainArrows, score);
         bob[index] = 0;
     }
