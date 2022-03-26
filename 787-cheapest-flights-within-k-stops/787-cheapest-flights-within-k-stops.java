@@ -26,7 +26,7 @@ class Solution {
             }
             if (visited[node] != -1 && visited[node] < stops) continue;
             visited[node] = stops;
-            if (stops <= k + 1) {
+            if (stops <= k) {
                 if (map.containsKey(node)) {
                     for (int next : map.get(node).keySet()) {
                         int nextCost = map.get(node).get(next);
