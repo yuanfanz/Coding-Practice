@@ -22,7 +22,7 @@ class Solution {
             if (node == dst) {
                 return cost;
             }
-            if (visited[node] != -1 && visited[node] <= stops) continue;
+            if (visited[node] != -1 && visited[node] < stops) continue;
             visited[node] = stops;
             if (stops <= k) {
                 if (map.containsKey(node)) {
