@@ -36,24 +36,3 @@ class Solution {
         return min == Integer.MAX_VALUE ? -1 : min;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
