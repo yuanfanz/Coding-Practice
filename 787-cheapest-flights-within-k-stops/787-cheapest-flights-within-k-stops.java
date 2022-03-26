@@ -4,31 +4,37 @@ class Solution {
         
         for (int[] cur : flights) {
             int from = cur[0];
-            if (!map.containsKey(from)) map.put(from, new HashMap<>());
-            map.get(from).put(cur[1], cur[2]);
+            int to = cur[1];
+            Map<Integer, Integer> costMap = map.getOrDefault(from, new HashMap<>());
+            costMap.put(to, cur[2]);
+            map.put(from, costMap);
         }
-        Queue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        pq.offer(new int[]{0, src, k + 1, 0});
-        Set<Integer> set = new HashSet<>();
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+        pq.offer(new int[]{src, 0, 0});
         int[] visited = new int[n];
         Arrays.fill(visited, -1);
-        while (pq.size() != 0) {
+        int min = Integer.MAX_VALUE;
+        while (pq.size() > 0) {
             int[] cur = pq.poll();
-            int dis = cur[0];
-            int node = cur[1];
-            int stop = cur[2];
-            int move = cur[3];
-            if (node == dst) return dis;
-            if (visited[node] != -1 && visited[node] < move) continue;
-            visited[node] = move;
-            if (stop > 0) {
+            int node = cur[0];
+            int cost = cur[1];
+            int stops = cur[2];
+            if (node == dst) {
+                if (stops <= k + 1) {
+                    min = Math.min(min, cost);
+                }
+            }
+            if (visited[node] != -1 && visited[node] < stops) continue;
+            visited[node] = stops;
+            if (stops <= k + 1) {
                 if (map.containsKey(node)) {
                     for (int next : map.get(node).keySet()) {
-                        pq.offer(new int[]{dis + map.get(node).get(next), next, stop - 1, move + 1});
+                        int nextCost = map.get(node).get(next);
+                        pq.offer(new int[]{next, cost + nextCost, stops + 1});
                     }
                 }
             }
         }
-        return -1;
+        return min == Integer.MAX_VALUE ? -1 : min;
     }
 }
