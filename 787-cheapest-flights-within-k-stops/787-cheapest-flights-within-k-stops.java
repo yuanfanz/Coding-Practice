@@ -20,9 +20,7 @@ class Solution {
             int cost = cur[1];
             int stops = cur[2];
             if (node == dst) {
-                if (stops <= k + 1) {
-                    min = Math.min(min, cost);
-                }
+                return cost;
             }
             if (visited[node] != -1 && visited[node] < stops) continue;
             visited[node] = stops;
