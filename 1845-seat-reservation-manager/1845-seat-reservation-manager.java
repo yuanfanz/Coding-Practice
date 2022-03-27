@@ -1,13 +1,15 @@
 class SeatManager {
     TreeSet<Integer> set;
+    int count;
     public SeatManager(int n) {
+        count = 1;
         set = new TreeSet<>();
-        for (int i = 1; i <= n; ++i) {
-            set.add(i);
-        }
     }
     
     public int reserve() {
+        if (set.size() == 0) {
+            return count++;
+        }
         return set.pollFirst();
     }
     
