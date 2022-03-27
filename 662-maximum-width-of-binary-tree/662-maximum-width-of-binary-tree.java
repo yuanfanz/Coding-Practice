@@ -1,42 +1,35 @@
 
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
-        Queue<Tuple> queue = new LinkedList<>();
-        queue.offer(new Tuple(root, 1));
-        
+        Map<TreeNode, Integer> map = new HashMap<>();
+        map.put(root, 1);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
         int max = 0;
         while (queue.size() > 0) {
             int size = queue.size();
             int start = 0;
             int end = 0;
             for (int i = 0; i < size; ++i) {
-                Tuple t = queue.poll();
-                TreeNode cur = t.node;
-                int index = t.index;
+                TreeNode cur = queue.poll();
                 if (i == 0) {
-                    start = index;
+                    start = map.get(cur);
                 }
                 if (i == size - 1) {
-                    end = index;
+                    end = map.get(cur);
                 }
                 if (cur.left != null) {
-                    queue.offer(new Tuple(cur.left, index * 2));
+                    map.put(cur.left, map.get(cur) * 2);
+                    queue.offer(cur.left);
                 }
                 if (cur.right != null) {
-                    queue.offer(new Tuple(cur.right, index * 2 + 1));
+                    map.put(cur.right, map.get(cur) * 2 + 1);
+                    queue.offer(cur.right);
                 }
             }
-            max = Math.max(max, end - start + 1);
+            max = Math.max(end - start + 1, max);
         }
         return max;
-    }
-    class Tuple{
-        TreeNode node;
-        int index;
-        public Tuple(TreeNode node, int index) {
-            this.node = node;
-            this.index = index;
-        }
     }
 }
 
