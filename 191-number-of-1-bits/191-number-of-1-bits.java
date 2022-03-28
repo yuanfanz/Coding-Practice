@@ -5,6 +5,7 @@ public class Solution {
         while (n != 0) {
             sum += n & 1;
             n = n >>> 1;
+            // somt
         }
         return sum;
     }
