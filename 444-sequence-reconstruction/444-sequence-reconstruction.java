@@ -34,6 +34,9 @@ class Solution {
                 }
             }
         }
-        return result.size() == n ? true : false;
+        for (int i = 0; i < result.size(); ++i) {
+            if (result.get(i) != nums[i]) return false;
+        }
+        return true;
     }
 }
