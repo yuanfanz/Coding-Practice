@@ -1,6 +1,6 @@
 
 public class NestedIterator implements Iterator<Integer> {
-    private Stack<NestedInteger> stack;
+    Stack<NestedInteger> stack;
     public NestedIterator(List<NestedInteger> nestedList) {
         stack = new Stack<>();
         addAll(nestedList);
@@ -8,7 +8,10 @@ public class NestedIterator implements Iterator<Integer> {
 
     @Override
     public Integer next() {
-        return hasNext() ? stack.pop().getInteger() : null;
+        if (hasNext()) {
+            return stack.pop().getInteger();
+        }
+        return null;
     }
 
     @Override
@@ -24,7 +27,8 @@ public class NestedIterator implements Iterator<Integer> {
     }
     
     private void addAll(List<NestedInteger> nestedList) {
-        for (int i = nestedList.size() - 1; i >= 0; --i) {
+        int size = nestedList.size();
+        for (int i = size - 1; i >= 0; --i) {
             stack.push(nestedList.get(i));
         }
     }
@@ -47,6 +51,7 @@ public class NestedIterator implements Iterator<Integer> {
  *     public List<NestedInteger> getList();
  * }
  */
+
 /**
  * Your NestedIterator object will be instantiated and called as such:
  * NestedIterator i = new NestedIterator(nestedList);
