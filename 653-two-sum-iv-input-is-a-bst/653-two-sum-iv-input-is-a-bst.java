@@ -4,17 +4,17 @@ class Solution {
         return dfs(root, root, k);
     }
     
-    private boolean dfs(TreeNode root, TreeNode cur, int k) {
-        if (cur == null) return false;
-        return search(root, cur, k - cur.val) || dfs(root, cur.left, k)
-            || dfs(root, cur.right, k);
+    private boolean dfs(TreeNode first, TreeNode second, int k) {
+        if (second == null) return false;
+        return search(first, second, k - second.val) || dfs(first, second.left, k)
+            || dfs(first, second.right, k);
     }
     
-    private boolean search(TreeNode root, TreeNode cur, int val) {
-        if (root == null) return false;
-        return root.val == val && root != cur ||
-            root.val < val && search(root.right, cur, val) ||
-            root.val > val && search(root.left, cur, val);
+    private boolean search(TreeNode first, TreeNode second, int val) {
+        if (first == null) return false;
+        return first.val == val && first != second ||
+            first.val < val && search(first.right, second, val) ||
+            first.val > val && search(first.left, second, val);
     }
 }
 
