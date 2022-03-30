@@ -1,10 +1,10 @@
 class Solution {
     public int nthUglyNumber(int n) {
         if (n == 1) return 1;
+        int[] dp = new int[n + 1];
         int p2 = 1;
         int p3 = 1;
         int p5 = 1;
-        int[] dp = new int[n + 1];
         dp[1] = 1;
         for (int i = 2; i <= n; ++i) {
             dp[i] = Math.min(2 * dp[p2], Math.min(3 * dp[p3], 5 * dp[p5]));
