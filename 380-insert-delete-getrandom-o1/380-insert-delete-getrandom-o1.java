@@ -1,46 +1,35 @@
 class RandomizedSet {
-    Map<Integer, Integer> valueMap;
-    Map<Integer, Integer> locationMap;
-
-    /** Initialize your data structure here. */
+    List<Integer> list;
+    Map<Integer, Integer> map;
     public RandomizedSet() {
-        valueMap = new HashMap<>();
-        locationMap = new HashMap<>();
+        list = new ArrayList<>();
+        map = new HashMap<>();
     }
     
-    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     public boolean insert(int val) {
-        if (valueMap.containsKey(val)) {
-            return false;
-        }
-        int cap = valueMap.size();
-        valueMap.put(val, cap);
-        locationMap.put(cap, val);
+        if (map.containsKey(val)) return false;
+        map.put(val, list.size());
+        list.add(val);
         return true;
     }
     
-    /** Removes a value from the set. Returns true if the set contained the specified element. */
     public boolean remove(int val) {
-        if (!valueMap.containsKey(val)) {
-            return false;
+        if (!map.containsKey(val)) return false;
+        int pos = map.get(val);
+        if (pos < list.size() - 1) {
+            int lastValue = list.get(list.size() - 1);
+            map.put(lastValue, pos);
+            list.set(pos, lastValue);
         }
-        int location = valueMap.get(val);
-        if (location < valueMap.size() - 1) {
-            // If this value is not on the last index
-            // then swap it with the last index value
-            int lastVal = locationMap.get(valueMap.size() - 1);
-            valueMap.put(lastVal, location);
-            locationMap.put(location, lastVal);
-        }
-        locationMap.remove(valueMap.size() - 1);
-        valueMap.remove(val);
+        map.remove(val);
+        list.remove(list.size() - 1);
         return true;
     }
     
-    /** Get a random element from the set. */
     public int getRandom() {
         Random rand = new Random();
-        return locationMap.get(rand.nextInt(locationMap.size()));
+        int index = rand.nextInt(list.size());
+        return list.get(index);
     }
 }
 
