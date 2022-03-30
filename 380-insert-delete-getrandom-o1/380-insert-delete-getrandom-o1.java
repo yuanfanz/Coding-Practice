@@ -1,23 +1,46 @@
 class RandomizedSet {
-    Set<Integer> set;
+    Map<Integer, Integer> valueMap;
+    Map<Integer, Integer> locationMap;
+
+    /** Initialize your data structure here. */
     public RandomizedSet() {
-        set = new HashSet<>();
+        valueMap = new HashMap<>();
+        locationMap = new HashMap<>();
     }
     
+    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     public boolean insert(int val) {
-        return set.add(val);
+        if (valueMap.containsKey(val)) {
+            return false;
+        }
+        int cap = valueMap.size();
+        valueMap.put(val, cap);
+        locationMap.put(cap, val);
+        return true;
     }
     
+    /** Removes a value from the set. Returns true if the set contained the specified element. */
     public boolean remove(int val) {
-        return set.remove(val);
+        if (!valueMap.containsKey(val)) {
+            return false;
+        }
+        int location = valueMap.get(val);
+        if (location < valueMap.size() - 1) {
+            // If this value is not on the last index
+            // then swap it with the last index value
+            int lastVal = locationMap.get(valueMap.size() - 1);
+            valueMap.put(lastVal, location);
+            locationMap.put(location, lastVal);
+        }
+        locationMap.remove(valueMap.size() - 1);
+        valueMap.remove(val);
+        return true;
     }
     
+    /** Get a random element from the set. */
     public int getRandom() {
-        int size = set.size();
-        Random random = new Random();
-        int index = random.nextInt(size);
-        List<Integer> list = new ArrayList<>(set);
-        return list.get(index);
+        Random rand = new Random();
+        return locationMap.get(rand.nextInt(locationMap.size()));
     }
 }
 
