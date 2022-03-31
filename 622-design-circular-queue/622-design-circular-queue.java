@@ -1,26 +1,22 @@
 class MyCircularQueue {
-    private Node head;
-    private Node tail;
-    private int cap;
-    private int curSize;
+    int[] arr;
+    int front;
+    int rear;
+    int size;
     public MyCircularQueue(int k) {
-        head = new Node(-1);
-        tail = new Node(-1);
-        head.next = tail;
-        tail.prev = head;
-        cap = k;
+        arr = new int[k];
+        front = 0;
+        rear = -1;
+        size = 0;
     }
     
     public boolean enQueue(int value) {
         if (isFull()) {
             return false;
         }
-        Node node = new Node(value);
-        tail.prev.next = node;
-        node.prev = tail.prev;
-        tail.prev = node;
-        node.next = tail;
-        curSize++;
+        rear = (rear + 1) % arr.length;
+        arr[rear] = value;
+        size++;
         return true;
     }
     
@@ -28,41 +24,25 @@ class MyCircularQueue {
         if (isEmpty()) {
             return false;
         }
-        head.next = head.next.next;
-        head.next.prev = head;
-        curSize--;
+        front = (front + 1) % arr.length;
+        size--;
         return true;
     }
     
     public int Front() {
-        if (isEmpty()) {
-            return -1;
-        }
-        return head.next.val;
+        return isEmpty() ? -1 : arr[front];
     }
     
     public int Rear() {
-        if (isEmpty()) {
-            return -1;
-        }
-        return tail.prev.val;
+        return isEmpty() ? -1 : arr[rear];
     }
     
     public boolean isEmpty() {
-        return curSize == 0;
+        return size == 0;
     }
     
     public boolean isFull() {
-        return curSize >= cap;
-    }
-    
-    class Node{
-        int val;
-        Node next;
-        Node prev;
-        public Node(int val) {
-            this.val = val;
-        }
+        return size == arr.length;
     }
 }
 
