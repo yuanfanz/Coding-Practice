@@ -10,7 +10,7 @@ class Solution {
                 j = mid;
             }
         }
-        return i;
+        return j;
     }
     private boolean isValid(int[] nums, int mid, int m) {
         int count = 0;
