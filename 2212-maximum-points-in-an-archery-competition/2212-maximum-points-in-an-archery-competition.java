@@ -1,33 +1,31 @@
 class Solution {
-    int maxscore = 0;
-    int[] max = new int[12];
-    
+    int[] maxArr;
+    int max;
     public int[] maximumBobPoints(int numArrows, int[] aliceArrows) {
+        maxArr = new int[12];
+        max = 0;
         int[] bob = new int[12];
-        calculate(aliceArrows, bob, 11, numArrows, 0);
-        return max;
+        dfs(bob, aliceArrows, numArrows, 11, 0);
+        return maxArr;
     }
-    
-    private void calculate(int[] alice, int[] bob, int index, int remainArrows, int score) {
-        if (index < 0 || remainArrows <= 0) {
-            if (remainArrows > 0) {
-                bob[0] += remainArrows;
+    private void dfs(int[] bob, int[] alice, int remain, int index, int score) {
+        if (index < 0 || remain <= 0) {
+            if (remain > 0) {
+                bob[0] += remain;
             }
-            if (score > maxscore) { // update highest score
-                maxscore = score;
-                max = bob.clone();
+            if (score > max) {
+                maxArr = bob.clone();
+                max = score;
             }
             return;
         }
-        // 1. either we try to have 1 more arrow than alice
-        if (remainArrows >= alice[index] + 1) {
+        if (remain >= alice[index] + 1) {
             bob[index] = alice[index] + 1;
-            calculate(alice, bob, index - 1, remainArrows - alice[index] - 1, score + index);
+            dfs(bob, alice, remain - alice[index] - 1, index - 1, score + index);
             bob[index] = 0;
         }
-        // 2. or no arrow and move on to next point
         bob[index] = 0;
-        calculate(alice, bob, index - 1, remainArrows, score);
+        dfs(bob, alice, remain, index - 1, score);
         bob[index] = 0;
     }
 }
