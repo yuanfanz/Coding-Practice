@@ -9,8 +9,8 @@ class Solution {
         String[] result = new String[1];
         result[0] = s.charAt(0) + "";
         for (int i = 0; i < s.length(); ++i) {
-            int left = i;
-            int right = i;
+            int left = i - 1;
+            int right = i + 1;
             char ch = s.charAt(i);
             while (left >= 0 && s.charAt(left) == ch) {
                 left--;
@@ -22,7 +22,7 @@ class Solution {
                 left--;
                 right++;
             }
-            if (right - left - 1 > max) {
+            if (right - left - 1 >= max) {
                 max = right - left - 1;
                 result[0] = s.substring(left + 1, right);
             }
