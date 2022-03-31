@@ -66,7 +66,7 @@ class Solution {
         return n != 0 ? new ArrayList<>() : result;
     }
     private void buildGroupGraph(Map<Integer, List<Integer>> graphMap, int[] groupIndegree,
-                                List<List<Integer>> beforeItems, int[] group, int n) {
+                                List<List<Integer>> beforeItems, int[] group, int n)  {
         for (int i = 0; i < n; ++i) {
             List<Integer> list = beforeItems.get(i);
             if (list.size() == 0) continue;
