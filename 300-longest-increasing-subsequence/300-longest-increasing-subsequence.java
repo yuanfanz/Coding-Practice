@@ -1,30 +1,20 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        int len = 1;
         int n = nums.length;
-        int[] sequence = new int[n];
-        sequence[len - 1] = nums[0];
-        for (int i = 1; i < n; ++i) {
-            if (sequence[len - 1] >= nums[i]) {
-                int index = search(sequence, nums[i], 0, len - 1);
-                sequence[index] = nums[i];
-            } else {
-                sequence[len++] = nums[i];
+        
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
             }
         }
-        return len;
-    }
-    private int search(int[] nums, int target, int i, int j) {
-        while (i <= j) {
-            int mid = i + (j - i) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] < target) {
-                i = mid + 1;
-            } else {
-                j = mid - 1;
-            }
+        int max = 1;
+        for (int i : dp) {
+            max = Math.max(max, i);
         }
-        return i;
+        return max;
     }
 }
