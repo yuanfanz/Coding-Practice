@@ -21,14 +21,15 @@ class RandomizedSet {
             map.put(lastValue, pos);
             list.set(pos, lastValue);
         }
-        map.remove(val);
         list.remove(list.size() - 1);
+        map.remove(val);
         return true;
     }
     
     public int getRandom() {
-        Random rand = new Random();
-        int index = rand.nextInt(list.size());
+        Random random = new Random();
+        int index = random.nextInt(list.size());
+        
         return list.get(index);
     }
 }
