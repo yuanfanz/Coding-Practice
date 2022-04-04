@@ -16,7 +16,7 @@ class MyQueue {
     }
     
     public int peek() {
-        if (output.isEmpty()) {
+        if (output.size() == 0) {
             while (input.size() > 0) {
                 output.push(input.pop());
             }
@@ -25,7 +25,7 @@ class MyQueue {
     }
     
     public boolean empty() {
-        return output.isEmpty() && input.isEmpty();
+        return input.size() == 0 && output.size() == 0;
     }
 }
 
