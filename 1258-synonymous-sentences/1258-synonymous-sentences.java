@@ -30,7 +30,7 @@ class Solution {
     }
     
     private void dfs(Set<String> result, StringBuilder sb, String[] strs, int index,
-                    UnionFind uf, String text, Map<Integer, Set<String>> setMap, Map<String, Integer> map) {
+            UnionFind uf, String text, Map<Integer, Set<String>> setMap, Map<String, Integer> map) {
         if (index == strs.length) {
             sb.setLength(sb.length() - 1);
             result.add(sb.toString());
