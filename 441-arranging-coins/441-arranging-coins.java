@@ -1,8 +1,5 @@
 class Solution {
     public int arrangeCoins(int n) {
-        if (n < 0) {
-            throw new IllegalArgumentException("Input Number is invalid. Only positive numbers are allowed");
-        }
         if (n <= 1) {
             return n;
         }
@@ -11,7 +8,7 @@ class Solution {
         }
 
         long i = 1;
-        long j = n / 2;
+        long j = n;
         while (i <= j) {
             long mid = i + (j - i) / 2;
             long res = (1 + mid) * mid / 2;
