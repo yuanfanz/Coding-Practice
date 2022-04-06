@@ -12,7 +12,7 @@ class Solution {
             int nextVal = cur.val;
             int prevVal = prev.val;
             // 4 cases
-            if (insertVal == prevVal || insertVal > prevVal && insertVal < nextVal
+            if (insertVal == prevVal || insertVal > prevVal && insertVal <= nextVal
                || (prevVal > nextVal && (insertVal < nextVal || insertVal > prevVal))) {
                 Node node = new Node(insertVal);
                 prev.next = node;
