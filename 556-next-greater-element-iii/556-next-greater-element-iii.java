@@ -1,7 +1,6 @@
 class Solution {
     public int nextGreaterElement(int n) {
         char[] arr = String.valueOf(n).toCharArray();
-        int len = arr.length;
         int i = arr.length - 2;
         while (i >= 0) {
             if (arr[i] < arr[i + 1]) {
@@ -17,13 +16,8 @@ class Solution {
             swap(arr, i, j);
         }
         reverse(arr, i + 1);
-        long result = Long.valueOf(String.valueOf(arr));
-        return result <= Integer.MAX_VALUE && result > n ? (int) result : -1;
-    }
-    private void swap(char[] arr, int i, int j) {
-        char ch = arr[i];
-        arr[i] = arr[j];
-        arr[j] = ch;
+        long num = Long.valueOf(String.valueOf(arr));
+        return num > n && num <= Integer.MAX_VALUE ? (int) num : -1;
     }
     private void reverse(char[] arr, int start) {
         int i = start;
@@ -33,5 +27,10 @@ class Solution {
             i++;
             j--;
         }
+    }
+    private void swap(char[] arr, int i, int j) {
+        char ch = arr[i];
+        arr[i] = arr[j];
+        arr[j] = ch;
     }
 }
