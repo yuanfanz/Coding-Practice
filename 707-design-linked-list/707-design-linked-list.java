@@ -1,80 +1,65 @@
 class MyLinkedList {
-    private Node head;
-    private Node tail;
+    Node head;
+    Node tail;
+    int size;
     public MyLinkedList() {
-        head = new Node(0);
-        tail = new Node(0);
+        head = new Node(-1);
+        tail = new Node(-1);
         head.next = tail;
         tail.prev = head;
+        size = 0;
     }
     
     public int get(int index) {
-        Node cur = head;
-        index++;
+        if (index >= size) return -1;
+        Node cur = head.next;
         while (cur != tail && index > 0) {
             cur = cur.next;
             index--;
         }
-        if (cur == tail) {
-            return -1;
-        } else {
-            return cur.val;
-        }
+        return cur.val;
     }
     
     public void addAtHead(int val) {
-        Node cur = new Node(val);
-        cur.next = head.next;
-        head.next.prev = cur;
-        head.next = cur;
-        cur.prev = head;
+        addAtIndex(0, val);
     }
     
     public void addAtTail(int val) {
-        Node cur = new Node(val);
-        cur.prev = tail.prev;
-        tail.prev.next = cur;
-        cur.next = tail;
-        tail.prev = cur;
+        addAtIndex(size, val);
     }
     
     public void addAtIndex(int index, int val) {
+        if (index > size) return;
+        Node node = new Node(val);
         Node cur = head;
-        index++;
-        while (cur != tail && index > 0) {
+        while (index > 0) {
             cur = cur.next;
             index--;
         }
-        if (cur == tail && index > 0) return;
-        if (cur == tail) { // append to end
-            addAtTail(val);
-            return;
-        } else {
-            Node node = new Node(val);
-            node.prev = cur.prev;
-            cur.prev.next = node;
-            node.next = cur;
-            cur.prev = node;
-            return;
-        }
+        node.next = cur.next;
+        cur.next.prev = node;
+        node.prev = cur;
+        cur.next = node;
+        size++;
     }
     
     public void deleteAtIndex(int index) {
+        if (index < 0) return;
+        if (index >= size) return;
         Node cur = head;
-        index++;
-        while (cur != tail && index > 0) {
+        while (index > 0) {
             cur = cur.next;
             index--;
         }
-        if (cur == tail) return;
-        cur.next.prev = cur.prev;
-        cur.prev.next = cur.next;
+        cur.next.next.prev = cur;
+        cur.next = cur.next.next;
+        size--;
     }
     
     class Node{
         int val;
-        Node prev;
         Node next;
+        Node prev;
         public Node(int val) {
             this.val = val;
         }
