@@ -1,20 +1,21 @@
 class Solution {
     public boolean canReach(int[] arr, int start) {
         Queue<Integer> queue = new LinkedList<>();
+        
         queue.offer(start);
-        boolean[] visited = new boolean[arr.length];
+        int n = arr.length;
+        boolean[] visited = new boolean[n];
         while (queue.size() > 0) {
             int cur = queue.poll();
-            if (arr[cur] == 0) return true;
             if (visited[cur]) continue;
             visited[cur] = true;
-            int first = cur - arr[cur];
-            int second = cur + arr[cur];
-            if (first >= 0) {
-                queue.offer(first);
+            int jump = arr[cur];
+            if (arr[cur] == 0) return true;
+            if (cur + jump < n) {
+                queue.offer(cur + jump);
             }
-            if (second < arr.length) {
-                queue.offer(second);
+            if (cur - jump >= 0) {
+                queue.offer(cur - jump);
             }
         }
         return false;
