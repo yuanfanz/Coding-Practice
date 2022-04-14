@@ -5,14 +5,14 @@ class Solution {
         int j = position[position.length - 1];
         
         while (i < j) {
-            int mid = i + ((j - i) + 1) / 2;
+            int mid = i + (j - i) / 2;
             if (!isValid(position, mid, m)) {
-                j = mid - 1;
+                j = mid;
             } else {
-                i = mid;
+                i = mid + 1;
             }
         }
-        return i;
+        return j - 1;
     }
     private boolean isValid(int[] position, int mid, int m) {
         int count = 1;
@@ -26,29 +26,3 @@ class Solution {
         return count >= m;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
