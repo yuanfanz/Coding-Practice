@@ -1,17 +1,14 @@
 class Solution {
     public int maxDistance(int[] position, int m) {
         Arrays.sort(position);
-        int n = position.length;
         int i = 1;
-        int j = (int) Math.pow(10, 9);
+        int j = position[position.length - 1];
         
         while (i < j) {
             int mid = i + ((j - i) + 1) / 2;
             if (!isValid(position, mid, m)) {
                 j = mid - 1;
             } else {
-                // System.out.println("i " + i);
-                // System.out.println("j " + j);
                 i = mid;
             }
         }
@@ -26,7 +23,6 @@ class Solution {
                 prev = position[i];
             }
         }
-        // System.out.println("count " + count);
         return count >= m;
     }
 }
