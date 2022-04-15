@@ -8,7 +8,7 @@ class Solution {
             if (ch == '(') {
                 stack.push(i);
             } else if (ch == ')') {
-                if (!stack.isEmpty() && s.charAt(stack.peek()) == '(') {
+                if (stack.size() > 0 && s.charAt(stack.peek()) == '(') {
                     stack.pop();
                 } else {
                     stack.push(i);
