@@ -10,14 +10,10 @@ class Solution {
         for (int i = 0; i < ages.length; ++i){
             double low = ages[i] * 0.5 + 7;
             double high = ages[i];
-            // System.out.print("low: " + low + "  ");
-            // System.out.println("high: " + high);
-            
             // >low and <=high
             int left = searchRight(ages, low) + 1;
             int right = searchRight(ages, high);
-            // System.out.print(left + "  ");
-            // System.out.println(right);
+            if (right == -1) return 0;
             count += Math.max(right - left, 0);
         }
         return count;
@@ -33,6 +29,9 @@ class Solution {
             } else {
                 j = mid - 1;
             }
+        }
+        if (j < 0 || nums[j] > target) {
+            return -1;
         }
         return j;
     }
