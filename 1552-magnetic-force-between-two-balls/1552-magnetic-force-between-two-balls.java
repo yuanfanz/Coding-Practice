@@ -1,19 +1,20 @@
 class Solution {
     public int maxDistance(int[] position, int m) {
         Arrays.sort(position);
-        int i = 1;
-        int j = position[position.length - 1];
-        
+        int n = position.length;
+        int i = 0;
+        int j = position[n - 1];
         while (i < j) {
-            int mid = i + (j - i) / 2;
+            int mid = i + (j - i + 1) / 2;
             if (!isValid(position, mid, m)) {
-                j = mid;
+                j = mid - 1;
             } else {
-                i = mid + 1;
+                i = mid;
             }
         }
-        return j - 1;
+        return i;
     }
+    
     private boolean isValid(int[] position, int mid, int m) {
         int count = 1;
         int prev = position[0];
