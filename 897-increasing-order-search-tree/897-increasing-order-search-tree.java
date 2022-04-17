@@ -1,29 +1,24 @@
 
 class Solution {
+    private TreeNode result;
+    private TreeNode pre;
     public TreeNode increasingBST(TreeNode root) {
-        List<Integer> list = preorder(root);
-        
-        root = new TreeNode(list.get(0));
-        TreeNode prev = root;
-        for (int i = 1; i < list.size(); ++i) {
-            TreeNode cur = new TreeNode(list.get(i));
-            prev.right = cur;
-            prev = cur;
-        }
-        return root;
+        inorder(root);
+        return result;
     }
     
-    private List<Integer> preorder(TreeNode root) {
-        List<Integer> list = new ArrayList<>();
-        if (root == null) return list;
+    private void inorder(TreeNode root) {
+        if (root == null) return;
         
-        List<Integer> left = preorder(root.left);
-        List<Integer> right = preorder(root.right);
-        
-        list.addAll(left);
-        list.add(root.val);
-        list.addAll(right);
-        return list;
+        inorder(root.left);
+        if (result == null) {
+            result = root;
+        } else {
+            pre.right = root;
+        }
+        pre = root;
+        root.left = null;
+        inorder(root.right);
     }
 }
 
