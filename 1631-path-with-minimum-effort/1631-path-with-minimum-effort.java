@@ -1,58 +1,72 @@
 class Solution {
     public int minimumEffortPath(int[][] heights) {
-        Map<String, List<int[]>> map = new HashMap<>();
-        
         int m = heights.length;
         int n = heights[0].length;
         
+        UnionFind uf = new UnionFind(m * n);
+        List<int[]> list = new ArrayList<>();
         int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
-        int[][] visited = new int[m][n];
-        for (int[] cur : visited) {
-            Arrays.fill(cur, -1);
-        }
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
-        pq.offer(new int[]{0, 0, 0});
-        while (pq.size() > 0) {
-            int[] cur = pq.poll();
-            int i = cur[0];
-            int j = cur[1];
-            int max = cur[2];
-            if (i == m - 1 && j == n - 1) {
-                return max;
-            }
-            if (visited[i][j] != -1 && visited[i][j] <= max) continue;
-            visited[i][j] = max;
-            // System.out.print(i + " ");
-            // System.out.println(j);
-            for (int[] dir : dirs) {
-                int row = i + dir[0];
-                int col = j + dir[1];
-                if (row < 0 || col < 0 || row >= m || col >= n) continue;
-                pq.offer(new int[]{row, col, 
-                    Math.max(max, Math.abs(heights[row][col] - heights[i][j]))});
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                int cur = i * n + j;
+                // 4 directions
+                for (int[] dir : dirs) {
+                    int row = i + dir[0];
+                    int col = j + dir[1];
+                    if (row < 0 || col < 0 || row >= m || col >= n) {
+                        continue;
+                    }
+                    int next = row * n + col;
+                    list.add(new int[]{cur, next, Math.abs(heights[i][j] - heights[row][col])});
+                }
             }
         }
-        return -1;
+        Collections.sort(list, (a, b) -> a[2] - b[2]);
+        int sum = 0;
+        for (int[] cur : list) {
+            if (uf.union(cur[0], cur[1])) {
+                sum = Math.max(sum, cur[2]);
+            }
+            if (uf.isConnected(0, m * n - 1)) {
+                return sum;
+            }
+        }
+        return 0;
+    }
+    
+    class UnionFind{
+        int[] parent;
+        int count;
+        public UnionFind(int n) {
+            parent = new int[n];
+            for (int i = 0; i < n; ++i) {
+                parent[i] = i;
+            }
+            count = n;
+        }
+        public int find(int p) {
+            while (p != parent[p]) {
+                parent[p] = parent[parent[p]];
+                p = parent[p];
+            }
+            return p;
+        }
+        public boolean isConnected(int p, int q) {
+            int rootP = find(p);
+            int rootQ = find(q);
+            return rootP == rootQ;
+        }
+        public boolean union(int p, int q) {
+            int rootP = find(p);
+            int rootQ = find(q);
+            if (rootP == rootQ) return false;
+            if (rootP < rootQ) {
+                parent[rootQ] = rootP;
+            } else {
+                parent[rootP] = rootQ;
+            }
+            count--;
+            return true;
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
