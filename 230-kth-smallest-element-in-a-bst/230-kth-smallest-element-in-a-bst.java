@@ -15,7 +15,7 @@ class Solution {
         count++;
         if (count == k) {
             target = root.val;
-            return;
+            // return;
         }
         dfs(root.right, k);
     }
