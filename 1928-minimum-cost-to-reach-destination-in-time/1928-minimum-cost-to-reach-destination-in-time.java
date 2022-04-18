@@ -30,14 +30,14 @@ class Solution {
             
             visited[node] = time;
             
-            // if (map.containsKey(node)) {
+            if (map.containsKey(node)) {
                 for (int[] arr : map.get(node)) {
                     int next = arr[0];
                     int nextTime = arr[1];
                     pq.offer(new int[]{next, cost + passingFees[next], 
                                        time + nextTime});
                 }
-            // }
+            }
         }
         return -1;
     }
