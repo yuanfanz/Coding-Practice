@@ -13,39 +13,23 @@ class Solution {
             map.put(from, costMap1);
             map.put(to, costMap2);
         }
-        // int[] distance = new int[n + 1];
         PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
         pq.offer(new int[]{n, 0});
         int[] visited = new int[n + 1];
         Arrays.fill(visited, Integer.MAX_VALUE);
-        visited[n] = 0;
         while (pq.size() > 0) {
             int[] cur = pq.poll();
             int node = cur[0];
             int dis = cur[1];
+            if (dis >= visited[node]) continue;
+            visited[node] = dis;
             if (map.containsKey(node)) {
                 for (int next : map.get(node).keySet()) {
-                    int nextDis = map.get(node).get(next) + dis;
-                    if (nextDis < visited[next]) {
-                        visited[next] = nextDis;
-                        pq.offer(new int[]{next, nextDis});
-                    }
+                    int nextDis = map.get(node).get(next);
+                    pq.offer(new int[]{next, nextDis + dis});
                 }
             }
         }
-//         while(!pq.isEmpty()) {
-//             int[] curr = pq.poll();
-//             int node = curr[0];
-// 			int weight = curr[1];
-            
-//             for(int nei : map.get(node).keySet()) {
-//                 int w = weight + map.get(node).get(nei);
-//                 if(w < visited[nei]) {
-//                     visited[nei] = w;
-//                     pq.offer(new int[]{ nei, w });
-//                 }
-//             }
-//         }
         Integer[] dp = new Integer[n + 1];
         return dfs(visited, map, 1, n, dp);
     }
