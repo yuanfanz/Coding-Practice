@@ -36,7 +36,6 @@ class Solution {
                 queue.offer(new int[]{row, col, count + curCount});
             }
         }
-        int res = visited[destination[0]][destination[1]];
-        return res == Integer.MAX_VALUE ? -1 : res;
+        return -1;
     }
 }
