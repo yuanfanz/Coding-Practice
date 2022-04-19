@@ -46,7 +46,7 @@ class Solution {
                     col -= dir[1];
                     curCount--;
                 }
-                queue.offer(new Tuple(row, col, cur.count + curCount, cur.path + dirstr[k]));
+                queue.offer(new Tuple(row, col, count + curCount, path + dirstr[k]));
             }
         }
         Tuple res = visited[destination[0]][destination[1]];
