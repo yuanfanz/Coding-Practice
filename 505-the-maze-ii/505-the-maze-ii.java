@@ -5,7 +5,7 @@ class Solution {
         if (start[0] == destination[0] && start[1] == destination[1]) return 0;
         
         int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
-        Queue<int[]> queue = new LinkedList<>();
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[2] - b[2]);
         queue.offer(new int[]{start[0], start[1], 0});
         int[][] visited = new int[m][n];
         for (int[] cur : visited) {
@@ -16,6 +16,9 @@ class Solution {
             int i = cur[0];
             int j = cur[1];
             int count = cur[2];
+            if (i == destination[0] && j == destination[1]) {
+                return count;
+            }
             if (count >= visited[i][j]) continue;
             visited[i][j] = count;
             for (int[] dir : dirs) {
