@@ -6,7 +6,8 @@ class Solution {
         
         int[][] dirs = new int[][]{{-1,0},{0,1},{1,0},{0,-1}};
         String[] dirstr = new String[]{"u","r","d","l"};
-        PriorityQueue<Tuple> pq = new PriorityQueue<>();
+        // PriorityQueue<Tuple> pq = new PriorityQueue<>();
+        Queue<Tuple> pq = new LinkedList<>();
         pq.offer(new Tuple(start[0], start[1], 0, ""));
         Tuple[][] visited = new Tuple[m][n];
         for (int i = 0; i < m; ++i) {
@@ -20,9 +21,6 @@ class Solution {
             int j = cur.j;
             int count = cur.count;
             String path = cur.path;
-            
-            // System.out.println(i + " " + j + " ");
-            // System.out.println(path);
             
             Tuple obj = visited[i][j];
             if (obj.compareTo(cur) <= 0) continue;
@@ -45,7 +43,6 @@ class Solution {
                     }
                 }
                 if (!fall) {
-                // if (row != destination[0] || col != destination[1]) {
                     row -= dir[0];
                     col -= dir[1];
                     curCount--;
@@ -74,13 +71,3 @@ class Solution {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
