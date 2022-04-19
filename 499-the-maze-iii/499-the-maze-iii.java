@@ -6,17 +6,16 @@ class Solution {
         
         int[][] dirs = new int[][]{{-1,0},{0,1},{1,0},{0,-1}};
         String[] dirstr = new String[]{"u","r","d","l"};
-        // PriorityQueue<Tuple> pq = new PriorityQueue<>();
-        Queue<Tuple> pq = new LinkedList<>();
-        pq.offer(new Tuple(start[0], start[1], 0, ""));
+        Queue<Tuple> queue = new LinkedList<>();
+        queue.offer(new Tuple(start[0], start[1], 0, ""));
         Tuple[][] visited = new Tuple[m][n];
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 visited[i][j] = new Tuple(i, j, Integer.MAX_VALUE, "");
             }
         }
-        while (pq.size() > 0) {
-            Tuple cur = pq.poll();
+        while (queue.size() > 0) {
+            Tuple cur = queue.poll();
             int i = cur.i;
             int j = cur.j;
             int count = cur.count;
@@ -47,7 +46,7 @@ class Solution {
                     col -= dir[1];
                     curCount--;
                 }
-                pq.offer(new Tuple(row, col, cur.count + curCount, cur.path + dirstr[k]));
+                queue.offer(new Tuple(row, col, cur.count + curCount, cur.path + dirstr[k]));
             }
         }
         Tuple res = visited[destination[0]][destination[1]];
