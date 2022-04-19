@@ -1,5 +1,6 @@
 class Solution {
     int mod = (int) Math.pow(10, 9) + 7;
+    
     public int countRestrictedPaths(int n, int[][] edges) {
         Map<Integer, Map<Integer, Integer>> map = new HashMap<>();
         
@@ -43,34 +44,11 @@ class Solution {
         long res = 0;
         for (int next : map.get(cur).keySet()) {
             if (distance[cur] > distance[next]) {
-                res = (res + dfs(distance, map, next, end, dp) % mod);
+                res += dfs(distance, map, next, end, dp) % mod;
             }
         }
-        res = res % mod;
+        res %= mod;
         dp[cur] = (int) res;
         return dp[cur];
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
