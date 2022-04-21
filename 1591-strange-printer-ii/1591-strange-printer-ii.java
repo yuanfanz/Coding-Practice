@@ -6,7 +6,6 @@ class Solution {
         for (int i = 1; i <= 60; ++i) {
             search(indegree, targetGrid, i, map);
         }
-        int[] visited = new int[61];
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 1; i <= 60; ++i) {
             if (indegree[i] == 0) {
@@ -64,15 +63,3 @@ class Solution {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
