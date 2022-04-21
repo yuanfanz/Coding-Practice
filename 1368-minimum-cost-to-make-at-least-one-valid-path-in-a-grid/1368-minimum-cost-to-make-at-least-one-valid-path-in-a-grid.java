@@ -6,10 +6,7 @@ class Solution {
         int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
         PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
         pq.offer(new int[]{0, 0, 0});
-        int[][] visited = new int[m][n];
-        for (int[] cur : visited) {
-            Arrays.fill(cur, Integer.MAX_VALUE);
-        }
+        boolean[][] visited = new boolean[m][n];
         while (pq.size() > 0) {
             int[] cur = pq.poll();
             int i = cur[0];
@@ -17,8 +14,8 @@ class Solution {
             int cost = cur[2];
             if (i == m - 1 && j == n - 1) return cost;
             
-            if (cost >= visited[i][j]) continue;
-            visited[i][j] = cost;
+            if (visited[i][j]) continue;
+            visited[i][j] = true;
             
             for (int k = 0; k < 4; ++k) {
                 int nextCost = cost;
