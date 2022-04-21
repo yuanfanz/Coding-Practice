@@ -2,34 +2,36 @@ class Solution {
     public boolean isPrintable(int[][] targetGrid) {
         Map<Integer, List<Integer>> map = new HashMap<>();
         
-        int[] indegree = new int[61];
         for (int i = 1; i <= 60; ++i) {
-            search(indegree, targetGrid, i, map);
+            search(targetGrid, i, map);
         }
-        Queue<Integer> queue = new LinkedList<>();
+        int[] visited = new int[61];
         for (int i = 1; i <= 60; ++i) {
-            if (indegree[i] == 0) {
-                queue.offer(i);
+            if (visited[i] != 0) continue;
+            if (dfs(map, i, visited)) {
+                return false;
             }
         }
-        int count = 0;
-        while (queue.size() > 0) {
-            int cur = queue.poll();
-            count++;
-            if (map.containsKey(cur)) {
-                for (int next : map.get(cur)) {
-                    indegree[next]--;
-                    if (indegree[next] == 0) {
-                        queue.offer(next);
+        return true;
+    }
+    
+    private boolean dfs(Map<Integer, List<Integer>> map, int color, int[] visited) {
+        visited[color] = 1;
+        if (map.containsKey(color)) {
+            for (int next : map.get(color)) {
+                if (visited[next] == 1) return true;
+                if (visited[next] == 0) {
+                    if (dfs(map, next, visited)) {
+                        return true;
                     }
                 }
             }
         }
-        return count == 60;
+        visited[color] = 2;
+        return false;
     }
     
-    private void search(int[] indegree, int[][] grid, 
-                        int color, Map<Integer, List<Integer>> map) {
+    private void search(int[][] grid, int color, Map<Integer, List<Integer>> map) {
         int minRow = Integer.MAX_VALUE;
         int maxRow = Integer.MIN_VALUE;
         int minCol = Integer.MAX_VALUE;
@@ -57,7 +59,6 @@ class Solution {
                     List<Integer> list = map.getOrDefault(color, new ArrayList<>());
                     list.add(grid[i][j]);
                     map.put(color, list);
-                    indegree[grid[i][j]]++;
                 }
             }
         }
