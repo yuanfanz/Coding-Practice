@@ -1,14 +1,13 @@
 public class Codec {
-      String v;
+
     // Encodes a URL to a shortened URL.
     public String encode(String longUrl) {
-        v = longUrl;
-        return "";
+        return longUrl;
     }
 
     // Decodes a shortened URL to its original URL.
     public String decode(String shortUrl) {
-        return v;
+        return shortUrl;
     }
 }
 
