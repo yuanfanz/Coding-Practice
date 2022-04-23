@@ -1,6 +1,7 @@
 class Solution {
     public int wiggleMaxLength(int[] nums) {
         int n = nums.length;
+        
         if (n == 0) return 0;
         
         int[] up = new int[n];
