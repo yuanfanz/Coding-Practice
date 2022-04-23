@@ -3,14 +3,14 @@ class Solution {
     public int countNodes(TreeNode root) {
         if (root == null) return 0;
         
-        int left = getLeftHeight(root.left);
-        int right = getRightHeight(root.right);
+        int leftHeight = getLeftHeight(root.left);
+        int rightHeight = getRightHeight(root.right);
         
-        if (left == right) {
-            // this is a full binary tree
-            return (2 << left) - 1;
+        if (leftHeight == rightHeight) {
+            return (2 << leftHeight) - 1;
         }
-        return countNodes(root.left) + countNodes(root.right) + 1;
+        
+        return 1 + countNodes(root.left) + countNodes(root.right);
     }
     
     private int getLeftHeight(TreeNode root) {
