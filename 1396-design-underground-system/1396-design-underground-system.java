@@ -52,13 +52,15 @@ class UndergroundSystem {
     }
     
     public void checkOut(int id, String stationName, int t) {
-        Person person = userMap.get(id);
-        person.checkout(stationName, t);
-        String start = person.start;
-        String routeStr = start + "_" + stationName;
-        Route route = routeMap.getOrDefault(routeStr, new Route(start, stationName));
-        route.addTrip(person.startTime, t);
-        routeMap.put(routeStr, route);
+        if (userMap.containsKey(id)) {
+            Person person = userMap.get(id);
+            person.checkout(stationName, t);
+            String start = person.start;
+            String routeStr = start + "_" + stationName;
+            Route route = routeMap.getOrDefault(routeStr, new Route(start, stationName));
+            route.addTrip(person.startTime, t);
+            routeMap.put(routeStr, route);
+        }
     }
     
     public double getAverageTime(String startStation, String endStation) {
