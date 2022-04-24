@@ -37,7 +37,7 @@ class Solution {
                 continue;
             }
             // larger rectangles
-            SortedMap<Integer, List<Integer>> submap = xmap.tailMap(recY);
+            SortedMap<Integer, List<Integer>> submap = xmap.subMap(recY, maxY + 1);
             for (int next : submap.keySet()) {
                 List<Integer> list = submap.get(next);
                 int index = search(list, x);
@@ -67,29 +67,3 @@ class Solution {
         return i;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
