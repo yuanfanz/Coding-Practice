@@ -7,12 +7,11 @@ class Solution {
             int mid = i + (j - i) / 2;
             int res = num / mid;
             int rem = num % mid;
-            if (res == mid && rem == 0) {
-                return true;
-            } else if (res < mid) {
-                j = mid - 1;
-            } else {
+            if (res == mid && rem == 0) return true;
+            if (res > mid) {
                 i = mid + 1;
+            } else {
+                j = mid - 1;
             }
         }
         return false;
