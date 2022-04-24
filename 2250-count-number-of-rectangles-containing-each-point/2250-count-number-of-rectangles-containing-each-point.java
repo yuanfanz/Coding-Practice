@@ -1,5 +1,3 @@
-import java.util.SortedMap;
-
 class Solution {
     public int[] countRectangles(int[][] rectangles, int[][] points) {
         TreeMap<Integer, List<Integer>> xmap = new TreeMap<>();
@@ -37,9 +35,8 @@ class Solution {
                 continue;
             }
             // larger rectangles
-            SortedMap<Integer, List<Integer>> submap = xmap.subMap(recY, maxY + 1);
-            for (int next : submap.keySet()) {
-                List<Integer> list = submap.get(next);
+            for (int next : xmap.subMap(recY, maxY + 1).keySet()) {
+                List<Integer> list = xmap.get(next);
                 int index = search(list, x);
                 if (index != -1) {
                     count += list.size() - index;
