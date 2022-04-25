@@ -1,20 +1,21 @@
 class Solution {
     public int searchInsert(int[] nums, int target) {
-        int i = 0;
-        int j = nums.length - 1;
-        while (i <= j) {
-            int mid = i + (j - i) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] < target) {
-                i = mid + 1;
-            } else {
-                j = mid - 1;
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] == target) {
+                // 别返回，锁定左侧边界
+                right = mid - 1;
             }
         }
-        // if (j < 0 || nums[j] != target) {
-        //     return j + 1;
+        // 最后要检查 left 越界的情况
+        // if (left >= nums.length || nums[left] != target) {
+        //     return -1;
         // }
-        return i;
+        return left;
     }
 }
