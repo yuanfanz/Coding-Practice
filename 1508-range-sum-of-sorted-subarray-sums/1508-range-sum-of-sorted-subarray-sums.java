@@ -6,7 +6,7 @@ class Solution {
             presum[i + 1] = presum[i] + nums[i];
         }
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i <= n; ++i) {
+        for (int i = 1; i <= n; ++i) {
             for (int j = 0; j < i; ++j) {
                 list.add(presum[i] - presum[j]);
             }
