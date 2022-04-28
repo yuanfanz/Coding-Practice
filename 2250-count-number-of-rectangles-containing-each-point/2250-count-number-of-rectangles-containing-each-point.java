@@ -58,7 +58,7 @@ class Solution {
                 i = mid + 1;
             }
         }
-        if (i >= nums.size() || nums.get(i) < target) {
+        if (i >= nums.size()) {
             return -1;
         }
         return i;
