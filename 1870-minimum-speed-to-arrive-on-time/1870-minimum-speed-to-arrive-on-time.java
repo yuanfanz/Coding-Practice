@@ -16,15 +16,12 @@ class Solution {
     
     private boolean isValid(int[] dist, double hour, int mid) {
         double count = 0;
-        // System.out.println(mid);
         for (int i = 0; i < dist.length - 1; ++i) {
             count += (double) dist[i] / (double) mid;
             if (dist[i] % mid != 0) {
                 count = Math.ceil(count);
             }
         }
-        // System.out.println("  " + count);
-        // if (count > dist[dist.length - 1]) return false;
         count += (double) dist[dist.length - 1] / (double) mid;
         return count <= hour;
     }
