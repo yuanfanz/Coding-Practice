@@ -1,9 +1,10 @@
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int n = graph.length;
+        int[] colors = new int[n];
         
         for (int i = 0; i < n; ++i) {
-            int[] colors = new int[n];
+            if (colors[i] != 0) continue;
             colors[i] = 1;
             if (!dfs(graph, i, colors, 1)) return false;
         }
