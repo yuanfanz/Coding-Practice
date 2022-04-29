@@ -3,7 +3,7 @@ class Solution {
         int n = graph.length;
         
         for (int i = 0; i < n; ++i) {
-        int[] colors = new int[n];
+            int[] colors = new int[n];
             colors[i] = 1;
             if (!dfs(graph, i, colors, 1)) return false;
         }
