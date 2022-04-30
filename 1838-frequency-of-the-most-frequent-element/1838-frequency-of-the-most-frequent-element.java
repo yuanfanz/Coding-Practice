@@ -9,7 +9,7 @@ class Solution {
         Collections.sort(list);
         for (int i = 0; i < list.size(); ++i) {
             int cur = list.get(i);
-            int count = map.get(cur);
+            int count = map.get(list.get(i));
             if (i > 0) {
                 int rem = k;
                 for (int j = i - 1; j >= 0; --j) {
