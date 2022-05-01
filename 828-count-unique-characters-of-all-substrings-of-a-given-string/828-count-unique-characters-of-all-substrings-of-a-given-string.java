@@ -1,22 +1,19 @@
 class Solution {
-    public int uniqueLetterString(String s) {
-        int[] contribution = new int[26];
-        int[] lastPosition = new int[26];
-        
+    public int uniqueLetterString(String S) {
         int res = 0;
-        for (int i = 0; i < s.length(); ++i) {
-            int charNum = s.charAt(i) - 'A';
-            
-            int totalEndingHere = i + 1;
-            contribution[charNum] = totalEndingHere - lastPosition[charNum];
-            
-            int cur = 0;
-            for (int j = 0; j < 26; ++j) {
-                cur += contribution[j];
-            }
+        if (S == null || S.length() == 0)
+            return res;    
+        int[] showLastPosition = new int[128];
+        int[] contribution = new int[128];
+        int cur = 0;
+        for (int i = 0; i < S.length(); i++) {
+            char x = S.charAt(i);
+            cur -= contribution[x]; 
+            contribution[x] = (i - (showLastPosition[x] - 1));
+            cur += contribution[x]; 
+            showLastPosition[x] = i + 1;
             res += cur;
-            lastPosition[charNum] = i + 1;
-        }
+        }   
         return res;
     }
 }
