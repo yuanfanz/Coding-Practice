@@ -11,7 +11,7 @@ class Solution {
         int right = dfs(root.right, result);
         
         int cur = Math.max(left, right) + 1;
-        if (cur >= result.size()) {
+        if (cur == result.size()) {
             result.add(new ArrayList<>());
         }
         result.get(cur).add(root.val);
