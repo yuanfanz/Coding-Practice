@@ -14,14 +14,18 @@ class Solution {
         int step = 0;
         while (queue.size() > 0) {
             int size = queue.size();
-            for (int i = 0; i < size; ++i) {
+            for (int s = 0; s < size; ++s) {
                 int[] cur = queue.poll();
-                if (cur[0] == m - 1 && cur[1] == n - 1) {
+                int i = cur[0];
+                int j = cur[1];
+                if (i == m - 1 && j == n - 1) {
                     return step;
                 }
+                if (visited[i][j] != -1 && cur[2] >= visited[i][j]) continue;
+                visited[i][j] = cur[2];
                 for (int[] dir : dirs) {
-                    int row = cur[0] + dir[0];
-                    int col = cur[1] + dir[1];
+                    int row = i + dir[0];
+                    int col = j + dir[1];
                     if (row < 0 || col < 0 || row >= m || col >= n) {
                         continue;
                     }
@@ -29,10 +33,9 @@ class Solution {
                     if (grid[row][col] == 1) {
                         curK++;
                     }
-                    if (curK > k || visited[row][col] != -1 && curK >= visited[row][col]) {
+                    if (curK > k) {
                         continue;
                     }
-                    visited[row][col] = curK;
                     queue.offer(new int[]{row, col, curK});
                 }
             }
