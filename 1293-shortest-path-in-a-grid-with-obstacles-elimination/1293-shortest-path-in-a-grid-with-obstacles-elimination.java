@@ -4,7 +4,10 @@ class Solution {
         int n = grid[0].length;
         int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
 
-        boolean[][][] visited = new boolean[m][n][k + 1];
+        int[][] visited = new int[m][n];
+        for (int[] cur : visited) {
+            Arrays.fill(cur, -1);
+        }
         
         Queue<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{0, 0, 0});
@@ -26,10 +29,10 @@ class Solution {
                     if (grid[row][col] == 1) {
                         curK++;
                     }
-                    if (curK > k || visited[row][col][curK]) {
+                    if (curK > k || visited[row][col] != -1 && curK >= visited[row][col]) {
                         continue;
                     }
-                    visited[row][col][curK] = true;
+                    visited[row][col] = curK;
                     queue.offer(new int[]{row, col, curK});
                 }
             }
