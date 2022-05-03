@@ -19,8 +19,8 @@ class Solution {
                         if (board[row][col] == 'X') {
                             uf.union(i * n + j, row * n + col);
                         }
+                        visited[row][col] = true;
                     }
-                    visited[i][j] = true;
                 }
             }
         }
