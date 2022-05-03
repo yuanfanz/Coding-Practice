@@ -6,19 +6,21 @@ class Solution {
         UnionFind uf = new UnionFind(board);
         
         int[][] dirs = new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+        boolean[][] visited = new boolean[m][n];
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (board[i][j] == 'X') {
                     for (int[] dir : dirs) {
                         int row = i + dir[0];
                         int col = j + dir[1];
-                        if (row < 0 || col < 0 || row >= m || col >= n) {
+                        if (row < 0 || col < 0 || row >= m || col >= n || visited[row][col]) {
                             continue;
                         }
                         if (board[row][col] == 'X') {
                             uf.union(i * n + j, row * n + col);
                         }
                     }
+                    visited[i][j] = true;
                 }
             }
         }
