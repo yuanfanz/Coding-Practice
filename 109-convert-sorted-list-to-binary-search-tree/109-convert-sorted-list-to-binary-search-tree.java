@@ -22,8 +22,6 @@ class Solution {
     }
     
     private ListNode getMid(ListNode head, ListNode tail) {
-        if (head == null || head.next == null) return head;
-        
         ListNode slow = head;
         ListNode fast = head;
         while (fast != tail && fast.next != tail) {
