@@ -8,7 +8,6 @@ class DetectSquares {
     
     public void add(int[] point) {
         count[point[0]][point[1]]++;
-        // if (count[point[0]][point[1]] > 1) return;
         list.add(point);
     }
     
