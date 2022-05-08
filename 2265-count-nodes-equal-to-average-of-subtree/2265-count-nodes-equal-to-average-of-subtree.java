@@ -1,21 +1,80 @@
+
 class Solution {
+    int count = 0;
     public int averageOfSubtree(TreeNode root) {
-        int[] res = helper(root);
-        return res[2];
+        if (root == null) return 0;
+        Tuple tuple = preorder(root);
+        dfs(tuple);
+        return count;
     }
-    public int[] helper(TreeNode root){
-        int[] p = new int[3];
-        if (root == null) {
-            return p;
+    
+    private Tuple preorder(TreeNode root) {
+        if (root == null) return null;
+        Tuple t = new Tuple(root.val);
+        t.count = 1;
+        if (root.left == null && root.right == null) {
+            return t;
         }
-        int[] left = helper(root.left);
-        int[] right = helper(root.right);
-        p[0] = left[0] + right[0] + root.val;
-        p[1] = left[1] + right[1] + 1;
-        p[2] = left[2] + right[2];
-        if ((p[0] / p[1]) == root.val) {
-            p[2] += 1;
+        Tuple left = preorder(root.left);
+        Tuple right = preorder(root.right);
+        if (left != null) t.count += left.count;
+        if (right != null) t.count += right.count;
+        t.left = left;
+        t.right = right;
+        return t;
+    }
+    
+    private int dfs(Tuple root) {
+        if (root == null) return -1;
+        // if (root.left == null && root.right == null) {
+        //     count++;
+        //     return root.val;
+        // }
+        int left = dfs(root.left);
+        int right = dfs(root.right);
+        int total = root.val;
+        if (left != -1) {
+            total += left;
         }
-        return p;
+        if (right != -1) {
+            total += right;
+        }
+        int avg = total / root.count;
+        if (avg == root.val) {
+            // System.out.println(avg + " " + root.val);
+            count++;
+        }
+        return total;
+    }
+    
+    class Tuple{
+        int val;
+        int count;
+        Tuple left;
+        Tuple right;
+        Tuple() {}
+        Tuple(int val) { this.val = val; }
+        Tuple(int val, Tuple left, Tuple right, int count) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+            this.count = count;
+        }
     }
 }
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
