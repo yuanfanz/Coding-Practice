@@ -1,35 +1,17 @@
 
 class Solution {
-    int sum = 0;
+    private int result;
     public int sumNumbers(TreeNode root) {
-        dfs(root, "");
-        return sum;
+        dfs(root, 0);
+        return result;
     }
-    
-    private void dfs(TreeNode root, String cur) {
-        if (root == null) return;
-        cur = cur + root.val + "";
+    private void dfs(TreeNode root, int sum) {
+        if (root == null)return;
+        sum = sum * 10 + root.val;
         if (root.left == null && root.right == null) {
-            sum += Integer.valueOf(cur);
-            // return;
+            result += sum;
         }
-        dfs(root.left, cur);
-        dfs(root.right, cur);
+        dfs(root.left, sum);
+        dfs(root.right, sum);
     }
 }
-
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
