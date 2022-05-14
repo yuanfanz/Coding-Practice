@@ -17,10 +17,7 @@ class Solution {
             }
             int index = search(intervals, i + 1, cur[1]);
             if (index != -1) {
-                // System.out.println(index);
                 int[] right = intervals[index];
-                // System.out.println(right[0]);
-                // System.out.println(right[1]);
                 res[first] = map.get(right);
             } else {
                 res[first] = -1;
