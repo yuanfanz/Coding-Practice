@@ -1,31 +1,31 @@
 class Solution {
-    private int[] wSum;
+    int[] wSum;
     public Solution(int[] w) {
         int n = w.length;
-        wSum = new int[n];
-        wSum[0] = w[0];
-        for (int i = 1; i < n; ++i) {
-            wSum[i] = wSum[i - 1] + w[i];
+        wSum = new int[n + 1];
+        for (int i = 0; i < n; ++i) {
+            wSum[i + 1] = wSum[i] + w[i];
         }
     }
     
     public int pickIndex() {
         Random random = new Random();
-        int index = random.nextInt(wSum[wSum.length - 1]) + 1;
+        int total = wSum[wSum.length - 1];
+        int index = random.nextInt(total) + 1;
         
-        int i = 0;
-        int j = wSum.length - 1;
+        int i = 1;
+        int j = wSum.length;
         while (i <= j) {
             int mid = i + (j - i) / 2;
             if (wSum[mid] == index) {
-                return mid;
-            } else if (wSum[mid] > index) {
-                j = mid - 1;
-            } else {
+                return mid - 1;
+            } else if (wSum[mid] < index) {
                 i = mid + 1;
+            } else {
+                j = mid - 1;
             }
         }
-        return i;
+        return i - 1;
     }
 }
 
