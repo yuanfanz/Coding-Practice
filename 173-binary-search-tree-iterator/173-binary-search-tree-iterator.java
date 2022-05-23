@@ -7,14 +7,17 @@ class BSTIterator {
     }
     
     public int next() {
-        TreeNode cur = stack.pop();
-        int val = cur.val;
-        addAll(cur.right);
-        return val;
+        if (hasNext()) {
+            TreeNode cur = stack.pop();
+            int val = cur.val;
+            addAll(cur.right);
+            return val;
+        }
+        return -1;
     }
     
     public boolean hasNext() {
-        return !(stack.size() == 0);
+        return stack.size() != 0;
     }
     
     private void addAll(TreeNode root) {
