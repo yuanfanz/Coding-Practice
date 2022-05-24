@@ -3,21 +3,17 @@
 
 public class Solution extends Relation {
     public int findCelebrity(int n) {
+        int candidate = 0;
+        for (int i = 1; i < n; ++i) {
+            if (knows(candidate, i)) {
+                candidate = i;
+            }
+        }
         for (int i = 0; i < n; ++i) {
-            if (isCelebrity(i, n)) {
-                return i;
+            if (i != candidate && (!knows(i, candidate) || knows(candidate, i))) {
+                return -1;
             }
         }
-        return -1;
-    }
-    
-    private boolean isCelebrity(int i, int n) {
-        for (int j = 0; j < n; ++j) {
-            if (i == j) continue;
-            if (knows(i, j) || !knows(j, i)) {
-                return false;
-            }
-        }
-        return true;
+        return candidate;
     }
 }
