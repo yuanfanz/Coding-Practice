@@ -21,7 +21,7 @@ class Solution {
             } else {
                 return false;
             }
-        } else {
+        } 
             for (int k = j + 1; k <= s.length(); ++k) {
                 String str = s.substring(j, k);
                 if (!set.contains(str)) {
@@ -34,7 +34,6 @@ class Solution {
                     set.remove(str);
                 }
             }
-        }
         return false;
     }
 }
