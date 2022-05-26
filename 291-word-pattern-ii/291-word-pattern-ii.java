@@ -21,8 +21,7 @@ class Solution {
             } else {
                 return false;
             }
-        } 
-        else {
+        } else {
             for (int k = j + 1; k <= s.length(); ++k) {
                 String str = s.substring(j, k);
                 if (!set.contains(str)) {
