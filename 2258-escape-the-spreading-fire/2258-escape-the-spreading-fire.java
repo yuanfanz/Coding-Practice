@@ -33,7 +33,8 @@ class Solution {
                     int x = pos[0] + dir[j];
                     int y = pos[1] + dir[j + 1];
                     
-                    if (x >= 0 && y >= 0 && x < m && y < n && grid[x][y] == 0 && times[x][y] == Integer.MAX_VALUE) {
+                    if (x >= 0 && y >= 0 && x < m && y < n && grid[x][y] == 0 
+                        && times[x][y] == Integer.MAX_VALUE) {
                         times[x][y] = time;
                         fires.offer(new int[]{x, y});
                     }
