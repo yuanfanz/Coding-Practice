@@ -15,10 +15,6 @@ class Solution {
             result.add(new ArrayList<>(list));
             return;
         }
-        if (index == candidates.length) {
-            return;
-        }
-        
         for (int i = index; i < candidates.length; ++i) {
             if (visited[i] || (i > 0 && !visited[i - 1] && candidates[i] == candidates[i - 1])) continue;
             list.add(candidates[i]);
