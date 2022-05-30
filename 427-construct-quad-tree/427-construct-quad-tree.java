@@ -5,7 +5,7 @@ class Solution {
     
     private Node helper(int[][] grid, int x, int y, int len) {
         if (len == 1) {
-            return new Node(grid[x][y] != 0, true, null, null, null, null);
+            return new Node(grid[x][y] != 0, true);
         }
         Node root = new Node();
         Node topLeft = helper(grid, x, y, len / 2);
