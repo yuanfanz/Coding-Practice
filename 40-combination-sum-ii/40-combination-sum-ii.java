@@ -11,11 +11,11 @@ class Solution {
     private void dfs(int[] candidates, List<List<Integer>> result, boolean[] visited,
                      List<Integer> list, int target, int index, int sum) {
         if (sum > target) return;
-        // if (index == candidates.length) {
-        //     return;
-        // }
         if (sum == target) {
             result.add(new ArrayList<>(list));
+            return;
+        }
+        if (index == candidates.length) {
             return;
         }
         
