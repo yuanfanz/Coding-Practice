@@ -6,11 +6,12 @@ class Solution {
         for (int i = 1; i < n; ++i) {
             diff[i] = prices[i] - prices[i - 1];
         }
-        int presum = 0;
-        int max = 0;
+        int[] presum = new int[n];
+        presum[0] = diff[0];
+        int max = diff[0];
         for (int i = 1; i < n; ++i) {
-            presum = diff[i] + (presum > 0 ? presum : 0);
-            max = Math.max(max, presum);
+            presum[i] = diff[i] + (presum[i - 1] > 0 ? presum[i - 1] : 0);
+            max = Math.max(max, presum[i]);
         }
         return max;
     }
