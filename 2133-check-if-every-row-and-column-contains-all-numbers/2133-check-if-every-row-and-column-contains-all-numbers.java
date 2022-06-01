@@ -6,6 +6,8 @@ class Solution {
             Set<Integer> row = new HashSet<>();
             Set<Integer> col = new HashSet<>();
             for (int j = 0; j < n; ++j) {
+                // System.out.print("row: " + matrix[i][j]);
+                // System.out.println("    col: " + matrix[j][i]);
                 if (!row.add(matrix[i][j]) || !col.add(matrix[j][i])) {
                     return false;
                 }
