@@ -1,24 +1,27 @@
 
 class Solution {
     public List<List<Integer>> findLeaves(TreeNode root) {
-        List<List<Integer>> result = new ArrayList<>();
-        dfs(root, result);
+         List<List<Integer>> result = new ArrayList<>();
+        
+        while (root != null) {
+            List<Integer> list = new ArrayList<>();
+            root = helper(root, list);
+            result.add(list);
+        }
         return result;
     }
-    private int dfs(TreeNode root, List<List<Integer>> result) {
-        if (root == null) return -1;
-        int left = dfs(root.left, result);
-        int right = dfs(root.right, result);
-        
-        int cur = Math.max(left, right) + 1;
-        if (cur == result.size()) {
-            result.add(new ArrayList<>());
+    
+    private TreeNode helper(TreeNode root, List<Integer> list) {
+        if (root == null) return null;
+        if (root.left == null && root.right == null) {
+            list.add(root.val);
+            return null;
         }
-        result.get(cur).add(root.val);
-        return cur;
+        root.left = helper(root.left, list);
+        root.right = helper(root.right, list);
+        return root;
     }
 }
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
