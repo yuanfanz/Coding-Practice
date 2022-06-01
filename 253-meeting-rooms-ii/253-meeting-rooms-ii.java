@@ -12,12 +12,11 @@ class Solution {
         }
         Arrays.sort(start);
         Arrays.sort(end);
-        
-        int endPtr = 0;
         int rooms = 0;
+        int endPtr = 0;
         for (int i = 0; i < n; ++i) {
             if (start[i] < end[endPtr]) {
-                rooms++;    
+                rooms++;
             } else {
                 endPtr++;
             }
