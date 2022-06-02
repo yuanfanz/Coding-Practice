@@ -2,8 +2,8 @@ class Solution {
     public int calculate(String s) {
         Stack<Integer> stack = new Stack<>();
         
-        char sign = '+';
         int num = 0;
+        char sign = '+';
         int i = 0;
         while (i < s.length()) {
             while (i < s.length() && Character.isDigit(s.charAt(i))) {
@@ -11,18 +11,21 @@ class Solution {
             }
             if (i < s.length() && s.charAt(i) == '(') {
                 int count = 1;
-                int start = ++i;
-                while (i < s.length() && count > 0) {
-                    if (s.charAt(i) == '(') {
-                        count++;
-                    } else if (s.charAt(i) == ')') {
+                int start = i + 1;
+                int end = i + 1;
+                while (end < s.length() && count > 0) {
+                    if (s.charAt(end) == ')') {
                         count--;
+                        if (count == 0) break;
+                    } else if (s.charAt(end) == '(') {
+                        count++;
                     }
-                    i++;
+                    end++;
                 }
-                num = calculate(s.substring(start, i - 1));
+                num = calculate(s.substring(start, end));
+                i = end + 1;
             }
-            if (i >= s.length() - 1 || !Character.isDigit(s.charAt(i)) && s.charAt(i) != '(') {
+            if (i == s.length() || !Character.isDigit(s.charAt(i)) && (s.charAt(i) != '(')) {
                 if (sign == '+') {
                     stack.push(num);
                 }
@@ -39,8 +42,8 @@ class Solution {
                     sign = s.charAt(i);
                 }
                 num = 0;
+                i++;
             }
-            i++;
         }
         int res = 0;
         while (stack.size() > 0) {
@@ -49,11 +52,6 @@ class Solution {
         return res;
     }
 }
-
-
-
-
-
 
 
 
