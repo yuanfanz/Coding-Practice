@@ -3,17 +3,18 @@ class Solution {
     public TreeNode constructMaximumBinaryTree(int[] nums) {
         Deque<TreeNode> deque = new LinkedList<>();
         
-        for (int i = 0; i < nums.length; ++i) {
-            TreeNode cur = new TreeNode(nums[i]);
-            while (deque.size() > 0 && deque.peekFirst().val < cur.val) {
-                cur.left = deque.pollFirst();
+        for (int num : nums) {
+            TreeNode cur = new TreeNode(num);
+            while (deque.size() > 0 && num > deque.peekFirst().val) {
+                TreeNode node = deque.pollFirst();
+                cur.left = node;
             }
             if (deque.size() > 0) {
                 deque.peekFirst().right = cur;
             }
             deque.addFirst(cur);
         }
-        return deque.size() == 0 ? null : deque.pollLast();
+        return deque.pollLast();
     }
 }
 
