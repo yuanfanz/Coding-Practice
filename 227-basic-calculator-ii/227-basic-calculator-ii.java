@@ -2,6 +2,7 @@ class Solution {
     public int calculate(String s) {
         Stack<Integer> stack = new Stack<>();
         char sign = '+';
+        
         int num = 0;
         for (int i = 0; i < s.length(); ++i) {
             char ch = s.charAt(i);
@@ -26,7 +27,7 @@ class Solution {
             }
         }
         int res = 0;
-        while (!stack.isEmpty()) {
+        while (stack.size() > 0) {
             res += stack.pop();
         }
         return res;
