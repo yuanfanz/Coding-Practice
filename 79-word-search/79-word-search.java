@@ -7,7 +7,7 @@ class Solution {
         for (int i = 0; i < m; ++i) {
             for (int j = 0; j < n; ++j) {
                 if (board[i][j] == word.charAt(0)) {
-                    if (dfs(board, i, j, word, dirs, 0)) {
+                    if (dfs(board, i, j, dirs, 0, word)) {
                         return true;
                     }
                 }
@@ -15,8 +15,9 @@ class Solution {
         }
         return false;
     }
+    
     private boolean dfs(char[][] board, int i, int j,
-                        String word, int[][] dirs, int index) {
+                        int[][] dirs, int index, String word) {
         if (index == word.length()) {
             return true;
         }
@@ -24,14 +25,14 @@ class Solution {
             return false;
         }
         char ch = board[i][j];
-        if (ch != word.charAt(index)) {
+        if (ch == '#' || ch != word.charAt(index)) {
             return false;
         }
         board[i][j] = '#';
         for (int[] dir : dirs) {
             int row = i + dir[0];
             int col = j + dir[1];
-            if (dfs(board, row, col, word, dirs, index + 1)) {
+            if (dfs(board, row, col, dirs, index + 1, word)) {
                 return true;
             }
         }
@@ -39,3 +40,16 @@ class Solution {
         return false;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
