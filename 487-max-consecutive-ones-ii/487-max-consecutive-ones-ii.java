@@ -18,6 +18,6 @@ class Solution {
                 max = Math.max(max, j - i + 1);
             }
         }
-        return Math.min(max, n);
+        return max;
     }
 }
