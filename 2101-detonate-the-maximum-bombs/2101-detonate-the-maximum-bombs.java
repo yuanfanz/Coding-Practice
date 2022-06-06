@@ -1,16 +1,14 @@
 class Solution {
     private int max = 1;
-    private boolean[] visited;
     public int maximumDetonation(int[][] bombs) {
-        visited = new boolean[bombs.length];
         for (int i = 0; i < bombs.length; ++i) {
-            dfs(i, bombs);
-            Arrays.fill(visited, false);
+            boolean[] visited = new boolean[bombs.length];
+            dfs(i, bombs, visited);
         }
         return max;
     }
     
-    private int dfs(int i, int[][] bombs) {
+    private int dfs(int i, int[][] bombs, boolean[] visited) {
         if (visited[i]) {
             return 0;
         }
@@ -19,7 +17,7 @@ class Solution {
         for (int j = 0; j < bombs.length; ++j) {
             if (visited[j]) continue;
             if (canBom(bombs[i], bombs[j])) {
-                count += dfs(j, bombs);
+                count += dfs(j, bombs, visited);
             }
         }
         max = Math.max(max, count);
