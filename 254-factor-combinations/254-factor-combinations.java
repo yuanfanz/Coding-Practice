@@ -5,6 +5,7 @@ class Solution {
         dfs(result, new ArrayList<>(), n, 2);
         return result;
     }
+    
     private void dfs(List<List<Integer>> result, List<Integer> list,
                     int n, int index) {
         if (n == 1) {
