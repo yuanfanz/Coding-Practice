@@ -3,10 +3,10 @@ class Solution {
         int n = s.length();
         boolean[] dp = new boolean[n + 1];
         dp[0] = true;
-        for (int i = 0; i <= n; ++i) {
+        for (int i = 1; i <= n; ++i) {
             for (int j = 0; j < i; ++j) {
                 if (wordDict.contains(s.substring(j, i))) {
-                    dp[i] = dp[i] | dp[j];
+                    dp[i] = dp[i] || dp[j];
                 }
             }
         }
