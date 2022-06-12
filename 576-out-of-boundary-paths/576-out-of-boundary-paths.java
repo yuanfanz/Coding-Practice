@@ -14,7 +14,7 @@ class Solution {
                         if (row < 0 || col < 0 || row >= m || col >= n) {
                             next = 1;
                         } else {
-                            next = dp[row][col][step - 1] % mod;
+                            next = dp[row][col][step - 1];
                         }
                         dp[i][j][step] += next;
                         dp[i][j][step] %= mod;
