@@ -29,7 +29,6 @@ class Solution {
     }
     
     private int search(List<Integer> list, int target) {
-        // if (target == -1) return 0;
         int i = 0;
         int j = list.size() - 1;
         while (i <= j) {
