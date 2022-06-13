@@ -1,7 +1,6 @@
 class Solution {
     public String minRemoveToMakeValid(String s) {
         Stack<Integer> stack = new Stack<>();
-        
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); ++i) {
             char ch = s.charAt(i);
