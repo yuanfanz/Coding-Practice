@@ -1,30 +1,19 @@
 class Solution {
     public void sortColors(int[] nums) {
-        int i = 0;
-        int j = nums.length - 1;
-        sort(nums, i, j);
-    }
-    private void sort(int[] nums, int i, int j) {
-        if (i >= j) {
-            return;
-        }
-        int pivot = partition(nums, i, j);
-        sort(nums, i, pivot);
-        sort(nums, pivot + 1, j);
-    }
-    private int partition(int[] nums, int i, int j) {
-        int pivot = nums[i];
-        while (i < j) {
-            while (i < j && nums[j] >= pivot) {
-                j--;
+        int zero = 0;
+        int two = nums.length - 1;
+        for (int i = 0; i <= two; ++i) {
+            while (i < two && nums[i] == 2) {
+                swap(nums, i, two--);
             }
-            nums[i] = nums[j];
-            while (i < j && nums[i] <= pivot) {
-                i++;
+            while (i > zero && nums[i] == 0) {
+                swap(nums, i, zero++);
             }
-            nums[j] = nums[i];
         }
-        nums[i] = pivot;
-        return i;
+    }
+    private void swap(int[] nums, int i, int j) {
+        nums[i] ^= nums[j];
+        nums[j] ^= nums[i];
+        nums[i] ^= nums[j];
     }
 }
