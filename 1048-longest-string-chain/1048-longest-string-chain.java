@@ -9,11 +9,6 @@ class Solution {
         }
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < i; ++j) {
-                
-                // System.out.println(words[j]);
-                // System.out.println(words[i]);
-                // System.out.println(isValid(words[j], words[i]));
-                
                 if (isValid(words[j], words[i])) {
                     dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
