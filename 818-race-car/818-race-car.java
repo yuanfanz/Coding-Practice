@@ -15,7 +15,12 @@ class Solution {
                 dp[i] = k++;
                 s = (1 << k) - 1;
             } else {
+                // 2. we go k times A, then go back, backward distance: s - i
                 dp[i] = k + 1 + dp[s - i];
+                
+                // 3. we go (k - 1) times A, then go back, then go forward
+                // backward distance: 2^back - 1
+                // forward distance: (i - (2^k - 1)) + (backward distance)
                 for (int back = 0; back <= k - 2; ++back) {
                     int distance = i + ((1 << back) - 1) - ((1 << (k - 1)) - 1);
                     dp[i] = Math.min(dp[i], k - 1 + 2 + back + dp[distance]);
