@@ -12,11 +12,15 @@ class Solution {
     public boolean isHappy(int n) {
         int slow, fast;
         slow = fast = n;
-        do {
+        slow = digitSquareSum(slow);
+        fast = digitSquareSum(fast);
+        fast = digitSquareSum(fast);
+        while (slow != fast) {
             slow = digitSquareSum(slow);
             fast = digitSquareSum(fast);
             fast = digitSquareSum(fast);
-        } while(slow != fast);
+            if (fast == 1) return true;
+        } 
         if (slow == 1) return true;
         else return false;
     }
