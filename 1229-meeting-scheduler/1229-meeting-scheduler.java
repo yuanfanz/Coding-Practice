@@ -43,7 +43,7 @@ class Solution {
     }
     
     public List<int[]> merge(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        // Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
         
         int[] prev = intervals[0];
         List<int[]> list = new ArrayList<>();
@@ -61,14 +61,3 @@ class Solution {
         return list;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
