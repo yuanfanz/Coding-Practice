@@ -9,8 +9,8 @@ class Solution {
     private int dfs(Node root) {
         if (root == null) return 0;
         
-        int first = -1;
-        int second = -1;
+        int first = 0;
+        int second = 0;
         for (int i = 0; i < root.children.size(); ++i) {
             int cur = dfs(root.children.get(i));
             if (cur > first) {
@@ -20,7 +20,7 @@ class Solution {
                 second = cur;
             }
         }
-        res = Math.max(res, first + second + 2);
+        res = Math.max(res, first + second);
         return first + 1;
     }
 }
