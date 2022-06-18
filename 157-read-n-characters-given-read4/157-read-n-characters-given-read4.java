@@ -16,9 +16,9 @@ public class Solution extends Reader4 {
             char[] tmp = new char[4];
             int count = read4(tmp);
             eof = count < 4;
-            
+            // even if we read 4 chars from read4
+            // we don't want chars more than n
             count = Math.min(count, n - total);
-            
             for (int i = 0; i < count; ++i) {
                 buf[total++] = tmp[i];
             }
