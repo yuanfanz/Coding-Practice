@@ -8,11 +8,8 @@ class Solution {
         long[] dis2 = dijkstra(forwardMap, src2, n);
         long[] dis3 = dijkstra(backwardMap, dest, n);
         
-        // print(forwardMap);
-        // print(backwardMap);
         long res = INF;
         for (int i = 0; i < n; ++i) {
-            // System.out.println(dis1[i] + " " + dis2[i] + " " + dis3[i]);
             if (dis1[i] != INF && dis2[i] != INF && dis3[i] != INF) {
                 res = Math.min(res, dis1[i] + dis2[i] + dis3[i]);
             }
@@ -73,28 +70,4 @@ class Solution {
             this.dis = dis;
         }
     }
-    
-    private void print(Map<Integer, Map<Integer, Integer>> map) {
-        for (int key : map.keySet()) {
-            System.out.println(key + " ");
-            for (int next : map.get(key).keySet()) {
-                System.out.print("     " + next + " ");
-                System.out.println(map.get(key).get(next) + " ");
-            }
-        }
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
