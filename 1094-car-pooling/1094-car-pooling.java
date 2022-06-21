@@ -11,7 +11,6 @@ class Solution {
             start = Math.min(start, from);
             end = Math.max(end, to);
         }
-        // print(map);
         int sum = 0;
         for (int i = start; i <= end; ++i) {
             if (map.containsKey(i)) {
@@ -21,12 +20,4 @@ class Solution {
         }
         return true;
     }
-    
-    private void print(Map<Integer, Integer> map) {
-    for (int i : map.keySet()) {
-        System.out.print(i + " " + map.get(i));
-        System.out.println();
-    }
-}
-
 }
