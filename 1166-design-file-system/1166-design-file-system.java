@@ -7,7 +7,6 @@ class FileSystem {
     public boolean createPath(String path, int value) {
         String[] arr = path.split("/");
         Node cur = root;
-        // print(arr);
         for (int i = 0; i < arr.length - 1; ++i) {
             String s = arr[i];
             if (s.length() == 0) continue;
@@ -52,13 +51,6 @@ class FileSystem {
             this.map = new HashMap<>();
         }
     }
-    
-    private void print(String[] grid) {
-    for (int i = 0; i < grid.length; ++i) {
-        System.out.print(grid[i] + " ");
-    }
-    System.out.println();
-}
 }
 
 /**
