@@ -15,6 +15,7 @@ class Solution {
                 }
             }
         }
+        print(set);
         return set.size();
     }
     
@@ -30,10 +31,18 @@ class Solution {
             if (grid[row][col] == 0) continue;
             grid[row][col] = 0;
             sb.append(k);
+            sb.append("_");
             dfs(grid, row, col, dirs, sb);
+            sb.append("_");
         }
-        sb.append("_");
     }
+    
+    private void print(Set<String> set) {
+    for (String i : set) {
+        System.out.print(i + " ");
+    }
+    System.out.println();
+}
 }
 
 
