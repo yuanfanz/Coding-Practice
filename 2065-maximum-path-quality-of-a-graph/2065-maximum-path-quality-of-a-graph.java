@@ -39,7 +39,6 @@ class Solution {
         
         if (map.containsKey(cur)) {
             for (int next : map.get(cur).keySet()) {
-                if (shortestMap.get(next) + time > maxTime) continue;
                 int nextTime = map.get(cur).get(next);
                 if (shortestMap.get(next) + time + nextTime > maxTime) continue;
                 dfs(next, map, shortestMap, values, maxTime, sum, time + nextTime, visited);
