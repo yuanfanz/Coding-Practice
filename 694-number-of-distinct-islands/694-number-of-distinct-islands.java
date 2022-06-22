@@ -15,7 +15,6 @@ class Solution {
                 }
             }
         }
-        print(set);
         return set.size();
     }
     
@@ -36,29 +35,4 @@ class Solution {
             sb.append("_");
         }
     }
-    
-    private void print(Set<String> set) {
-    for (String i : set) {
-        System.out.print(i + " ");
-    }
-    System.out.println();
 }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
