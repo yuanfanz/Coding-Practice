@@ -22,6 +22,20 @@ class FileSystem {
     }
     
     public void mkdir(String path) {
+        find(path);
+    }
+    
+    public void addContentToFile(String filePath, String content) {
+        Node cur = find(filePath);
+        cur.isFile = true;
+        cur.content = cur.content + content;
+    }
+    
+    public String readContentFromFile(String filePath) {
+        return find(filePath).content;
+    }
+    
+    private Node find(String path) {
         String[] arr = path.split("/");
         Node cur = root;
         for (int i = 0; i < arr.length; ++i) {
@@ -32,35 +46,7 @@ class FileSystem {
             }
             cur = cur.map.get(curPath);
         }
-    }
-    
-    public void addContentToFile(String filePath, String content) {
-        String[] arr = filePath.split("/");
-        Node cur = root;
-        for (int i = 0; i < arr.length; ++i) {
-            String curPath = arr[i];
-            if (curPath.length() == 0) continue;
-            if (!cur.map.containsKey(curPath)) {
-                cur.map.put(curPath, new Node(curPath));
-            }
-            cur = cur.map.get(curPath);
-        }
-        cur.isFile = true;
-        cur.content = cur.content + content;
-    }
-    
-    public String readContentFromFile(String filePath) {
-        String[] arr = filePath.split("/");
-        Node cur = root;
-        for (int i = 0; i < arr.length; ++i) {
-            String curPath = arr[i];
-            if (curPath.length() == 0) continue;
-            if (!cur.map.containsKey(curPath)) {
-                cur.map.put(curPath, new Node(curPath));
-            }
-            cur = cur.map.get(curPath);
-        }
-        return cur.content;
+        return cur;
     }
     
     class Node{
@@ -87,21 +73,3 @@ class FileSystem {
  * obj.addContentToFile(filePath,content);
  * String param_4 = obj.readContentFromFile(filePath);
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
