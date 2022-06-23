@@ -1,8 +1,8 @@
 class Solution {
     public int scheduleCourse(int[][] courses) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
-        
         Arrays.sort(courses, (a, b) -> a[1] - b[1]);
+        
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
         int end = 0;
         for (int[] cur : courses) {
             end += cur[0];
