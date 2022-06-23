@@ -26,7 +26,6 @@ class Solution {
                 }
             }
         }
-        // print(dp);
         int[][] dirs = new int[][]{{0,1},{1,1},{1,0}};
         for (int i = m - 1; i >= 0; --i) {
             for (int j = n - 1; j >= 0; --j) {
@@ -34,16 +33,11 @@ class Solution {
                 if (grid[i][j] == 'X') continue;
                 List<Node> list = new ArrayList<>();
                 int max = 0;
-                // System.out.println("i: " + i);
-                // System.out.println("j: " + j);
                 for (int k = 0; k < 3; ++k) {
                     int row = i + dirs[k][0];
                     int col = j + dirs[k][1];
-                    // System.out.println("     row: " + row);
-                    // System.out.println("     col: " + col);
                     if (row < 0 || col < 0 || row >= m || col >= n) continue;
                     list.add(dp[row][col]);
-                    // System.out.println("dp[row][col].sum: " + dp[row][col].sum);
                     max = Math.max(max, dp[row][col].sum);
                 }
                 cur.sum = cur.sum + max;
@@ -78,17 +72,6 @@ class Solution {
             this.col = col;
             this.num = num;
             this.sum = sum;
-        }
-    }
-    
-    private void print(Node[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                System.out.print(grid[i][j].sum + " ");
-            }
-            System.out.println();
         }
     }
 }
