@@ -22,7 +22,7 @@ class Solution {
             for (int j = 1; j <= target; ++j) {
                 dp[i][j] = dp[i - 1][j];
                 if (nums[i - 1] <= j) {
-                    dp[i][j] = dp[i - 1][j] || dp[i - 1][j - nums[i - 1]];
+                    dp[i][j] = dp[i][j] || dp[i - 1][j - nums[i - 1]];
                 }
             }
         }
