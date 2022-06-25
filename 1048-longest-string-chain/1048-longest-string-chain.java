@@ -18,9 +18,6 @@ class Solution {
         for (int i : dp) {
             max = Math.max(max, i);
         }
-        
-        // System.out.println(isValid("ba", "bad"));
-        
         return max;
     }
     
