@@ -18,6 +18,9 @@ class Solution {
         for (int i : dp) {
             max = Math.max(max, i);
         }
+        
+        // System.out.println(isValid("ba", "bad"));
+        
         return max;
     }
     
@@ -27,8 +30,7 @@ class Solution {
         int j = 0;
         while (i < s1.length() && j < s2.length()) {
             if (s1.charAt(i) != s2.charAt(j)) {
-                return s1.substring(i + 1).equals(s2.substring(j)) ||
-                        s1.substring(i).equals(s2.substring(j + 1));
+                return s1.substring(i).equals(s2.substring(j + 1));
             }
             i++;
             j++;
@@ -36,3 +38,12 @@ class Solution {
         return true;
     }
 }
+
+
+
+
+
+
+
+
+
