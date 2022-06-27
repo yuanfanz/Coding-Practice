@@ -1,32 +1,35 @@
 class PhoneDirectory {
-    TreeSet<Integer> set;
-    int size;
-    int count;
+    int cap;
+    Set<Integer> set;
+    int cur;
     public PhoneDirectory(int maxNumbers) {
-        count = 0;
-        size = maxNumbers;
-        set = new TreeSet<>();
+        set = new HashSet<>();
+        cap = maxNumbers;
+        cur = 0;
     }
     
     public int get() {
-        if (size == count - set.size()) {
-            return -1;
+        if (set.size() > 0) {
+            int val = set.iterator().next();
+            set.remove(val);
+            return val;
         }
-        if (set.size() > 0 && set.first() < count) {
-            return set.pollFirst();
-        }
-        return count++;
+        if (cur >= cap) return -1;
+        return cur++;
     }
     
     public boolean check(int number) {
-        // System.out.print(number + " ");
-        // System.out.println(set.contains(number));
-        
-        return set.contains(number) || count <= number && number < size;
+        if (set.contains(number)) {
+            return true;
+        }
+        if (number < cur) {
+            return false;
+        }
+        return true;
     }
     
     public void release(int number) {
-        if (number >= count) return;
+        if (number >= cur) return;
         set.add(number);
     }
 }
