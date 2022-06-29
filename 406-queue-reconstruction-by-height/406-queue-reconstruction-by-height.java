@@ -14,27 +14,16 @@ class Solution {
             // System.out.print(cur[0] + " " + cur[1] + " ");
             int front = cur[1];
             int j = 0;
-            // if (front == 0) {
-            //     while (j < n) {
-            //         if (result[j][0] == -1 || result[j][0] >= cur[0]) {
-            //             if (front == 0) break;
-            //             front--;
-            //         }
-            //         j++;
-            //     }
-            // } else {
-                while (j < n) {
-                    if (result[j][0] == -1 || result[j][0] >= cur[0]) {
-                        if (front == 0) break;
-                        front--;
-                    }
-                    j++;
+            while (j < n) {
+                if (result[j][0] == -1 || result[j][0] >= cur[0]) {
+                    if (front == 0) break;
+                    front--;
                 }
-            // }
-            if (j < n) {
-                result[j] = cur;
+                j++;
             }
-            // print(result);
+            // if (j < n) {
+                result[j] = cur;
+            // }
         }
         return result;
     }
