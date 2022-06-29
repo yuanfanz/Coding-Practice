@@ -1,8 +1,11 @@
 class Solution {
     private int res = Integer.MAX_VALUE;
     public int minimumTimeRequired(int[] jobs, int k) {
+        Arrays.sort(jobs);
+        int n = jobs.length;
+        
         int i = 0;
-        int j = jobs.length * 10000000;
+        int j = n * jobs[n - 1];
         while (i < j) {
             int mid = i + (j - i) / 2;
             if (dfs(jobs, 0, k, mid, new int[k])) {
@@ -20,7 +23,6 @@ class Solution {
         if (cur == jobs.length) {
             return true;
         }
-        
         // flag means if already assign a job to a worker that has no work
         boolean flag = false;
         for (int i = 0; i < k; ++i) {
