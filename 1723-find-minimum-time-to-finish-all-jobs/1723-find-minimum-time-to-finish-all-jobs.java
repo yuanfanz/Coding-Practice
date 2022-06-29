@@ -21,14 +21,16 @@ class Solution {
             return true;
         }
         
-        int flag = 0;
+        // flag means if already assign a job to a worker that has no work
+        boolean flag = false;
         for (int i = 0; i < k; ++i) {
             if (workers[i] + jobs[cur] > mid) continue;
             
-            // flag means if already assign a job
             if (workers[i] == 0) {
-                if (flag == 1) continue;
-                flag = 1;
+                // if already assign work to another worker that has no work
+                // skip current no work worker
+                if (flag) continue;
+                flag = true;
             }
             
             workers[i] += jobs[cur];
