@@ -11,32 +11,34 @@ class Solution {
         map.put(5, Arrays.asList(1, 2, 3, 4, 6));
         map.put(6, Arrays.asList(1, 5));
         
-        int[][] prev = new int[7][7];
+        int[][][] dp = new int[n + 1][7][7];
+        
+        for (int i = 1; i <= 6; ++i) {
+            dp[1][0][i] = 1;
+        }
         for (int i = 1; i <= 6; ++i) {
             for (int j : map.get(i)) {
-                prev[i][j] = 1;
+                dp[2][i][j] += dp[1][0][j];
             }
         }
-        //  .. _k _j _i ..
-        for (int len = 3; len <= n; ++len) {
-            int[][] cur = new int[7][7];
-            for (int i = 1; i <= 6; ++i) {
-                for (int j : map.get(i)) {
-                    for (int k = 1; k <= 6; ++k) {
-                        if (k != i) {
-                            cur[i][j] += prev[j][k];
-                            cur[i][j] %= mod;
+        //  .. _c _b _a ..
+        for (int i = 3; i <= n; ++i) {
+            for (int a = 1; a <= 6; ++a) {
+                for (int b : map.get(a)) {
+                    for (int c = 1; c <= 6; ++c) {
+                        if (c != a) {
+                            dp[i][b][a] += dp[i - 1][c][b];
+                            dp[i][b][a] %= mod;
                         }
                     }
                 }
             }
-            prev = cur;
         }
         int res = 0;
         for (int i = 1; i <= 6; ++i) {
             for (int j = 1; j <= 6; ++j) {
                 if (i == j) continue;
-                res += prev[i][j];
+                res += dp[n][i][j];
                 res %= mod;
             }
         }
