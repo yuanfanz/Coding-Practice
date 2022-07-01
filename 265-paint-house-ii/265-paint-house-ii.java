@@ -41,10 +41,4 @@ class Solution {
         }
         return min;
     }
-    private void print(int[] grid) {
-    for (int i = 0; i < grid.length; ++i) {
-        System.out.print(grid[i] + " ");
-    }
-    System.out.println();
-}
 }
