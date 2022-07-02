@@ -3,35 +3,25 @@ class Solution {
         List<List<Long>> result = new ArrayList<>();
         
         Map<Integer, Long> map = new HashMap<>();
-        int left = 10001;
-        int right = 1;
+        int start = 100001;
+        int end = 0;
         for (int[] cur : segments) {
-            int start = cur[0];
-            int end = cur[1];
-            long color = cur[2];
-            left = Math.min(left, start);
-            right = Math.max(right, end);
-            map.put(start, map.getOrDefault(start, (long)0) + color);
-            map.put(end, map.getOrDefault(end, (long)0) - color);
+            map.put(cur[0], map.getOrDefault(cur[0], 0L) + (long) cur[2]);
+            map.put(cur[1], map.getOrDefault(cur[1], 0L) - (long) cur[2]);
+            start = Math.min(start, cur[0]);
+            end = Math.max(end, cur[1]);
         }
-        // print(map);
-        long color = map.get(left);
-        int prevIndex = left;
-        for (int i = left + 1; i <= right; ++i) {
+        long color = map.get(start);
+        int prev = start;
+        for (int i = start + 1; i <= end; ++i) {
             if (map.containsKey(i)) {
                 if (color != 0) {
-                    result.add(new ArrayList<>(Arrays.asList((long)prevIndex, (long)i, color)));
+                    result.add(Arrays.asList((long) prev, (long) i, color));
                 }
                 color += map.get(i);
-                prevIndex = i;
+                prev = i;
             }
         }
         return result;
-    }
-    private void print(Map<Integer, Integer> map) {
-        for (int i : map.keySet()) {
-            System.out.print(i + " " + map.get(i));
-            System.out.println();
-        }
     }
 }
