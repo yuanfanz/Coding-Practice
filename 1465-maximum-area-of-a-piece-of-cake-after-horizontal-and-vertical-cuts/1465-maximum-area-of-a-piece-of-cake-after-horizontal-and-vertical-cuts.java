@@ -29,21 +29,20 @@ class Solution {
         long max = 0;
         int i = 0;
         int j = 0;
-        while (i < row.size() && j < col.size()) {
-            long rowNum = (long) row.get(i);
-            long colNum = (long) col.get(j);
-            // System.out.println(rowNum);
-            // System.out.println(colNum);
-            // System.out.println();
-            long area = rowNum * colNum;
-            max = Math.max(max, area);
-            if (rowNum > colNum) {
-                j++;
-            } else {
-                i++;
-            }
-        }
-        return (int) (max % mod);
+        // while (i < row.size() && j < col.size()) {
+        //     long rowNum = (long) row.get(i);
+        //     long colNum = (long) col.get(j);
+        //     long area = rowNum * colNum;
+        //     max = Math.max(max, area);
+        //     if (rowNum > colNum) {
+        //         j++;
+        //     } else {
+        //         i++;
+        //     }
+        // }
+        // return (int) (max % mod);
+        long area = ((long)row.get(0) * (long)col.get(0));
+        return (int) (area % mod);
     }
 }
 
