@@ -1,13 +1,17 @@
+
 class Solution {
     public String getDirections(TreeNode root, int startValue, int destValue) {
-        TreeNode lca = getLca(root, startValue, destValue);
+        TreeNode first = findNode(root, startValue);
+        TreeNode second = findNode(root, destValue);
         
+        TreeNode lca = findLca(root, first, second);
+
         List<List<String>> path = new ArrayList<>();
-        List<String> lcaToStart = new ArrayList<>();
+        List<String> startToLca = new ArrayList<>();
         List<String> lcaToEnd = new ArrayList<>();
         
-        dfsStart(lcaToStart, lca, startValue, path);
-        dfsEnd(lcaToEnd, lca, destValue, path);
+        findUpPath(first, lca, startToLca, path);
+        findDownPath(second, lca, lcaToEnd, path);
         
         StringBuilder sb = new StringBuilder();
         for (List<String> list : path) {
@@ -18,42 +22,50 @@ class Solution {
         return sb.toString();
     }
     
-    private void dfsStart(List<String> list, TreeNode lca, int start,
-                         List<List<String>> path) {
+    private void findUpPath(TreeNode node, TreeNode lca, List<String> list,
+                                   List<List<String>> path) {
         if (lca == null) return;
-        if (lca.val == start) {
+        if (lca == node) {
             path.add(new ArrayList<>(list));
             return;
         }
         list.add("U");
-        dfsStart(list, lca.left, start, path);
+        findUpPath(node, lca.left, list, path);
         list.remove(list.size() - 1);
         list.add("U");
-        dfsStart(list, lca.right, start, path);
+        findUpPath(node, lca.right, list, path);
         list.remove(list.size() - 1);
     }
     
-    private void dfsEnd(List<String> list, TreeNode lca, int end,
-                       List<List<String>> path) {
+    private void findDownPath(TreeNode node, TreeNode lca, List<String> list,
+                                   List<List<String>> path) {
         if (lca == null) return;
-        if (lca.val == end) {
+        if (lca == node) {
             path.add(new ArrayList<>(list));
             return;
         }
         list.add("L");
-        dfsEnd(list, lca.left, end, path);
+        findDownPath(node, lca.left, list, path);
         list.remove(list.size() - 1);
         list.add("R");
-        dfsEnd(list, lca.right, end, path);
+        findDownPath(node, lca.right, list, path);
         list.remove(list.size() - 1);
     }
     
-    private TreeNode getLca(TreeNode root, int p, int q) {
-        if (root == null || root.val == p || root.val == q) {
-            return root;
-        }
-        TreeNode left = getLca(root.left, p, q);
-        TreeNode right = getLca(root.right, p, q);
+    private TreeNode findLca(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) return root;
+        TreeNode left = findLca(root.left, p, q);
+        TreeNode right = findLca(root.right, p, q);
+        if (left == null) return right;
+        if (right == null) return left;
+        return root;
+    }
+    
+    private TreeNode findNode(TreeNode root, int val) {
+        if (root == null) return null;
+        if (root.val == val) return root;
+        TreeNode left = findNode(root.left, val);
+        TreeNode right = findNode(root.right, val);
         if (left == null) return right;
         if (right == null) return left;
         return root;
