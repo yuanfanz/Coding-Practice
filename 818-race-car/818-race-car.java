@@ -1,33 +1,45 @@
 class Solution {
     public int racecar(int target) {
-        // target is the position
-        // dp[i] get to the i position, minimum operations is dp[i]
         int[] dp = new int[target + 2];
         
         dp[1] = 1;
         dp[2] = 4;
         
-        int k = 2; // k is multiple A operation
+        // k is multiple A operation
+        int k = 2;
         int s = 3;
         for (int i = 3; i <= target; ++i) {
-            // 1. we can get to i cause i is (2^n - 1)
+            // 1. we can go to i only using A operation
+            // cause i is 2^n - 1
             if (i == s) {
                 dp[i] = k++;
-                s = (1 << k) - 1;
+                s = (int) Math.pow(2, k) - 1;
             } else {
-                // 2. we go k times A, then go back, backward distance: s - i
+                // 2. we go beyond the distance, we need to go back after K times A operation
+                // backward distance: s - i
                 dp[i] = k + 1 + dp[s - i];
                 
-                // 3. we go (k - 1) times A, then go back, then go forward
-                // backward distance: 2^back - 1
-                // forward distance: (i - (2^k - 1)) + (backward distance)
+                // 3. we go (k - 1) times A operation, then go back, then go forward
+                // backward distance: 2^back - 1, we are not sure about exact value of back
+                // forward distance: (i - (2^(k-1) - 1)) + backward distance
                 for (int back = 0; back <= k - 2; ++back) {
-                    int distance = i + ((1 << back) - 1) - ((1 << (k - 1)) - 1);
+                    int distance = i - ((int) Math.pow(2, k - 1) - 1) + ((int) Math.pow(2, back) - 1);
                     dp[i] = Math.min(dp[i], k - 1 + 2 + back + dp[distance]);
                 }
-                
             }
         }
         return dp[target];
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
