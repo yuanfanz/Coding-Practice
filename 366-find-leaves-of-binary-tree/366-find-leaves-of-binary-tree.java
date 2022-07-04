@@ -2,6 +2,7 @@
 class Solution {
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
+        
         dfs(root, result);
         return result;
     }
@@ -11,12 +12,12 @@ class Solution {
         int left = dfs(root.left, result);
         int right = dfs(root.right, result);
         
-        int cur = Math.max(left, right) + 1;
-        if (cur == result.size()) {
+        int height = Math.max(left, right) + 1;
+        if (height == result.size()) {
             result.add(new ArrayList<>());
         }
-        result.get(cur).add(root.val);
-        return cur;
+        result.get(height).add(root.val);
+        return height;
     }
 }
 
