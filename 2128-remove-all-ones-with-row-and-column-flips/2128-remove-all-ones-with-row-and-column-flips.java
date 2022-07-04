@@ -3,38 +3,31 @@ class Solution {
         int m = grid.length;
         int n = grid[0].length;
         
-        for (int i = 0; i < m; ++i) {
-            if (grid[i][0] == 1) {
-                flip(grid, i, true);
+        List<Integer> cols = new ArrayList<>();
+        for (int i = 0; i < n; ++i) {
+            if (grid[0][i] == 1) {
+                cols.add(i);
             }
         }
-        for (int j = 0; j < n; ++j) {
-            if (grid[0][j] == 1) {
-                flip(grid, j, false);
-            }
+        for (int i : cols) {
+            flipCol(grid, i);
         }
-        for (int i = 0; i < m; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (grid[i][j] == 1) {
-                    return false;
+        
+        for (int i = 1; i < m; ++i) {
+            for (int j = 1; j < n; ++j) {
+                if (grid[i][0] == 0) {
+                    if (grid[i][j] == 1) return false;
+                } else {
+                    if (grid[i][j] == 0) return false;
                 }
             }
         }
         return true;
     }
     
-    private void flip(int[][] grid, int x, boolean isRow) {
-        int m = grid.length;
-        int n = grid[0].length;
-        
-        if (isRow) {
-            for (int j = 0; j < n; ++j) {
-                grid[x][j] = 1 - grid[x][j];
-            }
-        } else {
-            for (int i = 0; i < m; ++i) {
-                grid[i][x] = 1 - grid[i][x];
-            }
+    private void flipCol(int[][] grid, int col) {
+        for (int i = 0; i < grid.length; ++i) {
+            grid[i][col] = 1 - grid[i][col];
         }
     }
 }
