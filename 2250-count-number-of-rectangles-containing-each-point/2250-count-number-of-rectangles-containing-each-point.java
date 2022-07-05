@@ -24,14 +24,19 @@ class Solution {
             int x = points[i][0];
             int y = points[i][1];
             
+            // beyond max height of all squares
             if (y > maxY) {
                 continue;
             }
             
             int count = 0;
             Integer recY = map.ceilingKey(y);
+            // remind the treemap subMap() method
+            // only find the height that higher than point
             for (int next : map.subMap(recY, maxY + 1).keySet()) {
                 List<Integer> xlist = map.get(next);
+                // search for left bound
+                // anything larger than left bound is qualified
                 int index = searchLeftBound(xlist, x);
                 if (index != -1) {
                     count += (xlist.size() - index);
