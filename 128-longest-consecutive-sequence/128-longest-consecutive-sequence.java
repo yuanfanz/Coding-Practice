@@ -8,12 +8,12 @@ class Solution {
         int max = 0;
         for (int i = 0; i < nums.length; ++i) {
             if (!set.contains(nums[i] - 1)) {
-                int len = 0;
-                int num = nums[i];
-                while (set.contains(num++)) {
-                    len++;
+                int cur = nums[i];
+                int count = 0;
+                while (set.contains(cur++)) {
+                    count++;
                 }
-                max = Math.max(max, len);
+                max = Math.max(max, count);
             }
         }
         return max;
