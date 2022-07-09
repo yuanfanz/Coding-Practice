@@ -1,30 +1,3 @@
-
-
-class Solution {
-    public Node inorderSuccessor(Node node) {
-        if (node == null) return null;
-        if (node.right != null) {
-            node = node.right;
-            while (node.left != null) {
-                node = node.left;
-            }
-            return node;
-        } else if (node.parent != null) {
-            // if node is the right child of parent
-            // find nodes upwards until meet a child that is left child
-            if (node.val > node.parent.val) {
-                while (node.parent != null && node.val > node.parent.val) {
-                    node = node.parent;
-                }
-                return node.parent;
-            } else {
-                return node.parent;
-            }
-        }
-        return null;
-    }
-}
-
 /*
 // Definition for a Node.
 class Node {
@@ -34,3 +7,32 @@ class Node {
     public Node parent;
 };
 */
+
+class Solution {
+    Stack<Node> stack;
+    public Node inorderSuccessor(Node node) {
+        Node root = node;
+        while (root.parent != null) {
+            root = root.parent;
+        }
+        stack = new Stack<>();
+        addAll(root);
+        
+        while (stack.size() > 0) {
+            Node cur = stack.pop();
+            addAll(cur.right);
+            if (cur == node) {
+                if (stack.size() == 0) return null;
+                return stack.pop();
+            }
+        }
+        return null;
+    }
+    
+    private void addAll(Node root) {
+        while (root != null) {
+            stack.push(root);
+            root = root.left;
+        }
+    }
+}
