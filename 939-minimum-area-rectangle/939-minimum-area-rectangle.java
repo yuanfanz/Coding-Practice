@@ -30,11 +30,9 @@ class Solution {
                 
                 List<Long> commonList = new ArrayList<>(common);
                 Collections.sort(commonList);
-                // print(commonList);
                 for (int k = 1; k < commonList.size(); ++k) {
                     min = Math.min(min, heightDiff * (commonList.get(k) - commonList.get(k - 1)));
                 }
-                // if (commonList.size() > 1) break;
             }
         }
         return min == Long.MAX_VALUE ? 0 : (int)min;
