@@ -23,33 +23,6 @@ class Solution {
                 return count + cur;
             }
         }
-        // while (t1 > 0 && t2 > 0) {
-        //     count++;
-        //     t1--;
-        //     t2--;
-        // }
-        // while (t1 > 0 && t3 > 0) {
-        //     count++;
-        //     t1--;
-        //     t3--;
-        // }
-        // while (t2 > 0 && t3 > 0) {
-        //     count++;
-        //     t2--;
-        //     t3--;
-        // }
-        // while (t1 > 0) {
-        //     count++;
-        //     t1--;
-        // }
-        // while (t2 > 0) {
-        //     count++;
-        //     t2--;
-        // }
-        // while (t3 > 0) {
-        //     count++;
-        //     t3--;
-        // }
         return count;
     }
 }
