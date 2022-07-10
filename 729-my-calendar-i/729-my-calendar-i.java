@@ -10,7 +10,7 @@ class MyCalendar {
             return false;
         }
         Integer next = map.ceilingKey(start);
-        if (next != null && next < end) {
+        if (next != null && end > next) {
             return false;
         }
         map.put(start, end);
