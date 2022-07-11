@@ -5,14 +5,14 @@ class Solution {
         int n = jobDifficulty.length;
         
         int[][] dp = new int[d + 1][n + 1];
-        // int firstDayJob = jobDifficulty[0];
-        // for (int j = 1; j <= n; ++j) {
-        //     firstDayJob = Math.max(firstDayJob, jobDifficulty[j - 1]);
-        //     dp[1][j] = firstDayJob;
-        // }
+        int firstDayJob = jobDifficulty[0];
         for (int j = 1; j <= n; ++j) {
-            dp[1][j] = Math.max(dp[1][j - 1], jobDifficulty[j - 1]);
+            firstDayJob = Math.max(firstDayJob, jobDifficulty[j - 1]);
+            dp[1][j] = firstDayJob;
         }
+        // for (int j = 1; j <= n; ++j) {
+        //     dp[1][j] = Math.max(dp[1][j - 1], jobDifficulty[j - 1]);
+        // }
         for (int i = 2; i <= d; ++i) {
             for (int j = 1; j <= n; ++j) {
                 dp[i][j] = Integer.MAX_VALUE;
