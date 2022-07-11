@@ -1,39 +1,19 @@
 class RLEIterator {
-    Stack<Node> stack;
+    int index;
+    int[] arr;
     public RLEIterator(int[] encoding) {
-        stack = new Stack<>();
-        for (int i = encoding.length - 1; i >= 1;) {
-            stack.push(new Node(encoding[i], encoding[i - 1]));
-            i -= 2;
-        }
+        index = 0;
+        this.arr = encoding;
     }
     
     public int next(int n) {
-        if (stack.size() == 0) return -1;
-        while (stack.size() > 0) {
-            Node cur = stack.pop();
-            int freq = cur.freq;
-            if (freq >= n) {
-                int val = cur.val;
-                freq -= n;
-                if (freq > 0) {
-                    stack.push(new Node(val, freq));
-                }
-                return val;
-            } else {
-                n -= freq;
-            }
+        while (index < arr.length && arr[index] < n) {
+            n -= arr[index];
+            index += 2;
         }
-        return -1;
-    }
-    
-    class Node{
-        int val;
-        int freq;
-        public Node(int val, int freq) {
-            this.val = val;
-            this.freq = freq;
-        }
+        if (index >= arr.length) return -1;
+        arr[index] -= n;
+        return arr[index + 1];
     }
 }
 
