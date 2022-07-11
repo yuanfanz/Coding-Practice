@@ -1,26 +1,20 @@
 class Solution {
     public int minMeetingRooms(int[][] intervals) {
-        int n = intervals.length;
+        TreeMap<Integer, Integer> map = new TreeMap<>();
         
-        int[] start = new int[n];
-        int[] end = new int[n];
-        
-        int index = 0;
         for (int[] cur : intervals) {
-            start[index] = cur[0];
-            end[index++] = cur[1];
+            int start = cur[0];
+            int end = cur[1];
+            map.put(start, map.getOrDefault(start, 0) + 1);
+            map.put(end, map.getOrDefault(end, 0) - 1);
         }
-        Arrays.sort(start);
-        Arrays.sort(end);
-        int rooms = 0;
-        int endPtr = 0;
-        for (int i = 0; i < n; ++i) {
-            if (start[i] < end[endPtr]) {
-                rooms++;
-            } else {
-                endPtr++;
-            }
+        
+        int num = 0;
+        int max = 0;
+        for (int key : map.keySet()) {
+            num += map.get(key);
+            max = Math.max(max, num);
         }
-        return rooms;
+        return max;
     }
 }
