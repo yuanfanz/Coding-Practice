@@ -18,11 +18,13 @@ class Solution {
         if (map.containsKey(x)) {
             return map.get(x);
         }
+        int count = 0;
         if (x % 2 == 0) {
-            map.put(x, getCount(x/2) + 1);
+            count = getCount(x/2) + 1;
         } else {
-            map.put(x, getCount(x*3 + 1) + 1);
+            count = getCount(x*3 + 1) + 1;
         }
-        return map.get(x);
+        map.put(x, count);
+        return count;
     }
 }
