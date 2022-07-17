@@ -1,66 +1,79 @@
 class FileSystem {
-    Node root;
+    private Node root;
     public FileSystem() {
         root = new Node();
     }
     
     public List<String> ls(String path) {
-        String[] arr = path.split("/");
-        Node cur = root;
-        for (int i = 0; i < arr.length; ++i) {
-            String curPath = arr[i];
-            if (curPath.length() == 0) continue;
-            if (!cur.map.containsKey(curPath)) {
-                break;
-            }
-            cur = cur.map.get(curPath);
+        Node cur = findOrBreak(path);
+        if (cur.isFile) {
+            return new ArrayList<>(Arrays.asList(cur.path));
         }
-        if (cur.isFile) return new ArrayList<>(Arrays.asList(cur.path));
-        List<String> list = new ArrayList<>(cur.map.keySet());
-        Collections.sort(list);
-        return list;
+        List<String> result = new ArrayList<>(cur.listChildren());
+        Collections.sort(result);
+        return result;
     }
     
     public void mkdir(String path) {
-        find(path);
+        findAndCreate(path);
     }
     
     public void addContentToFile(String filePath, String content) {
-        Node cur = find(filePath);
+        Node cur = findAndCreate(filePath);
         cur.isFile = true;
-        cur.content = cur.content + content;
+        cur.file = cur.file + content;
     }
     
     public String readContentFromFile(String filePath) {
-        return find(filePath).content;
+        return findAndCreate(filePath).file;
     }
     
-    private Node find(String path) {
+    public Node findOrBreak(String path) {
         String[] arr = path.split("/");
         Node cur = root;
         for (int i = 0; i < arr.length; ++i) {
-            String curPath = arr[i];
-            if (curPath.length() == 0) continue;
-            if (!cur.map.containsKey(curPath)) {
-                cur.map.put(curPath, new Node(curPath));
+            String str = arr[i];
+            if (str.length() == 0) continue;
+            if (!cur.map.containsKey(str)) {
+                return cur;
             }
-            cur = cur.map.get(curPath);
+            cur = cur.map.get(str);
+        }
+        return cur;
+    }
+    
+    public Node findAndCreate(String path) {
+        String[] arr = path.split("/");
+        Node cur = root;
+        for (int i = 0; i < arr.length; ++i) {
+            String str = arr[i];
+            if (str.length() == 0) continue;
+            if (!cur.map.containsKey(str)) {
+                cur.map.put(str, new Node(str));
+            }
+            cur = cur.map.get(str);
         }
         return cur;
     }
     
     class Node{
         String path;
-        String content;
         Map<String, Node> map;
+        String file;
         boolean isFile;
-        public Node() {
+        
+        public Node(){
             map = new HashMap<>();
         }
+        
         public Node(String path) {
             this.path = path;
-            this.map = new HashMap<>();
-            this.content = "";
+            map = new HashMap<>();
+            file = "";
+        }
+        
+        public Set<String> listChildren() {
+            return this.map.keySet();
         }
     }
 }
