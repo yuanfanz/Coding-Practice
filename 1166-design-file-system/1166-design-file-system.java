@@ -1,5 +1,5 @@
 class FileSystem {
-    Node root;
+    private Node root;
     public FileSystem() {
         root = new Node();
     }
@@ -8,47 +8,44 @@ class FileSystem {
         String[] arr = path.split("/");
         Node cur = root;
         for (int i = 0; i < arr.length - 1; ++i) {
-            String s = arr[i];
-            if (s.length() == 0) continue;
-            if (!cur.map.containsKey(s)) {
+            String str = arr[i];
+            if (str.length() == 0) continue;
+            if (!cur.map.containsKey(str)) {
                 return false;
             }
-            cur = cur.map.get(s);
+            cur = cur.map.get(str);
         }
         String last = arr[arr.length - 1];
-        if (cur.map.containsKey(last)) {
-            return false;
-        } else {
-            Node node = new Node(last);
-            node.val = value;
-            cur.map.put(last, node);
-        }
+        if (cur.map.containsKey(last)) return false;
+        cur.map.put(last, new Node(last));
+        cur = cur.map.get(last);
+        cur.value = value;
         return true;
     }
     
     public int get(String path) {
         String[] arr = path.split("/");
         Node cur = root;
-        for (String s : arr) {
-            if (s.length() == 0) continue;
-            if (!cur.map.containsKey(s)) {
+        for (String str : arr) {
+            if (str.length() == 0) continue;
+            if (!cur.map.containsKey(str)) {
                 return -1;
             }
-            cur = cur.map.get(s);
+            cur = cur.map.get(str);
         }
-        return cur.val;
+        return cur.value;
     }
     
     class Node{
         String path;
         Map<String, Node> map;
-        int val;
-        public Node() {
-            this.map = new HashMap<>();
+        int value;
+        public Node(){
+            map = new HashMap<>();
         }
         public Node(String path) {
             this.path = path;
-            this.map = new HashMap<>();
+            map = new HashMap<>();
         }
     }
 }
