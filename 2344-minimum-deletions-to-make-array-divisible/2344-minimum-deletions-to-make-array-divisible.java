@@ -14,6 +14,7 @@ class Solution {
         
         while (pq.size() > 0) {
             Node node = pq.poll();
+            if (gcd < node.num) return -1;
             if (gcd % node.num == 0) {
                 return count;
             } else {
