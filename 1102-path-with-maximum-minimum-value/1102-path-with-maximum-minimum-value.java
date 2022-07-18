@@ -22,10 +22,10 @@ class Solution {
             }
         }
         Collections.sort(list, (a, b) -> b[2] - a[2]);
-        int max = Integer.MAX_VALUE;
+        int max = 0;
         for (int[] cur : list) {
             uf.union(cur[0], cur[1]);
-            max = Math.min(cur[2], max);
+            max = cur[2];
             if (uf.isConnected(0, m * n - 1)) {
                 return max;
             }
