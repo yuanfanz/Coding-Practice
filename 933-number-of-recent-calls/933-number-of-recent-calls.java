@@ -7,7 +7,7 @@ class RecentCounter {
     public int ping(int t) {
         list.add(t);
         int index = search(list, t - 3000);
-        // if (index == -1) return list.size();
+        if (index == -1) return list.size();
         return list.size() - index;
     }
     
