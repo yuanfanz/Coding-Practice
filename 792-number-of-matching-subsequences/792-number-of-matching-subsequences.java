@@ -1,29 +1,30 @@
 class Solution {
     public int numMatchingSubseq(String s, String[] words) {
-        ArrayList[] bucket = new ArrayList[26];
+        ArrayList<Node>[] bucket = new ArrayList[26];
         
         for (int i = 0; i < 26; ++i) {
             bucket[i] = new ArrayList<>();
         }
-        for (String cur : words) {
-            char ch = cur.charAt(0);
-            bucket[ch - 'a'].add(new Node(cur, 0));
+        for (String word : words) {
+            char ch = word.charAt(0);
+            bucket[ch - 'a'].add(new Node(word, 0));
         }
-        int res = 0;
+        int count = 0;
         for (int i = 0; i < s.length(); ++i) {
             char ch = s.charAt(i);
-            ArrayList<Node> list = bucket[ch - 'a'];
+            List<Node> list = bucket[ch - 'a'];
             bucket[ch - 'a'] = new ArrayList<>();
             for (Node node : list) {
-                node.index += 1;
+                node.index++;
                 if (node.index == node.word.length()) {
-                    res++;
+                    count++;
                 } else {
-                    bucket[node.word.charAt(node.index) - 'a'].add(node);
+                    char next = node.word.charAt(node.index);
+                    bucket[next - 'a'].add(node);
                 }
             }
         }
-        return res;
+        return count;
     }
     
     class Node{
