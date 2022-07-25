@@ -7,7 +7,6 @@ class Solution {
             int left = cur[0];
             int right = cur[1];
             int len = query(root, 0, N, left, right - 1);
-            // System.out.println("len: " + len);
             list.add(right - left - len);
             update(root, 0, N, left, right - 1, 1);
         }
