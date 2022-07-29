@@ -6,11 +6,26 @@ class Solution {
         for (String s : words) {
             if (s.length() != pattern.length()) continue;
             // System.out.println(s + " " + getPatternString(s));
-            if (patternStr.equals(getPatternString(s))) {
+            if (check(patternStr, s)) {
                 result.add(s);
             }
         }
         return result;
+    }
+    
+    private boolean check(String t, String s) {
+        int[] hash = getHash(s);
+        int[] lastIndex = new int[26];
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); ++i) {
+            char ch = s.charAt(i);
+            if (hash[ch - 'a'] == 0) continue;
+            sb.append(hash[ch - 'a'] + "_" + lastIndex[ch - 'a'] + "_");
+            hash[ch - 'a']--;
+            lastIndex[ch - 'a'] = i;
+            if (!t.startsWith(sb.toString())) return false;
+        }
+        return true;
     }
     
     private String getPatternString(String s) {
