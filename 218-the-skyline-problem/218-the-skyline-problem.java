@@ -44,7 +44,7 @@ class Solution {
         }
         if (lh == -1) return rh;
         if (rh == -1) return lh;
-        return Math.min(lh, rh);
+        return Math.max(lh, rh);
     }
     
     private void update(Node node, int start, int end, int left, int right, int val) {
