@@ -36,15 +36,14 @@ class Solution {
         pushDown(node);
         int lh = -1;
         int rh = -1;
+        int res = 0;
         if (left <= mid) {
-            lh = query(node.left, start, mid, left, right);
+            res = Math.max(res, query(node.left, start, mid, left, right));
         }
         if (right > mid) {
-            rh = query(node.right, mid + 1, end, left, right);
+            res = Math.max(res, query(node.right, mid + 1, end, left, right));
         }
-        if (lh == -1) return rh;
-        if (rh == -1) return lh;
-        return Math.max(lh, rh);
+        return res;
     }
     
     private void update(Node node, int start, int end, int left, int right, int val) {
