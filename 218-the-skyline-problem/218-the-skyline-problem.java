@@ -16,9 +16,8 @@ class Solution {
         List<Integer> list = new ArrayList<>(set);
         Collections.sort(list);
         for (int i = 0; i < list.size() - 1; ++i) {
+            // the left point is main point of the segment
             int curHeight = query(root, min, max, list.get(i), list.get(i + 1) - 1);
-            // System.out.print("index: " + list.get(i) + " ");
-            // System.out.println(curHeight);
             if (prevHeight != curHeight) {
                 prevHeight = curHeight;
                 result.add(Arrays.asList(list.get(i), curHeight));
@@ -34,8 +33,6 @@ class Solution {
         }
         int mid = start + (end - start) / 2;
         pushDown(node);
-        int lh = -1;
-        int rh = -1;
         int res = 0;
         if (left <= mid) {
             res = Math.max(res, query(node.left, start, mid, left, right));
