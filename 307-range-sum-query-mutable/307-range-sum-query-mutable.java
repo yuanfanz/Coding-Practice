@@ -1,73 +1,90 @@
 class NumArray {
     Node root;
+    int min;
+    int max;
     public NumArray(int[] nums) {
-        root = buildTree(nums, 0, nums.length - 1);
+        root = new Node();
+        min = 0;
+        max = nums.length - 1;
+        build(root, min, max, nums);
     }
     
     public void update(int index, int val) {
-        update(root, index, val);
-    }
-    
-    private void update(Node node, int index, int val) {
-        if (node == null) return;
-        if (index > node.end) return;
-        if (index < node.start) return;
-        
-        if (index == node.start && index == node.end) {
-            node.sum = val;
-            return;
-        }
-        update(node.left, index, val);
-        update(node.right, index, val);
-        // dont forget to update sum val on node
-        node.sum = node.left.sum + node.right.sum;
+        update(root, min, max, index, index, val);
     }
     
     public int sumRange(int left, int right) {
-        return sumRange(root, left, right);
+        return query(root, min, max, left, right);
     }
     
-    private int sumRange(Node root, int start, int end) {
-        if (start > end) return 0;
-        
-        start = Math.max(start, root.start);
-        end = Math.min(end, root.end);
-        
-        if (start == root.start && end == root.end) {
-            return root.sum;
-        }
-        int left = sumRange(root.left, start, end);
-        int right = sumRange(root.right, start, end);
-        
-        return left + right;
-    }
-    
-    private Node buildTree(int[] nums, int start, int end) {
-        if (start > end) return null;
+    public void build(Node node, int start, int end, int[] arr) {
         if (start == end) {
-            return new Node(start, end, nums[start]);
+            node.sum = arr[start];
+            return;
         }
         int mid = start + (end - start) / 2;
-        Node left = buildTree(nums, start, mid);
-        Node right = buildTree(nums, mid + 1, end);
+        pushDown(node, mid - start + 1, end - mid);
+        build(node.left, start, mid, arr);
+        build(node.right, mid + 1, end, arr);
+        pushUp(node);
+    }
+    
+    public int query(Node node, int start, int end, int left, int right) {
+        if (left <= start && end <= right) {
+            return node.sum;
+        }
+        int mid = start + (end - start) / 2;
+        pushDown(node, mid - start + 1, end - mid);
+        int res = 0;
+        if (left <= mid) {
+            res += query(node.left, start, mid, left, right);
+        }
+        if (right > mid) {
+            res += query(node.right, mid + 1, end, left, right);
+        }
+        return res;
+    }
+    
+    public void update(Node node, int start, int end, int left, int right, int val) {
+        if (left <= start && end <= right) {
+            node.sum = val * (end - start + 1);
+            node.add = val;
+            return;
+        }
+        int mid = start + (end - start) / 2;
+        pushDown(node, mid - start + 1, end - mid);
+        if (left <= mid) {
+            update(node.left, start, mid, left, right, val);
+        }
+        if (right > mid) {
+            update(node.right, mid + 1, end, left, right, val);
+        }
+        pushUp(node);
+    }
+    
+    public void pushDown(Node node, int leftNum, int rightNum) {
+        if (node.left == null) node.left = new Node();
+        if (node.right == null) node.right = new Node();
         
-        Node root = new Node(start, end, left.sum + right.sum);
-        root.left = left;
-        root.right = right;
-        return root;
+        if (node.add == 0) return;
+        
+        node.left.sum = node.add * leftNum;
+        node.right.sum = node.add * rightNum;
+        
+        node.left.add = node.add;
+        node.right.add = node.add;
+        node.add = 0;
+    }
+    
+    public void pushUp(Node node) {
+        node.sum = node.left.sum + node.right.sum;
     }
     
     class Node{
-        Node left;
-        Node right;
+        Node left, right;
         int sum;
-        int start;
-        int end;
-        public Node(int start, int end, int sum) {
-            this.start = start;
-            this.end = end;
-            this.sum = sum;
-        }
+        int add;
+        public Node(){}
     }
 }
 
