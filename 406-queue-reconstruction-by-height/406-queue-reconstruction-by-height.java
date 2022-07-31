@@ -5,8 +5,7 @@ class Solution {
         int n = people.length;
         int[][] result = new int[n][2];
         for (int[] cur : result) {
-            cur[0] = -1;
-            cur[0] = -1;
+            Arrays.fill(cur, -1);
         }
         for (int i = 0; i < n; ++i) {
             int[] cur = people[i];
