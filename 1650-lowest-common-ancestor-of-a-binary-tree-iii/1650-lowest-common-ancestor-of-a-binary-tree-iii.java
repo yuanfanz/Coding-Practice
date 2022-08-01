@@ -1,36 +1,3 @@
-
-
-class Solution {
-    public Node lowestCommonAncestor(Node p, Node q) {
-        int ph = getHeight(p);
-        int qh = getHeight(q);
-        
-        if (ph > qh) {
-            return lowestCommonAncestor(q, p);
-        }
-        int diff = qh - ph;
-        while (diff > 0) {
-            q = q.parent;
-            diff--;
-        }
-        while (p != q) {
-            p = p.parent;
-            q = q.parent;
-        }
-        return p;
-    }
-    
-    private int getHeight(Node node) {
-        int res = 0;
-        
-        while (node != null) {
-            node = node.parent;
-            res++;
-        }
-        return res;
-    }
-}
-
 /*
 // Definition for a Node.
 class Node {
@@ -40,3 +7,18 @@ class Node {
     public Node parent;
 };
 */
+
+class Solution {
+    public Node lowestCommonAncestor(Node p, Node q) {
+        Set<Node> set = new HashSet<>();
+        while (p != null) {
+            set.add(p);
+            p = p.parent;
+        }
+        while (q != null) {
+            if (set.contains(q)) return q;
+            q = q.parent;
+        }
+        return null;
+    }
+}
