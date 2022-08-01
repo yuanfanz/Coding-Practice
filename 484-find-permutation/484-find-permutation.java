@@ -7,23 +7,23 @@ class Solution {
         }
         int i = 1;
         while (i <= n) {
-            if (s.charAt(i - 1) != 'I') {
+            // swap when D happens
+            if (s.charAt(i - 1) == 'D') {
                 int j = i;
                 while (i <= n && s.charAt(i - 1) == 'D') {
                     i++;
                 }
-                reverse(res, j - 1, i - 1);
+                swap(res, j - 1, i - 1);
             }
             i++;
         }
         return res;
     }
-    
-    private void reverse(int[] nums, int i, int j) {
+    private void swap(int[] res, int i, int j) {
         while (i < j) {
-            int tmp = nums[i];
-            nums[i] = nums[j];
-            nums[j] = tmp;
+            int tmp = res[i];
+            res[i] = res[j];
+            res[j] = tmp;
             i++;
             j--;
         }
