@@ -11,9 +11,6 @@ class Solution {
             if (ranges[i] == 0) continue;
             int start = i - ranges[i];
             int end = i + ranges[i];
-            // start = Math.max(0, start);
-            // end = Math.min(n, end);
-            // list.add(new Interval(start, end));
             update(root, min, max, start, end, end);
         }
         int jump = 0;
