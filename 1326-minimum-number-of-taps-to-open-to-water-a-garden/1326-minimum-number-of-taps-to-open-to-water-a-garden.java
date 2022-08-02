@@ -1,6 +1,5 @@
 class Solution {
     int res = 100000;
-    boolean wateredAll = false;
     int min = -101;
     int max = 10101;
     public int minTaps(int n, int[] ranges) {
@@ -22,17 +21,6 @@ class Solution {
             jump++;
         }
         return jump;
-    }
-    
-    class Interval{
-        int start;
-        int end;
-        int len;
-        public Interval(int start, int end) {
-            this.start = start;
-            this.end = end;
-            this.len = end - start;
-        }
     }
     
     public int query(Node node, int start, int end, int left, int right) {
