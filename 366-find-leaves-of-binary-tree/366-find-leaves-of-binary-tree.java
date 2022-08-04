@@ -3,24 +3,22 @@ class Solution {
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         
-        while (root != null) {
-            List<Integer> list = new ArrayList<>();
-            root = dfs(result, root, list);
-            result.add(list);
-        }
+        dfs(root, result);
         return result;
     }
     
-    private TreeNode dfs(List<List<Integer>> result, TreeNode root, 
-                        List<Integer> list) {
-        if (root == null) return null;
-        if (root.left == null && root.right == null) {
-            list.add(root.val);
-            return null;
+    private int dfs(TreeNode root, List<List<Integer>> result) {
+        if (root == null) return -1;
+        
+        int left = dfs(root.left, result);
+        int right = dfs(root.right, result);
+        
+        int height = Math.max(left, right) + 1;
+        if (height == result.size()) {
+            result.add(new ArrayList<>());
         }
-        root.left = dfs(result, root.left, list);
-        root.right = dfs(result, root.right, list);
-        return root;
+        result.get(height).add(root.val);
+        return height;
     }
 }
 
