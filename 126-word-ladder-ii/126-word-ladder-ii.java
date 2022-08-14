@@ -19,7 +19,6 @@ class Solution {
         bfs(beginSet, endSet, wordSet, map, false);
         List<String> list = new ArrayList<>();
         list.add(beginWord);
-        // System.out.println("#################");
         dfs(beginWord, endWord, map, result, list, wordSet);
         return result;
     }
