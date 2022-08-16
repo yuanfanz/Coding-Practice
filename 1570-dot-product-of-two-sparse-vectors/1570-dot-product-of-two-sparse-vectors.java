@@ -14,14 +14,14 @@ class SparseVector {
     
 	// Return the dotProduct of two sparse vectors
     public int dotProduct(SparseVector vec) {
-        if (vec.list.size() < this.list.size()) {
+        if (vec.list.size() > this.list.size()) {
             return vec.dotProduct(this);
         }
-        List<Integer> indexList = this.list;
+        List<Integer> indexList = vec.list;
         int sum = 0;
         for (int i = 0; i < indexList.size(); ++i) {
             int cur = indexList.get(i);
-            int index = find(vec.list, cur);
+            int index = find(this.list, cur);
             if (index == -1) continue;
             sum += vec.arr[cur] * this.arr[cur];
         }
