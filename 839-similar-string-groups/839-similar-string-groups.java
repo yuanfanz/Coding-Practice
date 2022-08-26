@@ -3,58 +3,72 @@ class Solution {
         UnionFind uf = new UnionFind(strs.length);
         
         for (int i = 0; i < strs.length; ++i) {
-            for (int j = 1; j < strs.length; ++j) {
-                String first = strs[i];
-                String second = strs[j];
-                if (isValid(first, second)) {
+            for (int j = i + 1; j < strs.length; ++j) {
+                if (isValid(strs[i], strs[j])) {
                     uf.union(i, j);
                 }
             }
         }
         return uf.count;
     }
-    private boolean isValid(String s1, String s2) {
-        int count = 0;
-        char ch1 = 'a';
-        char ch2 = 'a';
-        for (int i = 0; i < s1.length(); ++i) {
-            if (s1.charAt(i) != s2.charAt(i)) {
-                if (count > 0) {
-                    if (ch1 != s2.charAt(i) || ch2 != s1.charAt(i)) {
+    
+    public boolean isValid(String s, String t) {
+        int flag = 0;
+        char ch_s = 'a';
+        char ch_t = 'a';
+        for (int i = 0; i < s.length(); ++i) {
+            if (s.charAt(i) != t.charAt(i)) {
+                if (flag == 1) {
+                    if (ch_s != t.charAt(i) || ch_t != s.charAt(i)) {
                         return false;
                     }
+                    flag = 2;
+                } else if (flag == 0) {
+                    flag = 1;
+                    ch_s = s.charAt(i);
+                    ch_t = t.charAt(i);
                 } else {
-                    count++;
-                    ch1 = s1.charAt(i);
-                    ch2 = s2.charAt(i);
+                    return false;
                 }
             }
         }
         return true;
     }
+    
     class UnionFind{
         int[] parent;
+        int[] size;
         int count;
         public UnionFind(int n) {
             parent = new int[n];
+            size = new int[n];
             for (int i = 0; i < n; ++i) {
                 parent[i] = i;
+                size[i] = 1;
             }
             count = n;
         }
+        
+        public void union(int p, int q) {
+            int rootP = find(p);
+            int rootQ = find(q);
+            if (rootP == rootQ) return;
+            if (size[rootP] < size[rootQ]) {
+                parent[rootP] = rootQ;
+                size[rootQ] += size[rootP];
+            } else {
+                parent[rootQ] = rootP;
+                size[rootP] += size[rootQ];
+            }
+            count--;
+        }
+        
         public int find(int p) {
             while (p != parent[p]) {
                 parent[p] = parent[parent[p]];
                 p = parent[p];
             }
             return p;
-        }
-        public void union(int p, int q) {
-            int rootP = find(p);
-            int rootQ = find(q);
-            if (rootP == rootQ) return;
-            parent[rootP] = rootQ;
-            count--;
         }
     }
 }
