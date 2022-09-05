@@ -1,5 +1,5 @@
 class Solution {
-    private int max = 0;
+    private int max = 1;
     public int longestConsecutive(TreeNode root) {
         if (root == null) return 0;
         dfs(root, root.val + 1, 0);
