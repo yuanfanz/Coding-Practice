@@ -1,45 +1,41 @@
 class Solution {
     public int racecar(int target) {
-        int[] dp = new int[target + 2];
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(new Node(0, 1, ""));
         
-        dp[1] = 1;
-        dp[2] = 4;
+        // pos + speed
+        Set<String> set = new HashSet<>();
         
-        // k is multiple A operation
-        int k = 2;
-        int s = 3;
-        for (int i = 3; i <= target; ++i) {
-            // 1. we can go to i only using A operation
-            // cause i is 2^n - 1
-            if (i == s) {
-                dp[i] = k++;
-                s = (int) Math.pow(2, k) - 1;
-            } else {
-                // 2. we go beyond the distance, we need to go back after K times A operation
-                // backward distance: s - i
-                dp[i] = k + 1 + dp[s - i];
-                
-                // 3. we go (k - 1) times A operation, then go back, then go forward
-                // backward distance: 2^back - 1, we are not sure about exact value of back
-                // forward distance: (i - (2^(k-1) - 1)) + backward distance
-                for (int back = 0; back <= k - 2; ++back) {
-                    int distance = i - ((int) Math.pow(2, k - 1) - 1) + ((int) Math.pow(2, back) - 1);
-                    dp[i] = Math.min(dp[i], k - 1 + 2 + back + dp[distance]);
+        while (queue.size() > 0) {
+            int size = queue.size();
+            for (int i = 0; i < size; ++i) {
+                Node cur = queue.poll();
+                if (cur.pos == target) {
+                    // System.out.println(cur.sequence);
+                    return cur.sequence.length();
+                }
+                String state = cur.pos + "_" + cur.speed;
+                if (!set.add(state)) continue;
+                int newSpeed = cur.speed > 0 ? -1 : 1;
+                if (Math.abs(cur.pos + cur.speed - target) < target) {
+                    queue.offer(new Node(cur.pos + cur.speed, cur.speed * 2, cur.sequence + "A"));
+                }
+                if (Math.abs(cur.pos - target) < target) {
+                    queue.offer(new Node(cur.pos, newSpeed, cur.sequence + "R"));
                 }
             }
         }
-        return dp[target];
+        return -1;
+    }
+    
+    class Node{
+        int pos;
+        int speed;
+        String sequence;
+        public Node(int pos, int speed, String sequence) {
+            this.pos = pos;
+            this.speed = speed;
+            this.sequence = sequence;
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
