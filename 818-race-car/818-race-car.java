@@ -17,10 +17,10 @@ class Solution {
                 String state = cur.pos + "_" + cur.speed;
                 if (!set.add(state)) continue;
                 int newSpeed = cur.speed > 0 ? -1 : 1;
-                if (Math.abs(cur.pos + cur.speed - target) < target) {
+                if (Math.abs(cur.pos + cur.speed) < 2 * target) {
                     queue.offer(new Node(cur.pos + cur.speed, cur.speed * 2, cur.sequence + "A"));
                 }
-                if (Math.abs(cur.pos - target) < target) {
+                if (Math.abs(cur.pos) < 2 * target) {
                     queue.offer(new Node(cur.pos, newSpeed, cur.sequence + "R"));
                 }
             }
