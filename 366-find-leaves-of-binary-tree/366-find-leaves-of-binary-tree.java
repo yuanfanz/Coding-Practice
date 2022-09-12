@@ -3,22 +3,22 @@ class Solution {
     public List<List<Integer>> findLeaves(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         
-        dfs(root, result);
+        dfs(result, root);
         return result;
     }
     
-    private int dfs(TreeNode root, List<List<Integer>> result) {
+    private int dfs(List<List<Integer>> result, TreeNode root) {
         if (root == null) return -1;
         
-        int left = dfs(root.left, result);
-        int right = dfs(root.right, result);
+        int left = dfs(result, root.left);
+        int right = dfs(result, root.right);
         
-        int height = Math.max(left, right) + 1;
-        if (height == result.size()) {
+        int cur = Math.max(left, right) + 1;
+        if (result.size() == cur) {
             result.add(new ArrayList<>());
         }
-        result.get(height).add(root.val);
-        return height;
+        result.get(cur).add(root.val);
+        return cur;
     }
 }
 
