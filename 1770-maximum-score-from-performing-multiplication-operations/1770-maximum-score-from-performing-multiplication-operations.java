@@ -1,3 +1,4 @@
+// copied from discuss
 class Solution {
     int n, m;
     int[] nums, muls;
