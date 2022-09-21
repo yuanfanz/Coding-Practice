@@ -1,3 +1,4 @@
+// copied from discuss
 class Solution {
     public int[] sumEvenAfterQueries(int[] A, int[][] queries) {
         int sum = 0;
