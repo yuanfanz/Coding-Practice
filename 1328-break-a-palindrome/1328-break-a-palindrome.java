@@ -45,7 +45,7 @@ class Solution {
         }
         for (int i = arr2.length - 1; i >= 0; --i) {
             if (arr2[i] != 'z') {
-                arr2[i] = (char)(arr2[i] + 1);
+                arr2[i] = 'b';
                 flag = true;
                 break;
             }
