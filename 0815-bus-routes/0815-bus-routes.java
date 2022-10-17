@@ -11,7 +11,7 @@ class Solution {
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(source);
         int step = 0;
-        Set<Integer> visited = new HashSet<>();
+        Set<Integer> visitedStops = new HashSet<>();
         Set<Integer> visitedRoutes = new HashSet<>();
         while (queue.size() > 0) {
             int size = queue.size();
@@ -20,13 +20,14 @@ class Solution {
                 if (curStop == target) {
                     return step;
                 }
-                if (visited.contains(curStop)) continue;
-                visited.add(curStop);
+                if (visitedStops.contains(curStop)) continue;
+                visitedStops.add(curStop);
                 if (map.containsKey(curStop)) {
                     for (int nextRoute : map.get(curStop)) {
                         if (visitedRoutes.contains(nextRoute)) continue;
                         visitedRoutes.add(nextRoute);
                         for (int nextStop : routes[nextRoute]) {
+                            if (visitedStops.contains(nextStop)) continue;
                             queue.offer(nextStop);
                         }
                     }
