@@ -27,7 +27,6 @@ class Solution {
                         if (visitedRoutes.contains(nextRoute)) continue;
                         visitedRoutes.add(nextRoute);
                         for (int nextStop : routes[nextRoute]) {
-                            if (visitedStops.contains(nextStop)) continue;
                             queue.offer(nextStop);
                         }
                     }
