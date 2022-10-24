@@ -2,10 +2,6 @@ class Solution {
     int max = 0;
     public int maxLength(List<String> arr) {
         int n = arr.size();
-        for (int i = 0; i < n; ++i) {
-            String s = arr.get(i);
-        }
-        
         for (int i = 0; i < arr.size(); ++i) {
             dfs(arr, i, "");
         }
