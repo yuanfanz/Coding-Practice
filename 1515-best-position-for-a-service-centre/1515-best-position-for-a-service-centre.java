@@ -8,8 +8,8 @@ class Solution {
         while (delta >= 10e-4) {
             // delta/100 is the increamental step
             // the time cost will be 200*200 each loop
-            for (double i = x - delta; i <= x + delta; i += delta/100) {
-                for (double j = y - delta; j <= y + delta; j += delta/100) {
+            for (double i = x - delta; i <= x + delta; i += delta/10) {
+                for (double j = y - delta; j <= y + delta; j += delta/10) {
                     double dis = getDistance(positions, i, j);
                     if (dis <= min) {
                         min = dis;
@@ -23,7 +23,7 @@ class Solution {
             // this helps us to narrow down the results
             x = min_x;
             y = min_y;
-            delta /= 100;
+            delta /= 10;
         }
         return min;
     }
