@@ -5,11 +5,13 @@ class Solution {
         double x = 50, y = 50, delta = 50;
         double min_x = x, min_y = y;
         
+        double grad = 10;
+        
         while (delta >= 10e-4) {
-            // delta/100 is the increamental step
+            // delta/grad is the increamental step
             // the time cost will be 200*200 each loop
-            for (double i = x - delta; i <= x + delta; i += delta/10) {
-                for (double j = y - delta; j <= y + delta; j += delta/10) {
+            for (double i = x - delta; i <= x + delta; i += delta/grad) {
+                for (double j = y - delta; j <= y + delta; j += delta/grad) {
                     double dis = getDistance(positions, i, j);
                     if (dis <= min) {
                         min = dis;
@@ -23,7 +25,7 @@ class Solution {
             // this helps us to narrow down the results
             x = min_x;
             y = min_y;
-            delta /= 10;
+            delta /= grad;
         }
         return min;
     }
