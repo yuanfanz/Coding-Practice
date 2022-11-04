@@ -23,7 +23,7 @@ class Solution {
                 break;
             }
         }
-        while (visited.size() < n + 1) {
+        while (visited.size() <= n) {
             for (int next : map.get(start)) {//遍历当前点的邻居节点
                 if (!visited.contains(next)) {
                     visited.add(next);
