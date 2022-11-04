@@ -1,59 +1,51 @@
 
 
 class Solution {
-    class Node {
-        String str;
-        int x, y;
-        Node(String _str, int _x, int _y) {
-            str = _str; x = _x; y = _y;
-        }
-    }
-    int n = 2, m = 3;
-    String s, e;
-    int x, y;
     public int slidingPuzzle(int[][] board) {
-        s = "";
-        e = "123450";
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                s += board[i][j];
-                if (board[i][j] == 0) {
-                    x = i; y = j;
+        String target = "123450";
+        String start = "";
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                start += board[i][j];
+            }
+        }
+        HashSet<String> visited = new HashSet<>();
+        // all the positions 0 can be swapped to
+        int[][] dirs = new int[][] { { 1, 3 }, { 0, 2, 4 },
+                { 1, 5 }, { 0, 4 }, { 1, 3, 5 }, { 2, 4 } };
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(start);
+        visited.add(start);
+        int res = 0;
+        while (!queue.isEmpty()) {
+            // level count, has to use size control here, otherwise not needed
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                String cur = queue.poll();
+                if (cur.equals(target)) {
+                    return res;
+                }
+                int zero = cur.indexOf('0');
+                // swap if possible
+                for (int dir : dirs[zero]) {
+                    String next = swap(cur, zero, dir);
+                    if (visited.contains(next)) {
+                        continue;
+                    }
+                    visited.add(next);
+                    queue.offer(next);
+
                 }
             }
-        }
-        int ans = bfs();
-        return ans;
-    }
-    int[][] dirs = new int[][]{{1,0},{-1,0},{0,1},{0,-1}};
-    int bfs() {
-        Deque<Node> d = new ArrayDeque<>();
-        Map<String, Integer> map = new HashMap<>();
-        Node root = new Node(s, x, y);
-        d.addLast(root);
-        map.put(s, 0);
-        while (!d.isEmpty()) {
-            Node poll = d.pollFirst();
-            int step = map.get(poll.str);
-            if (poll.str.equals(e)) return step;
-            int dx = poll.x, dy = poll.y;
-            for (int[] di : dirs) {
-                int nx = dx + di[0], ny = dy + di[1];
-                if (nx < 0 || nx >= n || ny < 0 || ny >= m) continue;
-                String nStr = update(poll.str, dx, dy, nx, ny);      
-                if (map.containsKey(nStr)) continue;          
-                Node next = new Node(nStr, nx, ny);
-                d.addLast(next);
-                map.put(nStr, step + 1);
-            }
+            res++;
         }
         return -1;
     }
-    String update(String cur, int i, int j, int p, int q) {
-        char[] cs = cur.toCharArray();
-        char tmp = cs[i * m + j];
-        cs[i * m + j] = cs[p * m + q];
-        cs[p * m + q] = tmp;
-        return String.valueOf(cs);
+
+    private String swap(String str, int i, int j) {
+        StringBuilder sb = new StringBuilder(str);
+        sb.setCharAt(i, str.charAt(j));
+        sb.setCharAt(j, str.charAt(i));
+        return sb.toString();
     }
 }
