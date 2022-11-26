@@ -11,6 +11,7 @@ class Solution {
             dp[i] = arr[i].val;
         }
         for (int i = 1; i < n; ++i) {
+            dp[i] = arr[i].val;
             dp[i] = Math.max(dp[i - 1], arr[i].val);
             for (int j = i - 1; j >= 0; --j) {
                 if (arr[j].end <= arr[i].start) {
