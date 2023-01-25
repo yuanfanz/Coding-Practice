@@ -18,25 +18,14 @@ class Solution {
         int[] dis1 = dijkstra(map, node1, n);
         int[] dis2 = dijkstra(map, node2, n);
         
-        // print(dis1);
-        // System.out.println("***");
-        // print(dis2);
-        // System.out.println("***");
-        
         long dis = INF;
         int res = -1;
         
         for (int i = 0; i < edges.length; ++i) {
             long cur = 0;
-            // if (node1 == i) {
-            //     cur = dis2[i];
-            // } else if (node2 == i) {
-            //     cur = dis1[i];
-            // } else {
-                cur = Math.max((long)dis1[i], (long)dis2[i]);
-            // }
             
-            // System.out.println(cur);
+            cur = Math.max((long)dis1[i], (long)dis2[i]);
+            
             if (cur < dis && cur < INTINF) {
                 dis = cur;
                 res = i;
@@ -77,11 +66,4 @@ class Solution {
             this.dis = dis;
         }
     }
-    
-    private void print(int[] grid) {
-    for (int i = 0; i < grid.length; ++i) {
-        System.out.print(grid[i] + " ");
-    }
-    System.out.println();
-}
 }
